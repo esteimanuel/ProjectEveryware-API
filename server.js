@@ -1,4 +1,5 @@
-var restify = require('restify');
+var restify = require('restify'),
+	fs		= require('fs');
 
 var server = restify.createServer({
   name: 'Glassy',
@@ -23,8 +24,8 @@ server.get('/actie', function(req, res, next){
 		res.send({id: 4, intiatiefnemer: "Barry Hoeks"});
 	}else{
 		// Search action based on postalcode
-		if(req.params.postalcode == '1234AB') res.send({id:2, intiatiefnemer: "Kees van Koten"});
-		else res.send(404);
+		if(req.params.postalcode == '1234AB') return res.send({id:2, intiatiefnemer: "Kees van Koten"});
+		else return res.send(404);
 	}
 });
 
@@ -36,8 +37,20 @@ server.post('/actie', function(req, res, next){
 // Join an action
 server.post('/actie/join', function(req, res, next){
 	// if action exists
-	if(req.params.action_code) res.send(200);
-	res.send(404);
+	if(req.params.action_code) return res.send(200);
+	return res.send(404);
+});
+
+server.get('/', function(req, res, next) {
+	fs.readFile(__dirname + '/index.phtml', function(err, data) {
+		if(err) 
+			return next(err);
+		
+		res.setHeader('Content-Type', 'text/html');
+		res.writeHead(200);
+		res.end(data);
+		return next();
+	});
 });
 
 server.listen(8080, function () {
