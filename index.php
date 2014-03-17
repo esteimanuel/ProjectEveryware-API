@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ERROR);
+//error_reporting(E_ERROR);
 
 try {
 
@@ -8,7 +8,7 @@ try {
 	 * Read the configuration
 	 */
 	$config = include __DIR__ . '/config/config.php';
-	
+
 	/**
 	 * Include Services
 	 */
@@ -30,9 +30,9 @@ try {
 	$app->setDi($di);
 
 	/**
-	 * Incude Application
+	 * Include Application
 	 */
-	include __DIR__ . '/router.php';
+	include 'router.php';
 
 	/**
 	 * Handle the request

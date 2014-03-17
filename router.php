@@ -1,9 +1,12 @@
 <?php
 
-public function defaultControllerCall($cont, $method, $app) {
+function defaultControllerCall($cont, $method, $app) {
     $controllerStr = ucfirst($cont).'Controller';
+    if (!class_exists($controllerStr)) {
+    	throw new Exception('Class does not exist');
+    }
     $controller = new $controllerStr();
-    
+
     return call_user_func_array(array($controller, $method), array($app));
 };
 
@@ -23,5 +26,4 @@ $app->delete('/{cont}/{act}', function($cont, $act) use($app) { return defaultCo
 // Handle not found
 $app->notFound(function () use ($app) {
     $app->response->setStatusCode(404, "Not Found")->sendHeaders();
-    //
 });
