@@ -1,9 +1,9 @@
 <?php
 
-Class Actie extends BaseModel
+Class Postcode extends BaseModel
 {
 	public function __construct(){
-		$this->modelName = "actie";
+		$this->modelName = "postcode";
 		parent::__construct();
 	}
 }

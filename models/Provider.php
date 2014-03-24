@@ -1,9 +1,9 @@
 <?php
 
-Class Actie extends BaseModel
+Class Provider extends BaseModel
 {
 	public function __construct(){
-		$this->modelName = "actie";
+		$this->modelName = "provider";
 		parent::__construct();
 	}
 }
