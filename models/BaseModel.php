@@ -12,13 +12,13 @@ Class BaseModel extends Phalcon\Mvc\Model
 	private $propSettings = array();
 	
 	protected $modelName;
+        
+        public function initialize() {
+            $config = include __DIR__."/../config/models.php";
+            $this->globalConfig = $config['globalConfig'];
 
-	public function __construct() {
-		$config = include __DIR__."/../config/models.php";
-		$this->globalConfig = $config['globalConfig'];
-
-		$this->readPropertiesFromConfig($config['models']);
-	}
+            $this->readPropertiesFromConfig($config['models']);
+        }
 
 	public function readPropertiesFromConfig($models) {
 		$modelSettings = $models[$this->modelName];

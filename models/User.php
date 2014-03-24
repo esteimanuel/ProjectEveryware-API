@@ -2,8 +2,8 @@
 
 Class User extends BaseModel
 {
-	public function __construct(){
+	public function initialize(){
 		$this->modelName = "gebruiker";
-		parent::__construct();
+		parent::initialize();
 	}
 }

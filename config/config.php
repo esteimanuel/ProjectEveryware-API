@@ -2,17 +2,17 @@
 
 define("DB_VER", 'dev');
 
-return new \Phalcon\Config(array(
+return array(
     'database' => array(
         'dev' => array(
-            'adapter' => 'PostgreSQL',
-            'host' => '*.*.*.*',
-            'username' => '',
-            'password' => '',
-            'dbname' => '',   
+            'adapter' => 'Postgresql',
+            'host' => 'db.roconda.nl',
+            'username' => 'glassy',
+            'password' => 'fsiok4niovgdSG',
+            'dbname' => 'glassy',
         ),
         'live' => array(
-            'adapter' => 'PostgreSQL',
+            'adapter' => 'Postgresql',
             'host' => '*.*.*.*',
             'username' => '',
             'password' => '',
@@ -24,5 +24,5 @@ return new \Phalcon\Config(array(
         'controllersDir' => __DIR__ . '/../controllers/',
         'baseUri' => '/',
     )
-));
+);
 

@@ -1,0 +1,7 @@
+Model
+http://docs.phalconphp.com/en/1.2.6/api/Phalcon_Mvc_Model.html
+
+Initialize,
+ - set relations,
+ - addBehavior
+

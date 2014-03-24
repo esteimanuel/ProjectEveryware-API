@@ -139,4 +139,4 @@ return array(
 			'inclusionIn' => 'Not a valid value',
 		)
 	)
-)
+);
