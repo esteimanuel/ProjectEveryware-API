@@ -1,6 +1,6 @@
 <?php
 
-Class District extends BaseModel
+Class Wijk extends BaseModel
 {
 	public function __construct(){
 		$this->modelName = "wijk";

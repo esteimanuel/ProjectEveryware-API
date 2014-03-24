@@ -1,6 +1,6 @@
 <?php
 
-Class Action extends BaseModel
+Class Actie extends BaseModel
 {
 	public function __construct(){
 		$this->modelName = "actie";
