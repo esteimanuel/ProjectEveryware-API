@@ -5,11 +5,12 @@ define("DB_VER", 'dev');
 return array(
     'database' => array(
         'dev' => array(
-            'adapter' => 'Postgresql',
+            'adapter' => 'PostgreSQL',
             'host' => 'db.roconda.nl',
             'username' => 'glassy',
             'password' => 'fsiok4niovgdSG',
             'dbname' => 'glassy',
+            'schema' => 'public'
         ),
         'live' => array(
             'adapter' => 'Postgresql',

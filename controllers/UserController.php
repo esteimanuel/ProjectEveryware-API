@@ -3,20 +3,35 @@
 class UserController
 {
     public function get($app) {
-        $phql = "SELECT * FROM user";
-        $users = $app->modelsManager->executeQuery($phql);
-
+//        $phql = 'SELECT * FROM gebruiker';
+//        $users = $app->modelsManager->executeQuery($phql);
+//
+//        $data = array();
+//        foreach ($users as $user) {
+//            $data[] = array(
+//                'id' => $user->id,
+//            );
+//        }
         $data = array();
+        $users = User::find();
+        var_dump($users);
         foreach ($users as $user) {
             $data[] = array(
-                'id' => $user->id,
+                'id' => $user->actie->id,
             );
         }
+        
         //Create a response
         $response = new Phalcon\Http\Response();
+        
+        $data[] = array('id' => 1);
 
         $response->setJsonContent($data);
 
         return $response;
+    }
+    
+    public function post() {
+        
     }
 }

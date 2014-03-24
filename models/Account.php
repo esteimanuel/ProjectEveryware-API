@@ -2,8 +2,8 @@
 
 Class Account extends BaseModel
 {
-	public function __construct(){
+	public function initialize(){
 		$this->modelName = "account";
-		parent::__construct();
+		parent::initialize();
 	}
 }
