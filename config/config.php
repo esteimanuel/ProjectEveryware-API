@@ -1,6 +1,9 @@
 <?php
-
-define("DB_VER", 'dev');
+if(!defined('DB_VER')) {
+    
+    define("DB_VER", 'dev');
+    
+}
 
 return array(
     'database' => array(
@@ -24,6 +27,7 @@ return array(
         'modelsDir' => __DIR__ . '/../models/',
         'controllersDir' => __DIR__ . '/../controllers/',
         'baseUri' => '/',
+        'roles' => array('user', 'admin', 'buddy'),
     )
 );
 

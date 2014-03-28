@@ -10,18 +10,18 @@
  *
  * @author Remi
  */
-class AccountController {
+class AccountController extends BaseController {
     //put your code here
-    public function get() {
-        $accLevel = AccountLevel::findFirst();
-        
-        $account = new Account();
-        $account->email = 'test@test.test';
-        $account->wachtwoord = 'test';
-        $account->accountLevel_id = $accLevel->id;
-        
-        var_dump($account);
-    }
+//    public function get() {
+//        $accLevel = AccountLevel::findFirst();
+//        
+//        $account = new Account();
+//        $account->email = 'test@test.test';
+//        $account->wachtwoord = 'test';
+//        $account->accountLevel_id = $accLevel->id;
+//        
+//        var_dump($account);
+//    }
     
 }
 

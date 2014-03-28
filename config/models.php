@@ -11,7 +11,7 @@ if(!defined('hasMany')) {
     define('settings',      'settings');
 }
 
-
+$config = include 'config.php';
 
 return array(
 	'models' => array(
@@ -36,6 +36,7 @@ return array(
                     relations => array(
                         array('type' => belongsTo, 'f_key' => 'actie_id', 'f_table' => 'actie', 'key' => 'id'),
                         array('type' => belongsTo, 'f_table' => 'postcode'),
+                        array('type' => belongsTo, 'f_table' => 'providerpakket'),
                         array('type' => hasOne, 'f_table' => 'interesse'),
                         array('type' => hasOne, 'f_table' => 'buddy'),
                         array('type' => hasOne, 'f_table' => 'account'),
@@ -60,13 +61,14 @@ return array(
 			'wijk_id' => array(
 				'validation' => array('presenceOf')
 			),
+                        'naam',
                     ),
                     relations => array(
                         array('type' => hasMany, 'f_table' => 'gebruiker'),
                         array('type' => hasMany, 'f_table' => 'media'),
                         array('type' => belongsTo, 'f_table' => 'wijk'),
                         array('type' => hasOne, 'f_table' => 'status'),
-                        array('type' => hasManyToMany, 'key' => 'id', 'k_table' => '', 'k_key1' => 'actie_id', 'k_key2' => 'provider_id', 'f_table' => 'provider', 'f_key' => 'id'),
+                        array('type' => hasManyToMany, 'key' => 'id', 'k_table' => 'actieproviderlink', 'k_key1' => 'actie_id', 'k_key2' => 'provider_id', 'f_table' => 'provider', 'f_key' => 'id'),
                     )
                 ),  
 		'wijk' => array(
@@ -82,6 +84,7 @@ return array(
 				'default' => false,
 			), 
 			'aantal_huishoudens',
+                        'wijk_naam',
                     ),
                     relations => array(
                         array('type' => hasMany, 'f_table' => 'postcode'),
@@ -193,20 +196,21 @@ return array(
 				'validation' => array('presenceOf')
 			),
 			'validatie_link',
+                        'token',
                     ),
                     relations => array(
                         array('type' => hasOne, 'f_table' => 'gebruiker'),
-                        array('type' => belongsTo, 'f_table' => 'account_level'),
+                        array('type' => belongsTo, 'f_table' => 'accountlevel'),
                     )
 		),
 		'accountLevel' => array(
                     settings => array(
-                        't_name' => 'account_level'
+                        't_name' => 'accountlevel'
                     ),
                     props => array(
 			'id',
 			'level' => array(
-				'validation' => array('inclusionIn' => array('domain' => array('user', 'admin', 'buddy'))),
+				'validation' => array('inclusionIn' => array('domain' => $config['application']['roles'])),
 			),
                     ),
                     relations => array(
@@ -222,11 +226,13 @@ return array(
 			'naam' => array(
 				'validation' => array('presenceOf')
 			),
-			'website_url',
+			'website_url' => array(
+                            'validation' => array('url')
+                        ),
                     ),
                     relations => array(
                         array('type' => hasMany, 'f_table' => 'provider_pakket'),
-                        array('type' => hasManyToMany, 'k_table' => '', 'f_table' => 'actie')
+                        array('type' => hasManyToMany, 'k_table' => 'actieproviderlink', 'f_table' => 'actie')
                     )
 		),
 		'provider_pakket' => array(
@@ -248,10 +254,10 @@ return array(
 	),
 	'globalConfig' => array(
 		'messages' => array(
-			'presenceOf' => 'Cannot be null or empty',
-			'email' => 'Not a valid email format',
-			'regex' => 'Not a valid pattern',
-			'inclusionIn' => 'Not a valid value',
+			'presenceOf' => 'cannot be null or empty',
+			'email' => 'not a valid email format',
+			'regex' => 'not a valid pattern',
+			'inclusionIn' => 'not a valid value',
 		)
 	)
 );

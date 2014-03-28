@@ -80,7 +80,7 @@ Class BaseModel extends Phalcon\Mvc\Model
 					$functionName = $key;
 					$functionArgs = $value;
 				}
-				$functionArgs['message'] = $this->globalConfig['messages'][$functionName];
+				$functionArgs['message'] = $propName.', '.$this->globalConfig['messages'][$functionName];
 				$functionArgs['field'] = $propName;
                                 $ucfFunctionName = "Phalcon\\Mvc\\Model\\Validator\\".ucfirst($functionName);
 				$this->validate(new $ucfFunctionName($functionArgs));
@@ -100,4 +100,8 @@ Class BaseModel extends Phalcon\Mvc\Model
 	    //return $this->props[$prop];
             return parent::__get($prop);
 	}
+        
+        public static function getIdPropName() {
+            return $this->getSource().'_id';
+        }
 }
