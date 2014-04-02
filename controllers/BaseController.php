@@ -104,14 +104,77 @@ class BaseController extends \Phalcon\Mvc\Controller {
     // ---------------------------
     
     public function get() {
-        $objs = call_user_func(array($this->short_controller_name,'find'));
+        $qStr = $this->request->getQuery();
+        $valid = true;
         
-        $data = array();
-        foreach($objs as $obj) {
-            $data[] = $obj;
+        $calcFunctions = array('count','sum', 'average', 'maximum', 'minimum');
+        $func = 'find';
+        if(isset($qStr['calc'])) {
+            if(in_array($qStr['calc'], $calcFunctions)) {
+                $func = $qStr['calc'];
+            } else {
+                $valid = false;
+                $this->response->setStatusCode(405, "Invalid method");
+            }
+            unset($qStr['calc']);
+        } else if((isset($qStr['limit']) && $qStr['limit'] === 1) || (isset($qStr['id']))) {
+            $func = 'findFirst';
+            unset($qStr['limit']);
         }
         
-        $this->response->setJsonContent($data);
+        if($valid) {
+            $result = $this->processQueryData($func, $qStr); /*call_user_func(array($this->short_controller_name, $func)); */
+
+            // TODO find and findFirst relations
+            
+            $data = array();
+            switch($func) {
+                case 'find':
+                    foreach($result as $obj) {
+                        $data[] = $obj;
+                    }
+                    break;
+                default:
+                    $data['result'] = $result;
+                    break;
+            }
+
+            $this->response->setJsonContent($data);
+        }
+    }
+    
+    private function processQueryData($func, $config) {
+        $arguments = array();
+        if(isset($config['id'])) {
+            $arguments[] = $config['id'];
+        } else {
+            // Magic happens
+            // Con args k:key v:value op:operator /* pre:prefixForValue app:appendForValue */ fc:frontCheck
+            if(isset($config['con'])) { // Read condition arguments ex. con[]={k:name,v:henk,fc:OR}
+                $conditions = array();
+                foreach($config['con'] as $i => $condition) {
+                    $conditions[$i] = json_decode($condition, true);
+                }
+                $params = array();
+                $conditionStr = BaseModel::getCondition($conditions, $params);
+                
+                $arguments['conditions'] = $conditionStr;
+                $arguments['bind'] = $params;
+            }
+            if(isset($config['order'])) { // CSV order arguments ex. name DESC, status
+                $arguments['order'] = $config['order'];
+            }
+            if(isset($config['limit'])) {
+                $arguments['limit'] = $config['limit'];
+            }
+            if(isset($config['group'])) {
+                $arguments['group'] = $config['group'];
+            }
+            // Cache needed?
+        }
+        $result = call_user_func(array($this->short_controller_name, $func), (count($arguments) > 0) ? $arguments : null);
+        
+        return $result;
     }
     
     public function post() {

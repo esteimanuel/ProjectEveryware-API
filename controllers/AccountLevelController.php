@@ -10,25 +10,25 @@
  *
  * @author Remi
  */
-class AccountLevelController {
+class AccountLevelController extends BaseController {
     //put your code here
     
-    public function get() {
-        $accLevel = new AccountLevel();
-        $accLevel->level = 'admin';
-        
-        $response = new Phalcon\Http\Response();
-        $message = 'empty';
-        
-        if($accLevel->create()) {
-            $message = 'Saved! :D';
-        } else {
-            $message = 'Failed :(';
-        }
-        
-        $response->setJsonContent(array('message', $message));
-        return $response;
-    }
+//    public function get() {
+//        $accLevel = new AccountLevel();
+//        $accLevel->level = 'admin';
+//        
+//        $response = new Phalcon\Http\Response();
+//        $message = 'empty';
+//        
+//        if($accLevel->create()) {
+//            $message = 'Saved! :D';
+//        } else {
+//            $message = 'Failed :(';
+//        }
+//        
+//        $response->setJsonContent(array('message', $message));
+//        return $response;
+//    }
 }
 
 ?>

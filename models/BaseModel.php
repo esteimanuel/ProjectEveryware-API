@@ -104,4 +104,27 @@ Class BaseModel extends Phalcon\Mvc\Model
         public static function getIdPropName() {
             return $this->getSource().'_id';
         }
+        
+        public static function getCondition($conditions, &$bindValues) {
+            $bindStr = null;
+
+            foreach($conditions as $i => $condition) {
+                $k = $condition['k'];
+                $bindValues[$k] = $condition['v'];
+
+                $op = (isset($condition['op'])) ? $condition['op'] : '=';
+    //            $pre = (isset($condition['pre'])) ? $condition['pre'] : '';
+    //            $app = (isset($condition['app'])) ? $condition['app'] : '';
+                $fc = (isset($condition['fc'])) ? $condition['fc'] : 'AND';
+
+                $str = $k.' '.$op.' :'.$k.':';
+                if(!isset($bindStr)) {
+                    $bindStr = $str;
+                } else {
+                    $bindStr .= ' '.$fc.' '.$str;
+                }
+            }
+
+            return $bindStr;
+        }
 }
