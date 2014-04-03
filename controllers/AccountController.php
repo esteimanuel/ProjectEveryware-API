@@ -44,6 +44,7 @@ class AccountController extends BaseController {
 
 		$email = $this->request->getPost("email");
 		$password = $this->request->getPost("wachtwoord");
+                // Klopt niet, je moet findFirst waar email = email AND password = password
 		$account = Account::findFirst($email);
 		$compare = strcmp($account->wachtwoord, $password);
 		if ($compare === 0) {
@@ -57,7 +58,8 @@ class AccountController extends BaseController {
 		} else {
 			$messages = $this->checkErrors($compare);
 		}
-
+                
+                // Dit override de eerste setJsonContent, je geeft dus geen token mee
 		$this->response->setJsonContent(array('messages' => $messages));
 	}
 
