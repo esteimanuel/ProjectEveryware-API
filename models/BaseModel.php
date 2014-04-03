@@ -101,7 +101,7 @@ Class BaseModel extends Phalcon\Mvc\Model
             return parent::__get($prop);
 	}
         
-        public static function getIdPropName() {
+        public function getIdPropName() {
             return $this->getSource().'_id';
         }
         

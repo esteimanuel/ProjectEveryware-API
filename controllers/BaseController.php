@@ -178,9 +178,10 @@ class BaseController extends \Phalcon\Mvc\Controller {
     }
     
     public function post() {
-        $idProp = call_user_func(array($this->short_controller_name,'getIdPropName'));
         $modelStr = $this->short_controller_name;
         $model = new $modelStr();
+        $idProp = $model->getIdPropName(); /* call_user_func(array($this->short_controller_name,'getIdPropName')); */
+        
         foreach($this->request->getPost() as $key => $value) {
             $model->$key = $value;
         }
@@ -201,7 +202,9 @@ class BaseController extends \Phalcon\Mvc\Controller {
     
     public function put() {
         $args = $this->request->getJsonRawBody();
-        $idProp = call_user_func(array($this->short_controller_name,'getIdPropName'));
+        $modelStr = $this->short_controller_name;
+        $model = new $modelStr();
+        $idProp = $model->getIdPropName();
         $model = call_user_func(array($this->short_controller_name, 'findFirst'),$args->$idProp);
         
         if($model) {
@@ -222,7 +225,9 @@ class BaseController extends \Phalcon\Mvc\Controller {
     
     public function delete() {
         $args = $this->request->getJsonRawBody();
-        $idProp = call_user_func(array($this->short_controller_name,'getIdPropName'));
+        $modelStr = $this->short_controller_name;
+        $model = new $modelStr();
+        $idProp = $model->getIdPropName();
         $model = call_user_func(array($this->short_controller_name, 'findFirst'),$args->$idProp);
         
         if($model) {

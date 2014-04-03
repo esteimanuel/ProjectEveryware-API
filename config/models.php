@@ -210,7 +210,7 @@ return array(
                     props => array(
 			'id',
 			'level' => array(
-				'validation' => array('inclusionIn' => array('domain' => $config['application']['roles'])),
+				'validation' => array('presenceOf', 'inclusionIn' => array('domain' => $config['application']['roles'])),
 			),
                     ),
                     relations => array(
