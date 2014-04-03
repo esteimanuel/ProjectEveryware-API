@@ -1,35 +1,35 @@
 <?php
 
-class UserController
+class UserController extends BaseController
 {
-    public function get($app) {
-//        $phql = 'SELECT * FROM gebruiker';
-//        $users = $app->modelsManager->executeQuery($phql);
-//
-//        $data = array();
-//        foreach ($users as $user) {
-//            $data[] = array(
-//                'id' => $user->id,
-//            );
-//        }
-        $data = array();
-        $users = User::find();
-        var_dump($users);
-        foreach ($users as $user) {
-            $data[] = array(
-                'id' => $user->actie->id,
-            );
-        }
+//     public function get($app) {
+// //        $phql = 'SELECT * FROM gebruiker';
+// //        $users = $app->modelsManager->executeQuery($phql);
+// //
+// //        $data = array();
+// //        foreach ($users as $user) {
+// //            $data[] = array(
+// //                'id' => $user->id,
+// //            );
+// //        }
+//         $data = array();
+//         $users = User::find();
+//         var_dump($users);
+//         foreach ($users as $user) {
+//             $data[] = array(
+//                 'id' => $user->actie->id,
+//             );
+//         }
         
-        //Create a response
-        $response = new Phalcon\Http\Response();
+//         //Create a response
+//         $response = new Phalcon\Http\Response();
         
-        $data[] = array('id' => 1);
+//         $data[] = array('id' => 1);
 
-        $response->setJsonContent($data);
+//         $response->setJsonContent($data);
 
-        return $response;
-    }
+//         return $response;
+//     }
     
     public function post() {
         
