@@ -4,7 +4,9 @@ return array(
     'guest' => array(
         'rights' => array(
             'Provider' => array('get','post','put'),
-            'Account' => array('get'),
+            'Account' => array('get', 'register', 'login', 'logout'),
+            'User' => array('get'),
+            'AccountLevel' => array('get', 'post'),
         ),
         'isAdmin' => false
     ),
