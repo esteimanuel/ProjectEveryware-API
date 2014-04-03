@@ -28,13 +28,15 @@ Class BaseModel extends Phalcon\Mvc\Model
 			if (is_numeric($key)) {
 				$propName = $value;
 			} else {
-                                $propSettings = $this->propSettings;
-				$propSettings[$key] = $value;
-                                $this->propSettings = $propSettings;
+                                //$propSettings = $this->propSettings;
+				$this->propSettings[$key] = $value;
+                                //$this->propSettings = $propSettings;
 				
                                 $propName = $key;
                                 $default = (isset($propSettings[$key]['default'])) ? $propSettings[$key]['default'] : null;
 			}
+                        
+                        $this->props[] = $propName;
                         
                         if(!isset($this->$propName) && isset($default)) {
                             $this->$propName = $default;
@@ -79,7 +81,7 @@ Class BaseModel extends Phalcon\Mvc\Model
 				} else {
 					$functionName = $key;
 					$functionArgs = $value;
-				}
+				}                    
 				$functionArgs['message'] = $propName.', '.$this->globalConfig['messages'][$functionName];
 				$functionArgs['field'] = $propName;
                                 $ucfFunctionName = "Phalcon\\Mvc\\Model\\Validator\\".ucfirst($functionName);
@@ -92,8 +94,11 @@ Class BaseModel extends Phalcon\Mvc\Model
 	}
 
 	public function __set($prop, $value) {
-            parent::__set($prop, $value);
-            $this->props[$prop] = $value;
+            if(in_array($prop, $this->props))
+                parent::__set($prop, $value);
+//            else 
+//                throw new Exception('Invalid property', 400);
+            //$this->props[$prop] = $value;
 	}
 
 	public function __get($prop) {

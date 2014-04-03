@@ -258,6 +258,7 @@ return array(
 			'email' => 'not a valid email format',
 			'regex' => 'not a valid pattern',
 			'inclusionIn' => 'not a valid value',
+                        'url' => ' not a valid url format'
 		)
 	)
 );

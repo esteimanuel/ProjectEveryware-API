@@ -182,7 +182,9 @@ class BaseController extends \Phalcon\Mvc\Controller {
         $model = new $modelStr();
         $idProp = $model->getIdPropName(); /* call_user_func(array($this->short_controller_name,'getIdPropName')); */
         
-        foreach($this->request->getPost() as $key => $value) {
+        $data = $this->getRequestData();
+        
+        foreach($data as $key => $value) {
             $model->$key = $value;
         }
 
@@ -202,10 +204,8 @@ class BaseController extends \Phalcon\Mvc\Controller {
     
     public function put() {
         $args = $this->request->getJsonRawBody();
-        $modelStr = $this->short_controller_name;
-        $model = new $modelStr();
-        $idProp = $model->getIdPropName();
-        $model = call_user_func(array($this->short_controller_name, 'findFirst'),$args->$idProp);
+        
+        $model = call_user_func(array($this->short_controller_name, 'findFirst'),$args->id);
         
         if($model) {
             unset($args->provider_id);
@@ -225,20 +225,32 @@ class BaseController extends \Phalcon\Mvc\Controller {
     
     public function delete() {
         $args = $this->request->getJsonRawBody();
-        $modelStr = $this->short_controller_name;
-        $model = new $modelStr();
-        $idProp = $model->getIdPropName();
-        $model = call_user_func(array($this->short_controller_name, 'findFirst'),$args->$idProp);
+        
+        $model = call_user_func(array($this->short_controller_name, 'findFirst'),$args->id);
         
         if($model) {
             $messages = '';
             if(!$model->delete()) {
                 $messages = $this->checkErrors($model);
             }
-            $this->response->setJsonContent(array('messages' => $messages, 'model' => $model));
+            $this->response->setStatusCode(204, "No content");
+            $this->response->setJsonContent(array('messages' => $messages));
         } else {
             $this->response->setStatusCode(404, "Not found");
         }
+    }
+    
+    private function getRequestData() {
+        $data;
+        switch($this->request->getHeader("CONTENT_TYPE")) {
+            case 'application/x-www-form-urlencoded':
+                $data = $this->request->getPost();
+                break;
+            default: // application/json
+                $data = $this->request->getJsonRawBody();
+                break;
+        }
+        return (isset($data)) ? $data : array();
     }
     
 }
