@@ -31,7 +31,7 @@ class UserController extends BaseController
 //         return $response;
 //     }
     
-    public function post() {
+    public function addToAction() {
         
     }
 }
