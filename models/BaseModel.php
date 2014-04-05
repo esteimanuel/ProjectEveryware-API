@@ -70,23 +70,30 @@ Class BaseModel extends Phalcon\Mvc\Model
         }
 
 	public function validation() {
-
+                $doValidation = true;
 		foreach ($this->propSettings as $propName => $config) {
 			$validationConfig = $config['validation'];
-			foreach ($validationConfig as $key => $value) {
-				$functionName = null;
-				$functionArgs = null;
-				if(is_numeric($key)) {
-					$functionName = $value;
-				} else {
-					$functionName = $key;
-					$functionArgs = $value;
-				}                    
-				$functionArgs['message'] = $propName.', '.$this->globalConfig['messages'][$functionName];
-				$functionArgs['field'] = $propName;
-                                $ucfFunctionName = "Phalcon\\Mvc\\Model\\Validator\\".ucfirst($functionName);
-				$this->validate(new $ucfFunctionName($functionArgs));
-			} 
+                        if(in_array('nullable', $validationConfig)) {
+                            if(!isset($this->$propName)) $this->$propName = null;
+                            $doValidation = (!is_null($this->$propName));
+                            if($doValidation) unset($validationConfig[array_search('nullable', $validationConfig)]);
+                        }
+                        if($doValidation) {
+                            foreach ($validationConfig as $key => $value) {
+                                    $functionName = null;
+                                    $functionArgs = null;
+                                    if(is_numeric($key)) {
+                                            $functionName = $value;
+                                    } else {
+                                            $functionName = $key;
+                                            $functionArgs = $value;
+                                    }                    
+                                    $functionArgs['message'] = $propName.', '.$this->globalConfig['messages'][$functionName];
+                                    $functionArgs['field'] = $propName;
+                                    $ucfFunctionName = "Phalcon\\Mvc\\Model\\Validator\\".ucfirst($functionName);
+                                    $this->validate(new $ucfFunctionName($functionArgs));
+                            } 
+                        }
 		}
 		if ($this->validationHasFailed() == true) {
 			return false;

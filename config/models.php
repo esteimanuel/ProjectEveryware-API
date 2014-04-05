@@ -20,7 +20,7 @@ return array(
                         't_name' => 'gebruiker'
                     ),
                      props => array(
-			'id',
+			'gebruiker_id',
 			'borg_betaald',
 			'huisnummer',
 			'huisnummer_toevoeging',
@@ -208,7 +208,7 @@ return array(
                         't_name' => 'accountlevel'
                     ),
                     props => array(
-			'id',
+			'accountlevel_id',
 			'level' => array(
 				'validation' => array('presenceOf', 'inclusionIn' => array('domain' => $config['application']['roles'])),
 			),
@@ -227,7 +227,7 @@ return array(
 				'validation' => array('presenceOf')
 			),
 			'website_url' => array(
-                            'validation' => array('url')
+                            'validation' => array('nullable', 'url')
                         ),
                     ),
                     relations => array(

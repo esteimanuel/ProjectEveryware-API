@@ -114,17 +114,17 @@ class BaseController extends \Phalcon\Mvc\Controller {
                 $func = $qStr['calc'];
             } else {
                 $valid = false;
-                $this->response->setStatusCode(405, "Invalid method");
+                $this->response->setStatusCode(405, "Invalid calc method");
             }
             unset($qStr['calc']);
-        } else if((isset($qStr['limit']) && $qStr['limit'] === 1) || (isset($qStr['id']))) {
+        } else if((isset($qStr['limit']) && $qStr['limit'] == 1) || (isset($qStr['id']))) {
             $func = 'findFirst';
             unset($qStr['limit']);
         }
         
         if($valid) {
             $result = $this->processQueryData($func, $qStr); /*call_user_func(array($this->short_controller_name, $func)); */
-
+            if($result === false) return false;
             // TODO find and findFirst relations
             
             $data = array();
@@ -133,6 +133,9 @@ class BaseController extends \Phalcon\Mvc\Controller {
                     foreach($result as $obj) {
                         $data[] = $obj;
                     }
+                    break;
+                case 'findFirst':
+                    $data = $result;
                     break;
                 default:
                     $data['result'] = $result;
@@ -145,6 +148,7 @@ class BaseController extends \Phalcon\Mvc\Controller {
     
     private function processQueryData($func, $config) {
         $arguments = array();
+        $isSpecialCalc = ($func === 'sum' || $func === 'average' || $func === 'maximum' || $func === 'minimum');
         if(isset($config['id'])) {
             $arguments[] = $config['id'];
         } else {
@@ -170,10 +174,26 @@ class BaseController extends \Phalcon\Mvc\Controller {
             if(isset($config['group'])) {
                 $arguments['group'] = $config['group'];
             }
+            
             // Cache needed?
         }
-        $result = call_user_func(array($this->short_controller_name, $func), (count($arguments) > 0) ? $arguments : null);
         
+        if($isSpecialCalc) {
+            if(isset($config['col'])) {
+                $arguments['column'] = $config['col'];
+            } else {
+                $this->response->setStatusCode(400, "Argument missing");
+                $this->response->setJsonContent(array('message' => "'col' argument missing"));
+                return false;
+            }
+        }
+        //try {
+            $result = call_user_func(array($this->short_controller_name, $func), (count($arguments) > 0) ? $arguments : null);
+//        } catch(Exception $e) {
+//            $this->response->setStatusCode(500, "Internal server error");
+//            $this->response->setJsonContent(array('message' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()));
+//            return false;
+//        }
         return $result;
     }
     
