@@ -43,7 +43,7 @@ class AccountController extends BaseController {
 		$messages = '';
 
 		$email = $this->request->getPost("email");
-		$password = $this->request->getPost("wachtwoord");
+		$password = $this->request->getPost("password");
                 // Klopt niet, je moet findFirst waar email = email AND password = password
 		$account = Account::findFirst($email);
 		$compare = strcmp($account->wachtwoord, $password);
