@@ -1,5 +1,5 @@
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ web/index.html?_url=/$1 [QSA,L]
+    RewriteEngine on
+    RewriteRule  ^$ web/    [L]
+    RewriteRule  (.*) web/$1 [L]
 </IfModule>

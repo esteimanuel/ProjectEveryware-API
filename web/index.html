@@ -14,9 +14,11 @@ and open the template in the editor.
         <!--Load Modules-->
 <!--        <script src="http://code.angularjs.org/1.1.5//angular-resource.min.js"></script>-->
         <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
-        <script src="scripts/modules/ui-bootstrap.js"></script>
+        <script src="common/modules/ui-bootstrap.js"></script>
 			
         <!--Load Boot-->
+        <script src="app/config.js"></script>
+        <script src="app/app.js"></script>
         
         <!--Load Controllers-->
         
@@ -24,11 +26,12 @@ and open the template in the editor.
         
         <!--Load LayoutFiles-->
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
-<!--        <link href="css/main.css" rel="stylesheet" />-->
+        <!--<link type="text/css" rel="stylesheet" href="web/styles/main-css.php" />-->
+        <link type="text/css" rel="stylesheet" href="styles/main.css" />
 		
     </head>
     <body>
-        <nav class="navbar navbar-default navbar-fixed-top main-navbar" role="navigation">
+        <nav data-ui-view="nav" class="navbar navbar-default navbar-fixed-top main-navbar" role="navigation">
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
               <div class="navbar-header">
@@ -61,7 +64,7 @@ and open the template in the editor.
         
         <!-- START CONTENT -->
         <div class="main-content-placement">
-            
+            <h1>hello world</h1>
         </div>
     </body>
 </html>
