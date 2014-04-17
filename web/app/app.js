@@ -6,12 +6,27 @@ var app = angular.module(config.app.name,['ui.router', 'ui.bootstrap'])
 .config(function($locationProvider, $stateProvider, $urlRouterProvider) {
     //$locationProvider.html5Mode(true);
     
-    $stateProvider.state('home', {
-        url:'',
+    $stateProvider.state('#', {
+        url: '',
         views: {
-            "left-nav":{templateUrl:'app/left-nav/nav.html'}
+            "left-nav": { templateUrl: 'app/left-nav/nav.html' }
         }
+    })
+    .state('profiel', {
+        url: '/profiel',
+        views: {
+            "left-nav": { templateUrl: 'app/left-nav/nav.html' },
+            "main-content": { templateUrl: 'app/profiel/profiel.html' }
+        }
+    })
+    .state('faq', {
+        url: '/faq',
+        views: {
+            "left-nav": { templateUrl: 'app/left-nav/nav.html' },
+            "main-content": { templateUrl: 'app/faq/faq.html' }
+    }
     });
+
 //    .state('login', {
 //        url:'/login',
 //        title: 'Login',
