@@ -9,7 +9,7 @@ var app = angular.module(config.app.name,['ui.router', 'ui.bootstrap'])
     $stateProvider.state('home', {
         url:'',
         views: {
-            //"nav":{templateUrl:'app/error/404.html'}
+            "left-nav":{templateUrl:'app/left-nav/nav.html'}
         }
     });
 //    .state('login', {
