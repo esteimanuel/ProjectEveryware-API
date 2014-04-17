@@ -7,18 +7,21 @@ var app = angular.module(config.app.name,['ui.router', 'ui.bootstrap'])
     //$locationProvider.html5Mode(true);
     
     $stateProvider.state('home', {
-        url:'',
+        url:'/',
         views: {
-            "left-nav":{templateUrl:'app/left-nav/nav.html'}
+            //"left-nav":{templateUrl:'app/left-nav/nav.html'},
+            "main":{templateUrl:'app/home/intro.html'}
         }
-    });
-//    .state('login', {
-//        url:'/login',
-//        title: 'Login',
-//        views: {
-//            "dialog":{templateUrl:'templates/login.html' /*, controller:'UserCtrl'*/}
-//        }
-//    }).state('register', {
+    }).state('wijk', {
+        url:'/wijk',
+        title: 'Wijk',
+        views: {
+            "left-nav":{templateUrl:'app/left-nav/wijk.html'},
+            "main":{templateUrl:'app/wijk/index.html'},
+            "right-nav": {templateUrl: 'app/right-nav/wijk.html'}
+        }
+    })
+//    .state('register', {
 //        url:'/register',
 //        title: 'Register',
 //        views: {
@@ -36,7 +39,7 @@ var app = angular.module(config.app.name,['ui.router', 'ui.bootstrap'])
 //        }
 //    });
     
-    $urlRouterProvider.otherwise("");
+    $urlRouterProvider.otherwise("/");
     
 })
 .run(function($rootScope, $state) {

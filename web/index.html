@@ -53,7 +53,7 @@ and open the template in the editor.
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-<!--                <a class="navbar-brand" data-ui-sref="main">ToDo</a>-->
+                <a class="navbar-brand" data-ui-sref="home">{Appname}</a>
                 
               </div>
               
@@ -64,7 +64,7 @@ and open the template in the editor.
                       <li><a data-ui-sref="home">FAQ</a></li>
                   </ul>
                   <ul class="nav navbar navbar-nav" style="margin-left:5%;">
-                      <li><a data-ui-sref="home">Mijn wijk</a></li>
+                      <li><a data-ui-sref="wijk">Mijn wijk</a></li>
                   </ul>
                   
                   <ul class="nav navbar-nav navbar-right">
@@ -95,7 +95,7 @@ and open the template in the editor.
               
             </div><!-- /.container-fluid -->
           </nav>
-        <div class="basedialog">
+<!--        <div class="basedialog">
             <div class="alert alert-info alert-dismissable" style="margin:0;">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <strong>Heads up!</strong> Manier om berichten aan de gebruiker te tonen
@@ -105,7 +105,7 @@ and open the template in the editor.
                     <li>De breadcrumbs kunnen eventueel weg als deze niet nodig zijn</li>
                 </ul>
             </div>
-        </div>
+        </div>-->
         <!-- START CONTENT -->
         <div class="main-content-placement" style="padding-top:15px;">
             
@@ -113,12 +113,11 @@ and open the template in the editor.
                 
             </aside>
             
-            <aside class="right-content well pull-right" style="width:20%;margin-top:100px;">
-                Hier kunnen bijv. de buddies en statussen van de actie komen te staan
+            <aside ui-view="right-nav" class="right-content pull-right" style="width:20%;margin-top:100px;">
+                <!-- Hier kunnen bijv. de buddies en statussen van de actie komen te staan -->
             </aside>
             
-            <div class="container" style="width:60%;display:inline-block;border:1px solid;">
-                <h2>Main content</h2>
+            <div ui-view="main" class="container" style="width:60%;">
 <!--                <ul class="nav nav-tabs nav-justified">
                     <li class="active"><a href="#">Item1</a></li>
                     <li><a href="#">Item2</a></li>
