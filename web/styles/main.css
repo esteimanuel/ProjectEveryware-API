@@ -17,6 +17,21 @@
 .nav li > p {
     padding-top: 15px;
 }
+
+#profile-form {
+    margin-top:25px;
+    width: 50%;
+}
+
+.form-control.std-marg-bot{
+    margin-bottom: 15px
+}
+
+
+  //  #profile-form #profile-voornaam, #profile-achternaam, #profile-postcode, #profile-nummer, #profile-email, #profile-wachtwoord  {
+   // margin-bottom: 15px;
+  //  }
+
 /* UTIL CLASSES */
 
 .dialogbackground {
