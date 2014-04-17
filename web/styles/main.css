@@ -14,7 +14,9 @@
     right: 0;
 }
 
-
+.nav li > p {
+    padding-top: 15px;
+}
 /* UTIL CLASSES */
 
 .dialogbackground {

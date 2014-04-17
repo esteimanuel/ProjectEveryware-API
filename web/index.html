@@ -1,117 +1,135 @@
-<!--
+﻿<!--
 To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html data-ng-app="glassy">
-    <head>
-        <title>Glassy</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!--Load Angular-->
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>-->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
-        
-        <!--Load Modules-->
-<!--        <script src="http://code.angularjs.org/1.1.5//angular-resource.min.js"></script>-->
-        <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
-        <script src="common/modules/ui-bootstrap.js"></script>
-			
-        <!--Load Boot-->
-        <script src="app/config.js"></script>
-        <script src="app/app.js"></script>
-        
-        <!--Load Controllers-->
-        
-        <!--Load Models-->
-        
-        <!--Load LayoutFiles-->
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
-        <!--<link type="text/css" rel="stylesheet" href="web/styles/main-css.php" />-->
-        <link type="text/css" rel="stylesheet" href="styles/main.css" />
-		
-    </head>
-    <body>
-        <nav data-ui-view="nav" class="navbar navbar-default navbar-fixed-top main-navbar" role="navigation">
-            <div class="container-fluid">
-              <!-- Brand and toggle get grouped for better mobile display -->
-              <div class="navbar-header">
+<head>
+    <title>Glassy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Load Angular-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+
+    <!--Load Modules-->
+    <!--        <script src="http://code.angularjs.org/1.1.5//angular-resource.min.js"></script>-->
+    <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
+    <script src="common/modules/ui-bootstrap.js"></script>
+
+    <!--Load Boot-->
+    <script src="app/config.js"></script>
+    <script src="app/app.js"></script>
+
+    <!--Load Controllers-->
+
+    <!--Load Models-->
+
+    <!--Load LayoutFiles-->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+    <!--<link type="text/css" rel="stylesheet" href="web/styles/main-css.php" />-->
+    <link type="text/css" rel="stylesheet" href="styles/main.css" />
+
+</head>
+<body>
+    <nav data-ui-view="nav" class="navbar navbar-default navbar-fixed-top main-navbar" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
-<!--                <a class="navbar-brand" data-ui-sref="main">ToDo</a>-->
-                
-              </div>
-              
-<!--              <ul class="nav navbar-nav navbar-center">
+                <a class="navbar-brand" data-ui-sref="main">Glassy | </a>
+
+            </div>
+
+            <!--              <ul class="nav navbar-nav navbar-center">
                     <li class="loader" ng-show="isLoading"><a><img src="css/loader.gif"/></a></li>
               </ul>-->
-              
-              <!-- Collect the nav links, forms, and other content for toggling -->
-              <div class="collapse navbar-collapse" id="navbar">
-                <ul class="nav navbar-nav navbar-right">
-                  <li><a data-ui-sref="home">Login</a></li>
-                  <li><a data-ui-sref="home">Register</a></li>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <p class="user">Welkom: {{ user.username }}</p>
+                    </li>
+                    <li>
+                       <form class="navbar-form navbar-left" role="search">
+                           <div class="form-group">
+                               <input type="text" class="form-control" placeholder="Search" />
+                           </div>
+                           <button type="submit" class="btn btn-group-lg">Submit</button>
+                       </form>
+                    </li>
                 </ul>
-              </div><!-- /.navbar-collapse -->
-              
-                
-              
-            </div><!-- /.container-fluid -->
-          </nav>
-        <div class="basedialog">
-            <div class="alert alert-info alert-dismissable" style="margin:0;">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong>Heads up!</strong> Manier om berichten aan de gebruiker te tonen
+
+
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a data-ui-sref="home">Login</a></li>
+                    <li><a data-ui-sref="home">Register</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+
+
+
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <div class="basedialog">
+        <div class="alert alert-info alert-dismissable" style="margin: 0;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Heads up!</strong> Manier om berichten aan de gebruiker te tonen
                 
                 <ul>
                     <li>De tab kan eventueel weg als deze niet nodig is</li>
                     <li>De breadcrumbs kunnen eventueel weg als deze niet nodig zijn</li>
                 </ul>
-            </div>
         </div>
-        <!-- START CONTENT -->
-        <div class="main-content-placement" style="padding-top:15px;">
-            
-            <aside class="left-nav pull-left" style="width:20%;padding:0 15px;">
-                
-                <ol class="breadcrumb" style="display:block;">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Library</a></li>
-                    <li class="active">Data</li>
-                </ol>
-                
-                <div class="list-group">
-                    <a href="#" class="list-group-item">Cras justo odio</a>
-                    <a href="#" class="list-group-item active">Dapibus ac facilisis in</a>
-                    <a href="#" class="list-group-item">Morbi leo risus</a>
-                    <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item">Vestibulum at eros</a>
-                </div>
-                
-<!--                <ul class="nav nav-pills nav-stacked">
+    </div>
+    <!-- START CONTENT -->
+    <div class="main-content-placement" style="padding-top: 15px;">
+
+        <aside class="left-nav pull-left" style="width: 20%; padding: 0 15px;">
+
+            <ol class="breadcrumb" style="display: block;">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Library</a></li>
+                <li class="active">Data</li>
+            </ol>
+
+            <div class="list-group">
+                <a href="#" class="list-group-item">Cras justo odio</a>
+                <a href="#" class="list-group-item active">Dapibus ac facilisis in</a>
+                <a href="#" class="list-group-item">Morbi leo risus</a>
+                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                <a href="#" class="list-group-item">Vestibulum at eros</a>
+            </div>
+
+            <!--                <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="#">Home</a></li>
                     <li><a href="#">Profile</a></li>
                     <li><a href="#">Messages</a></li>
                 </ul>-->
-                
-            </aside>
-            
-            <aside class="right-content well pull-right" style="width:20%;margin-top:100px;">
-                Hier kunnen bijv. de buddies en statussen van de actie komen te staan
-            </aside>
-            
-            <div class="container" style="width:60%;display:inline-block;">
-                <ul class="nav nav-tabs nav-justified">
-                    <li class="active"><a href="#">Item1</a></li>
-                    <li><a href="#">Item2</a></li>
-                    <li><a href="#">Item3</a></li>
-                </ul>
-            </div>
-            
+
+        </aside>
+
+        <aside class="right-content well pull-right" style="width: 20%; margin-top: 100px;">
+            Hier kunnen bijv. de buddies en statussen van de actie komen te staan
+        </aside>
+
+        <div class="container" style="width: 60%; display: inline-block;">
+            <ul class="nav nav-tabs nav-justified">
+                <li class="active"><a href="#">Item1</a></li>
+                <li><a href="#">Item2</a></li>
+                <li><a href="#">Item3</a></li>
+            </ul>
         </div>
-    </body>
+
+    </div>
+</body>
 </html>
 
