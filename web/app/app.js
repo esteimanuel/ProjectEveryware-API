@@ -6,36 +6,44 @@ var app = angular.module(config.app.name, ['ui.router', 'ui.bootstrap'])
 .config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
     //$locationProvider.html5Mode(true);
 
-    $stateProvider.state('#', {
-        url: '',
+    $stateProvider.state('home', {
+        url:'/',
         views: {
             //"left-nav":{templateUrl:'app/left-nav/nav.html'},
             "main":{templateUrl:'app/home/intro.html'}
+        }
+    }).state('wijk', {
+        url:'/wijk',
+        title: 'Wijk',
+        views: {
+            "left-nav":{templateUrl:'app/left-nav/wijk.html'},
+            "main":{templateUrl:'app/wijk/index.html'},
+            "right-nav": {templateUrl: 'app/wijk/mijn-wijk.progress.html'}
         }
     })
     .state('profiel', {
         url: '/profiel',
         views: {
-            "left-nav": { templateUrl: 'app/left-nav/nav.html' },
-            "main-content": { templateUrl: 'app/profiel/profiel.html' }
+            //"left-nav": { templateUrl: 'app/left-nav/nav.html' },
+            "main": { templateUrl: 'app/profiel/profiel.html' }
         }
     })
     .state('faq', {
         url: '/faq',
         views: {
             "left-nav": { templateUrl: 'app/left-nav/nav.html' },
-            "main-content": { templateUrl: 'app/faq/faq.html' }
+            "main": { templateUrl: 'app/faq/faq.html' }
         }
     })
     .state('mijnWijk', {
         url: '/mijnWijk',
         views: {
             "left-nav": { templateUrl: 'app/left-nav/nav.html' },
-            "main-content": { templateUrl: 'app/wijk-actie/mijn-wijk.html' },
+            "main": { templateUrl: 'app/wijk/mijn-wijk.html' }
         }
     })
     .state('mijnWijk.progress', {
-        "progress": { templateUrl: 'app/wijk-actie/mijn-wijk.progress.html' }
+        "progress": { templateUrl: 'app/wijk/mijn-wijk.progress.html' }
     });
 
     //    .state('login', {
@@ -62,7 +70,7 @@ var app = angular.module(config.app.name, ['ui.router', 'ui.bootstrap'])
     //        }
     //    });
 
-    $urlRouterProvider.otherwise("");
+    $urlRouterProvider.otherwise("/");
 
 })
 .run(function ($rootScope, $state) {
