@@ -2,9 +2,11 @@
  * Main application init
  */
 console.log("app boot script");
-var app = angular.module(config.app.name, ['ui.router', 'ui.bootstrap'])
-.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
+var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootstrap'])
+.config(function ($controllerProvider, $stateProvider, $urlRouterProvider) {
     //$locationProvider.html5Mode(true);
+
+    app.registerCtrl = $controllerProvider.register;
 
     $stateProvider.state('home', {
         url:'/',
@@ -13,14 +15,21 @@ var app = angular.module(config.app.name, ['ui.router', 'ui.bootstrap'])
             "main":{templateUrl:'app/home/intro.html'}
         }
     }).state('wijk', {
-        url:'/wijk',
+        url:'/wijk/:wid',
         title: 'Wijk',
         views: {
             "left-nav":{templateUrl:'app/left-nav/wijk.html'},
             "main":{templateUrl:'app/wijk/index.html'},
-            "right-nav": {templateUrl: 'app/wijk/mijn-wijk.progress.html'}
+            "right-nav": {templateUrl: 'app/right-nav/wijk.html'}
         }
     })
+    .state('register', {
+        url: '/register',
+        views: {
+            "left-nav":{templateUrl: 'app/left-nav/register.html'},
+            "main": {templateUrl: 'app/user/register.html'}
+        }
+    }) 
     .state('profiel', {
         url: '/profiel',
         views: {
@@ -31,7 +40,7 @@ var app = angular.module(config.app.name, ['ui.router', 'ui.bootstrap'])
     .state('faq', {
         url: '/faq',
         views: {
-            "left-nav": { templateUrl: 'app/left-nav/nav.html' },
+            //"left-nav": { templateUrl: 'app/left-nav/nav.html' },
             "main": { templateUrl: 'app/faq/faq.html' }
         }
     })
@@ -70,14 +79,18 @@ var app = angular.module(config.app.name, ['ui.router', 'ui.bootstrap'])
     //        }
     //    });
 
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise('/');
 
 })
 .run(function ($rootScope, $state) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
         console.log("State change");
         console.log(toState);
+        console.log(toParams);
         console.log(fromState);
+        
+        
+        
     });
 });
 //.directive("ddDraggable", Draggable)

@@ -4,13 +4,14 @@
         <li><a href="#">Library</a></li>
         <li class="active">Data</li>
     </ol>
+<!--http://jsfiddle.net/pkozlowski_opensource/4htfS/4/-->
 
     <div class="list-group">
-        <a href="#" class="list-group-item">Kaart</a>
-        <a href="#" class="list-group-item active">Video</a>
-        <a href="#" class="list-group-item">Deelnemers</a>
-        <a href="#" class="list-group-item">Iets</a>
-        <a href="#" class="list-group-item">Nog iets</a>
+        <a data-ng-click="scrollTo('map')" class="list-group-item">Kaart</a>
+        <a data-ng-click="scrollTo('video')" class="list-group-item active">Video</a>
+        <a data-ng-click="scrollTo('fake')" class="list-group-item">Deelnemers</a>
+        <a data-ng-click="scrollTo('fake')" class="list-group-item">Iets</a>
+        <a data-ng-click="scrollTo('fake')" class="list-group-item">Nog iets</a>
     </div>
 
 <!--                <ul class="nav nav-pills nav-stacked">

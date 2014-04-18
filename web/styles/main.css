@@ -6,33 +6,8 @@
         Purpose of the stylesheet follows.
 */
 
-.main-content-placement {
-    position:absolute;
-    top: 50px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.nav li > p {
-    padding-top: 15px;
-}
-
-#profile-form {
-    margin-top:25px;
-    width: 50%;
-}
-
-.form-control.std-marg-bot{
-    margin-bottom: 15px
-}
-
-
-/*  //  #profile-form #profile-voornaam, #profile-achternaam, #profile-postcode, #profile-nummer, #profile-email, #profile-wachtwoord  {
-   // margin-bottom: 15px;
-  //  }*/
-
 /* UTIL CLASSES */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .dialogbackground {
     position: fixed;
@@ -96,4 +71,60 @@
     background-color: #d9534f;
 }
 
+.hover-menu {
+    position:fixed;
+    top:60px;
+}
+
+/* END UTILS CLASSES */
+
+.main-content-placement {
+    position:absolute;
+    top: 54px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+}
+
+.nav li > p {
+    padding-top: 15px;
+}
+
+#profile-form {
+    margin-top:25px;
+    width: 50%;
+}
+
+.form-control.std-marg-bot{
+    margin-bottom: 15px
+}
+
+
+/*  //  #profile-form #profile-voornaam, #profile-achternaam, #profile-postcode, #profile-nummer, #profile-email, #profile-wachtwoord  {
+   // margin-bottom: 15px;
+  //  }*/
+
+/* USER CSS */
+
+.upper-right-dialog {
+    position: fixed;
+    top: 60px;
+    right: 4%;
+}
+
+.login-dialog {
+    padding: 5px;
+}
+
+/* END USER CSS */
+
+/* INTRO CSS */
+
+.video-frame {
+    width: 100%;
+    height: 450px;
+}
+
+/* END INTRO CSS */
 

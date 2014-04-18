@@ -3,7 +3,7 @@ To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html data-ng-app="glassy">
+<html data-ng-app="glassy" data-ng-controller="MainCtrl">
     <head>
         <title>Glassy</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,12 +15,15 @@ and open the template in the editor.
 <!--        <script src="http://code.angularjs.org/1.1.5//angular-resource.min.js"></script>-->
         <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
         <script src="common/modules/ui-bootstrap.js"></script>
+        <!--<script src="https://raw.githubusercontent.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-tpls-0.10.0.min.js"></script>-->
 			
         <!--Load Boot-->
         <script src="app/config.js"></script>
         <script src="app/app.js"></script>
         
         <!--Load Controllers-->
+        <script src="app/MainController.js"></script>
+        <script src="app/user/UserController.js"></script>
         
         <!--Load Models-->
         
@@ -30,7 +33,7 @@ and open the template in the editor.
         <link type="text/css" rel="stylesheet" href="styles/main.css" />
 		
     </head>
-    <body>
+    <body data-ng-controller="UserCtrl">
         <!-- 
             Nav links:
             - Top 10
@@ -43,7 +46,7 @@ and open the template in the editor.
             - gebruikersnaam, dropdown: profiel, logout
         -->
         
-        <nav data-ui-view="nav" class="navbar navbar-default navbar-fixed-top main-navbar" role="navigation">
+        <nav data-ui-view="nav" class="navbar navbar-default main-navbar" role="navigation">
             <div class="container">
               <!-- Brand and toggle get grouped for better mobile display -->
               <div class="navbar-header">
@@ -53,7 +56,7 @@ and open the template in the editor.
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" data-ui-sref="home">{Appname}</a>
+                <a class="navbar-brand" data-ui-sref="home">{{app.name}}</a>
                 
               </div>
               
@@ -64,18 +67,19 @@ and open the template in the editor.
                       <li><a data-ui-sref="faq">FAQ</a></li>
                   </ul>
                   <ul class="nav navbar navbar-nav" style="margin-left:5%;">
-                      <li><a data-ui-sref="wijk">Mijn wijk</a></li>
+                      <li data-ng-show="user.isLogged"><a data-ui-sref="wijk">Mijn wijk</a></li>
                   </ul>
                   
                   <ul class="nav navbar-nav navbar-right">
-                      <li><a data-ui-sref="home">Login</a></li>
-                      <li><a data-ui-sref="home">Register</a></li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{username} <b class="caret"></b></a>
+                      <li data-ng-show="!user.isLogged"><a data-ng-click="toggleLogin()">Login</a></li>
+                      <li data-ng-show="!user.isLogged"><a data-ui-sref="register">Register</a></li>
+                      <li data-ng-show="user.isAdmin && user.isLogged"><a href="/beheer">Beheer</a></li>
+                      <li class="dropdown" data-ng-show="user.isLogged">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> {{user.name}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                           <li><a data-ui-sref="profiel">Profiel</a></li>
                           <li class="divider"></li>
-                          <li><a href="#">Logout</a></li>
+                          <li><a data-ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
                         </ul>
                       </li>
                   </ul>
@@ -84,7 +88,7 @@ and open the template in the editor.
                       <div class="form-group input-group">
                           <input type="text" class="form-control" placeholder="Zoek een wijk" style="width:auto;">
                           <span class="input-group-btn" style="display:inline-block;">
-                              <button class="btn btn-primary" type="button">Search</button>
+                              <button class="btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i></button>
                           </span>
                       </div>
                   </form>
@@ -95,6 +99,7 @@ and open the template in the editor.
               
             </div><!-- /.container-fluid -->
           </nav>
+        <div data-ng-include="'app/user/login.html'" data-ng-show="views.showLogin"></div>
 <!--        <div class="basedialog">
             <div class="alert alert-info alert-dismissable" style="margin:0;">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -107,13 +112,13 @@ and open the template in the editor.
             </div>
         </div>-->
         <!-- START CONTENT -->
-        <div class="main-content-placement" style="padding-top:15px;">
+        <div class="main-content-placement">
             
             <aside ui-view="left-nav" class="left-nav pull-left" style="width:20%;padding:0 15px;">
                 
             </aside>
             
-            <aside ui-view="right-nav" class="right-content pull-right" style="width:20%;margin-top:100px;">
+            <aside ui-view="right-nav" class="right-content pull-right" style="width:20%;padding:0 15px;">
                 <!-- Hier kunnen bijv. de buddies en statussen van de actie komen te staan -->
             </aside>
             

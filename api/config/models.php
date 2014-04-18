@@ -29,9 +29,10 @@ return array(
 			'achternaam',
 			'telefoonnummer',
 			'geboorte_datum',
+                        'shared_info',
 			'actie_id',
 			'postcode_id',
-			'shared_info',
+                        'pakket_id',
                     ),
                     relations => array(
                         array('type' => belongsTo, 'f_key' => 'actie_id', 'f_table' => 'actie', 'key' => 'id'),
@@ -39,7 +40,7 @@ return array(
                         array('type' => belongsTo, 'f_table' => 'providerpakket'),
                         array('type' => hasOne, 'f_table' => 'interesse'),
                         array('type' => hasOne, 'f_table' => 'buddy'),
-                        array('type' => hasOne, 'f_table' => 'account'),
+                        array('type' => hasManyToMany, 'k_table' => 'accountgebruikerlink', 'f_table' => 'account'),
                         array('type' => hasMany, 'f_table' => 'media'),
                     )
                 ),
@@ -48,7 +49,7 @@ return array(
                         't_name' => 'actie'
                     ),
                     props => array(
-			'id',
+			'actie_id',
 			'borg',
 			'borg_totaal',
 			'initiatiefnemer_id',
@@ -61,13 +62,17 @@ return array(
 			'wijk_id' => array(
 				'validation' => array('presenceOf')
 			),
+                        'status_id' => array(
+                            'validation' => array('presenceOf')
+                        ),
                         'naam',
                     ),
                     relations => array(
                         array('type' => hasMany, 'f_table' => 'gebruiker'),
                         array('type' => hasMany, 'f_table' => 'media'),
                         array('type' => belongsTo, 'f_table' => 'wijk'),
-                        array('type' => hasOne, 'f_table' => 'status'),
+                        array('type' => belongsTo, 'f_table' => 'status'),
+                        //array('type' => hasOne, 'f_table' => 'status'),
                         array('type' => hasManyToMany, 'key' => 'id', 'k_table' => 'actieproviderlink', 'k_key1' => 'actie_id', 'k_key2' => 'provider_id', 'f_table' => 'provider', 'f_key' => 'id'),
                     )
                 ),  
@@ -76,9 +81,9 @@ return array(
                         't_name' => 'wijk'
                     ),
                     props => array(
-			'id',
+			'wijk_id',
 			'target',
-			'actie_duur',
+			'actie_duur_dagen',
 			'beschikbaar' => array(
 				'validation' => array('presenceOf'),
 				'default' => false,
@@ -96,12 +101,15 @@ return array(
                         't_name' => 'postcode'
                     ),
                     props => array(
-			'id',
+			'postcode_id',
 			'plaats',
 			'gemeente',
-			'postcode' => array(
-				'validation' => array('presenceOf', 'regex' => array('pattern' => '^[1-9][0-9]{3}\s?[a-zA-Z]{2}$')),
-			), 
+			'wijkcode' => array(
+				'validation' => array('presenceOf', 'regex' => array('pattern' => '^[1-9][0-9]{3}\s')),
+			),
+                        'lettercombinatie' => array(
+                            'validation' => array('regex' => array('pattern' => '?[a-zA-Z]{2}$'))
+                        ),
 			'latitude' => array(
 				'validation' => array('presenceOf')
 			),
@@ -115,12 +123,24 @@ return array(
                         array('type' => belongsTo, 'f_table' => 'wijk'),
                     )
                 ),
+                'status' => array(
+                    settings => array(
+                        't_name' => 'status'
+                    ),
+                    props => array(
+                        'status_id',
+                        'beschrijving',
+                    ),
+                    relations => array(
+                        array('type' => hasMany, 'f_table' => 'actie')
+                    ),
+                ),
 		'media' => array(
                     settings => array(
                         't_name' => 'media'
                     ),
                     props => array(
-			'id',
+			'media_id',
 			'reported_count' => array(
 				'default' => 0,
 			),
@@ -167,12 +187,12 @@ return array(
 			'datum' => array(
 				'validation' => array('presenceOf')
 			),
-			'gebruiker_id' => array(
+			'email' => array(
 				'validation' => array('presenceOf')
 			),
                     ),
                     relations => array(
-                        array('type' => hasOne, 'f_table' => 'gebruiker'),
+                        //array('type' => hasOne, 'f_table' => 'gebruiker'),
                     )
 		),
 		'account' => array(
@@ -180,10 +200,10 @@ return array(
                         't_name' => 'account'
                     ),
                     props => array(
+                        'account_id',
 			'email' => array(
 				'validation' => array('email', 'presenceOf')
 			),
-			'gebruiker_id',
 			'wachtwoord' => array(
 				'validation' => array('presenceOf')
 			),
@@ -199,7 +219,7 @@ return array(
                         'token',
                     ),
                     relations => array(
-                        array('type' => hasOne, 'f_table' => 'gebruiker'),
+                        array('type' => hasManyToMany, 'k_table' => 'accountgebruikerlink', 'f_table' => 'gebruiker'),
                         array('type' => belongsTo, 'f_table' => 'accountlevel'),
                     )
 		),
@@ -240,7 +260,7 @@ return array(
                         't_name' => 'provider_pakket'
                     ),
                     props => array(
-			'id',
+			'provider_pakket_id',
 			'prijs_maand',
 			'pakket_beschrijving',
 			'provider_id' => array(

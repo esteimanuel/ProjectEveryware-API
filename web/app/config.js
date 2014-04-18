@@ -5,6 +5,6 @@
 
 var config = {
     app: {
-        name: 'glassy'
+        name: 'Glassy'
     }
 };
