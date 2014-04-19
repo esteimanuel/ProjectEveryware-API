@@ -26,7 +26,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     .state('register', {
         url: '/register',
         views: {
-            "left-nav":{templateUrl: 'app/left-nav/register.html'},
+            //"left-nav":{templateUrl: 'app/left-nav/register.html'},
             "main": {templateUrl: 'app/user/register.html'}
         }
     }) 

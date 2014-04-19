@@ -1,16 +1,17 @@
-<div class="basedialog login-dialog">
+<div class="dialogbackground" style="background-color: rgba(33, 84, 162, 0.4);">
+    <div class="basedialog login-dialog">
         <form class="form-horizontal" data-ng-submit="login()">
             <fieldset>
-                <legend>Login</legend>
+                <legend>Login <span class="pull-right">{{app.name}}</span></legend>
                 <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label">Email</label>
-                    <div class="col-sm-10">
+                    <label for="email" class="col-sm-3 control-label">Email</label>
+                    <div class="col-sm-9">
                         <input type="email" class="form-control" id="email" placeholder="Email" data-ng-model="email" required autofocus>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label">Password</label>
-                    <div class="col-sm-10">
+                    <label for="password" class="col-sm-3 control-label">Password</label>
+                    <div class="col-sm-9">
                         <input type="password" class="form-control" id="password" placeholder="Password" data-ng-model="password" required>
                     </div>
                 </div>
@@ -27,3 +28,4 @@
             </fieldset>			
         </form>
     </div>
+</div>
