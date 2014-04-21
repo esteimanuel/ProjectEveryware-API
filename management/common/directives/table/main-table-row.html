@@ -1,0 +1,22 @@
+<tr>
+    <td ng-repeat="cell in cells track by $index" >
+        <span class="cell-text" ng-show="!editMode">{{cell.value}}</span>
+        <span ng-if="allowEdit" class="edit-mode" ng-show="editMode">
+            <input type="text" class="form-control" ng-model="cell.tmpValue"/>
+        </span>
+    </td>
+    <td ng-if="allowEdit || allowDelete">
+        <span ng-if="allowEdit">
+            <button ng-click="updateValues()" class="btn" ng-class="{'btn-success': editMode, 'btn-primary': !editMode}">
+                <i ng-if="!editMode" class="glyphicon glyphicon-pencil"></i> 
+                <i ng-if="editMode" class="glyphicon glyphicon-ok"></i> 
+            </button>
+            <button ng-click="cancelValues()" class="btn btn-danger" ng-show="editMode">
+                <i class="glyphicon glyphicon-remove"></i> 
+            </button>
+        </span>
+        <button ng-if="allowDelete" ng-click="deleteRow()" class="btn btn-default" ng-show="!editMode">
+            <i class="glyphicon glyphicon-trash"></i> 
+        </button>
+    </td>
+</tr>

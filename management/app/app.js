@@ -7,7 +7,7 @@
  * Main application init
  */
 console.log("app boot script for management");
-var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootstrap'])
+var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootstrap', 'gl.table'])
 .config(function ($controllerProvider, $stateProvider, $urlRouterProvider) {
     //$locationProvider.html5Mode(true);
 
@@ -24,6 +24,11 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         views: {
             'main':{templateUrl:'app/user/login.html'}
         }
+    }).state('user', {
+        url: '/user',
+        views: {
+            'main':{templateUrl: 'app/user/index.html'}
+        }
     });
 
     $urlRouterProvider.otherwise('/login');
@@ -36,17 +41,17 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         console.log(toParams);
         console.log(fromState);
         
-        if(User.data.isLogged) {
-            if(toState.name === 'login') {
-                event.preventDefault();
-                $state.transitionTo('home');
-            }
-        } else {
-            if(toState.name !== 'login') {
-                event.preventDefault();
-                $state.transitionTo('login');
-            }
-        }
+//        if(User.data.isLogged) {
+//            if(toState.name === 'login') {
+//                event.preventDefault();
+//                $state.transitionTo('home');
+//            }
+//        } else {
+//            if(toState.name !== 'login') {
+//                event.preventDefault();
+//                $state.transitionTo('login');
+//            }
+//        }
         
     });
 });

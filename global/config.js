@@ -6,5 +6,8 @@
 var config = {
     app: {
         name: 'Glassy'
+    },
+    directive: {
+        path: 'common/directives/'
     }
 };

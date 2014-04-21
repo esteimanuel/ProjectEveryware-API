@@ -5,4 +5,8 @@
 
 app.controller('MainCtrl', function($scope) {
     $scope.app = config.app;
+    
+    $scope.indexList = function(indexes) {
+        return new Array(indexes);
+    }
 });

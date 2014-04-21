@@ -5,7 +5,7 @@
 console.log("loaded user controller");
 app.controller('UserCtrl', function($scope, $stateParams, $state, $location) {
     $scope.views = {
-        showLogin: !!($location.search().login)
+        showLogin: ($location.search().login == 1)
     };
     $scope.user = {
         isLogged: !!(localStorage.token),
