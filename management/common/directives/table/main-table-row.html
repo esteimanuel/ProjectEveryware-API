@@ -5,9 +5,9 @@
             <input type="text" class="form-control" ng-model="cell.tmpValue"/>
         </span>
     </td>
-    <td ng-if="allowEdit || allowDelete">
+    <td ng-if="allowEdit || allowDelete" class="button-column">
         <span ng-if="allowEdit">
-            <button ng-click="updateValues()" class="btn" ng-class="{'btn-success': editMode, 'btn-primary': !editMode}">
+            <button ng-click="updateValues()" class="btn" ng-class="{'btn-success': editMode, 'btn-default': !editMode}">
                 <i ng-if="!editMode" class="glyphicon glyphicon-pencil"></i> 
                 <i ng-if="editMode" class="glyphicon glyphicon-ok"></i> 
             </button>

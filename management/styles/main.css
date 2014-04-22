@@ -20,3 +20,12 @@
     left:35%
 }
 
+.sortable-header {
+    cursor: pointer;
+}
+
+.button-column {
+    width:10%;
+    border:none !important;
+}
+
