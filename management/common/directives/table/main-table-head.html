@@ -2,7 +2,7 @@
    <tr>
        <th ng-if="!allowSort" ng-repeat="header in headers">{{header.name}}</th>
        <th ng-if="allowSort" ng-repeat="header in headers" ng-click="headerClick(header.id)" class="sortable-header">{{header.name}} 
-           <i class="glyphicon pull-right" ng-class="{'glyphicon-sort': header.sortOrder == null, 'glyphicon-sort-by-alphabet': header.sortOrder == 'ASC', 'glyphicon-sort-by-alphabet-alt': header.sortOrder == 'DESC'}"></i> 
+           <i class="glyphicon pull-right" style="color:#BDBDBD;" ng-class="{'glyphicon-chevron-right': header.sortOrder == null, 'glyphicon-chevron-down': header.sortOrder == 'ASC', 'glyphicon-chevron-up': header.sortOrder == 'DESC'}"></i> 
        </th>
    </tr> 
 </thead>

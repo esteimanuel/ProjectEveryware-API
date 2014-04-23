@@ -50,6 +50,12 @@ angular.module('gl.table', [])
                     _this.observers[i].updateData();
                 }
             }
+            
+            this.notifyRowRemoved = function(removedRowIndex) {
+                for(var i = 0; i < _this.observers.length; i++) {
+                    _this.observers[i].rowRemoved(removedRowIndex);
+                }
+            }
 //            $scope.tableClass = "table";
 //            $scope.headers = ["header1", "header2", "header3"];
 //            
@@ -118,6 +124,8 @@ angular.module('gl.table', [])
             $scope.allowDelete = true;
             $scope.editMode = false;
             
+            var _rowNr = attributes.row;
+            
             tableCtrl.addObserver($scope);
             
             $scope.sortCells = function() {
@@ -133,12 +141,12 @@ angular.module('gl.table', [])
                     console.log(i + ", " + key + ", " + newOrder[i]);
                 }
                 $scope.cells = newOrder;
-                tableCtrl.$scope.rows[attributes.row] = $scope.cells;
+                tableCtrl.$scope.rows[_rowNr] = $scope.cells;
             };
             
             $scope.cellOrder = tableCtrl.$scope.cellOrder;
-            if(parseInt(attributes.row) >= 0 && tableCtrl.$scope.rows) {
-                var rowData = tableCtrl.$scope.rows[attributes.row];
+            if(parseInt(_rowNr) >= 0 && tableCtrl.$scope.rows) {
+                var rowData = tableCtrl.$scope.rows[_rowNr];
                 if(rowData) {
                     $scope.cells = rowData;
                     $scope.sortCells();
@@ -170,12 +178,28 @@ angular.module('gl.table', [])
             }
             
             $scope.deleteRow = function() {
+                if($scope.removeRow)
+                    $scope.removeRow();
                 
+                tableCtrl.$scope.rows.splice(_rowNr, 1);
+                // element.parent().find(attr[row>_rowNr]).scope.rowNr - 1
+                tableCtrl.notifyRowRemoved(_rowNr);
+                element.remove();
+//                console.log($scope.cells);
+//                console.log(tableCtrl.$scope.rows);
+            }
+            
+            $scope.rowRemoved = function(removedRow) {
+                if(_rowNr > removedRow) {
+                    var lowerCount = 1;
+                    _rowNr = _rowNr - lowerCount;
+                    attributes.row = _rowNr - lowerCount;
+                }
             }
             
             // observer method
             $scope.updateData = function() {
-                $scope.cells = tableCtrl.$scope.rows[attributes.row];
+                $scope.cells = tableCtrl.$scope.rows[_rowNr];
             }
         },
         templateUrl: config.directive.path + 'table/main-table-row.html'

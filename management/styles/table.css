@@ -1,0 +1,16 @@
+/* 
+    Document   : table
+    Created on : 23-apr-2014, 10:02:47
+    Author     : Remi Sloot
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.gl-table-row {
+    transition: all 0.3s;
+}
+
+.remove {
+    opacity: 0;
+}
+
