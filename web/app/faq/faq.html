@@ -1,21 +1,39 @@
 <div class="faq">
     <h1>Frequently Asked Questions</h1>
 
-    <h3>Wat is glasvezel?</h3>
-    <p>super cool!</p>
+    <accordion close-others="oneAtATime = true">
 
-    <h3>Is glasvezel echt heel snel?</h3>
-    <p>JA!</p>
+    <accordion-group is-open="q1">
+        <accordion-heading>
+            Question 1 
+            <i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': q1, 'glyphicon-chevron-right': !q1}"></i>
+        </accordion-heading>
+        Answer 1
+    </accordion-group>
 
-    <h3>vraag</h3>
-    <p>antwoord 1</p>
 
-    <h3>vraag</h3>
-    <p>antwoord 1</p>
+    <accordion-group is-open="q2">
+        <accordion-heading>
+           Question 2
+            <i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': q2, 'glyphicon-chevron-right': !q2}"></i>
+        </accordion-heading>
+        Answer 2
+    </accordion-group>
 
-    <h3>vraag</h3>
-    <p>antwoord 1</p>
+    <accordion-group is-open="q3">
+        <accordion-heading>
+           Question 3
+           <i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': q3, 'glyphicon-chevron-right': !q3}"></i>
+        </accordion-heading>
+       Answer 3
+    </accordion-group>
 
-    <h3>vraag</h3>
-    <p>antwoord 1</p>
+     <accordion-group is-open="q4">
+        <accordion-heading>
+           Question 4
+           <i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': q4, 'glyphicon-chevron-right': !q4}"></i>
+        </accordion-heading>
+        Answer 4
+    </accordion-group>
+  </accordion>
 </div>

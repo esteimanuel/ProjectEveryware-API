@@ -1,15 +1,50 @@
-<form role="form">
+<form class="form-horizontal">
 
-    <img src="http://www.uceestation.nl/images/dummy_profiel.jpg?isleeg" />
-
-    <div class="form-group" id="profile-form">
-        <input type="text" class="form-control std-marg-bot" id="profile-voornaam" placeholder="Voornaam">
-        <input type="text" class="form-control std-marg-bot" id="profile-achternaam" placeholder="Achternaam">
-        <input type="text" class="form-control std-marg-bot" id="profile-postcode" placeholder="Postcode">
-        <input type="text" class="form-control std-marg-bot" id="profile-nummer" placeholder="Nummer">
-        <input type="text" class="form-control std-marg-bot" id="profile-email" placeholder="E-mailadres">
-        <input type="password" class="form-control std-marg-bot" id="profile-wachtwoord" placeholder="Wachtwoord">
-
-        <button type="submit" class="btn btn-primary">Wijzig  </button>
+    <div style="margin: 15px;">
+        <img src="http://www.uceestation.nl/images/dummy_profiel.jpg?isleeg" class="img-circle img-responsive" style="display: block; margin: auto; box-shadow: 2px 2px 10px">
     </div>
+
+    <div class="col-sm-offset-2">
+        <div class="form-group">
+            <label for="profile-name" class="col-sm-2 control-label">Naam: </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="profile-name" placeholder="Voornaam" data-ng-model="name" />
+            </div>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="profile-prefix" placeholder="Tussenvoegsel" data-ng-model="name-prefix" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="profile-surname" class="col-sm-2 control-label">Achternaam: </label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="profile-surname" placeholder="Achternaam" data-ng-model="name-surname" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="postalcode" class="col-sm-2 control-label">Postcode: </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="postalcode" placeholder="1234" data-ng-model="postalcode">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="postalcode-aa" placeholder="AA" data-ng-model="postalcode-AA">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">E-mail: </label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="email" placeholder="Email" data-ng-model="email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="wachtwoord" class="col-sm-2 control-label">Wachtwoord: </label>
+            <div class="col-sm-6">
+                <input type="password" class="form-control" id="wachtwoord" placeholder="Wachtwoord" data-ng-model="wachtwoord">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary pull-right">Wijzig  </button>
+        </div>
 </form>
