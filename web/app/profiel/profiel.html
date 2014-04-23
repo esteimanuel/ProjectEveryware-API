@@ -1,45 +1,50 @@
-<form role="form">
-    <img src="http://www.uceestation.nl/images/dummy_profiel.jpg?isleeg" style="margin: 0 auto; position: relative;" />
+<form class="form-horizontal">
 
-    <div class="form-group">
-        <label for="profile-name" class="col-sm-2 control-label">Naam: </label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" id="profile-name" placeholder="Voornaam" data-ng-model="name" />
-        </div>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="profile-prefix" placeholder="Tussenvoegsel" data-ng-model="name-prefix" />
-        </div>
+    <div style="margin: 15px;">
+        <img src="http://www.uceestation.nl/images/dummy_profiel.jpg?isleeg" alt="Responsive image" class="img-circle" style="display: block; margin: auto; box-shadow: 2px 2px 10px">
     </div>
 
-    <div class="form-group">
-        <label for="profile-surname" class="col-sm-2 control-label">Achternaam: </label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" id="profile-surname" placeholder="Achternaam" data-ng-model="name-surname" />
+    <div class="col-sm-offset-2">
+        <div class="form-group">
+            <label for="profile-name" class="col-sm-2 control-label">Naam: </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="profile-name" placeholder="Voornaam" data-ng-model="name" />
+            </div>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="profile-prefix" placeholder="Tussenvoegsel" data-ng-model="name-prefix" />
+            </div>
         </div>
-    </div>
-    <input type="text" class="form-control std-marg-bot" id="profile-nummer" placeholder="Nummer">
 
+        <div class="form-group">
+            <label for="profile-surname" class="col-sm-2 control-label">Achternaam: </label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="profile-surname" placeholder="Achternaam" data-ng-model="name-surname" />
+            </div>
+        </div>
 
-    <div class="form-group">
-        <label for="postalcode" class="col-sm-2 control-label">Postcode: </label>
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="postalcode" placeholder="1234" data-ng-model="postalcode">
+        <div class="form-group">
+            <label for="postalcode" class="col-sm-2 control-label">Postcode: </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="postalcode" placeholder="1234" data-ng-model="postalcode">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="postalcode-aa" placeholder="AA" data-ng-model="postalcode-AA">
+            </div>
         </div>
-        <div class="col-sm-1">
-            <input type="text" class="form-control" id="postalcode-aa" placeholder="AA" data-ng-model="postalcode-AA">
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="email" class="col-sm-2 control-label">Email: </label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control" id="email" placeholder="Email" data-ng-model="email">
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">E-mail: </label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="email" placeholder="Email" data-ng-model="email">
+            </div>
         </div>
-        <label for="wachtwoord" class="col-sm-2 control-label">Wachtwoord: </label>
-        <div class="col-sm-5">
-            <input type="password" class="form-control" id="Text2" placeholder="AA" data-ng-model="wachtwoord">
+        <div class="form-group">
+            <label for="wachtwoord" class="col-sm-2 control-label">Wachtwoord: </label>
+            <div class="col-sm-6">
+                <input type="password" class="form-control" id="wachtwoord" placeholder="Wachtwoord" data-ng-model="wachtwoord">
+            </div>
         </div>
-    </div>
 
-    <button type="submit" class="btn btn-primary pull-right">Wijzig  </button>
+        <button type="submit" class="btn btn-primary pull-right">Wijzig  </button>
+        </div>
 </form>
