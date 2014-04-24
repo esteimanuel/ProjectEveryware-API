@@ -255,9 +255,9 @@ return array(
                         array('type' => hasManyToMany, 'k_table' => 'actieproviderlink', 'f_table' => 'actie')
                     )
 		),
-		'provider_pakket' => array(
+		'providerPakket' => array(
                     settings => array(
-                        't_name' => 'provider_pakket'
+                        't_name' => 'providerpakket'
                     ),
                     props => array(
 			'provider_pakket_id',
@@ -270,7 +270,20 @@ return array(
                     relations => array(
                         array('type' => belongsTo, 'f_table' => 'provider'),
                     )
-		)
+		),
+                'accountGebruiker' => array(
+                    settings => array(
+                        't_name' => 'accountgebruikerlink'
+                    ),
+                    props => array(
+                        'account_id',
+                        'gebruiker_id'
+                    ),
+                    relations => array(
+                        array('type' => hasOne, 'f_table' => 'account'),
+                        array('type' => hasOne, 'f_table' => 'gebruiker')
+                    )
+                )
 	),
 	'globalConfig' => array(
 		'messages' => array(
