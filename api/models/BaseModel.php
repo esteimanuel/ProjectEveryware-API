@@ -33,7 +33,7 @@ Class BaseModel extends Phalcon\Mvc\Model
                                 //$this->propSettings = $propSettings;
 				
                                 $propName = $key;
-                                $default = (isset($propSettings[$key]['default'])) ? $propSettings[$key]['default'] : null;
+                                $default = (isset($this->propSettings[$key]['default'])) ? $this->propSettings[$key]['default'] : null;
 			}
                         
                         $this->props[] = $propName;

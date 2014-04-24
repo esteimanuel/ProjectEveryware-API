@@ -12,35 +12,43 @@
  */
 class AccountController extends BaseController {
 
-    public function register() {
+    public function register($email = null, $password = null) {
         $messages = '';
         $token = null;
         
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
+        if (!isset($email) && !isset($password)) {
+            $email = $this->request->getPost('email');
+            $password = $this->request->getPost('password');
+        }
+
+        $accountLevel = AccountLevel::findFirst(array('level' => 'user'));
         
         $account = new Account();
         $account->email = $email;
-        $account->password = $password;
+        $account->wachtwoord = $password;
+        $account->accountlevel_id = $accountLevel->accountlevel_id;
         if($account->save()) {
             $user = new User();
             if($user->save()) {
                 $userId = $user->gebruiker_id;
                 $accountId = $account->account_id;
+
+                echo $userId;
+                echo $accountId;
                 
                 $accountUser = new AccountGebruiker();
-                $accountUser->acount_id = $accountId;
-                $accountUser->user_id = $userId;
+                $accountUser->account_id = $accountId;
+                $accountUser->gebruiker_id = $userId;
                 if($accountUser->save()) {
                     $token = $this->loginAccount($email, $password);
                 } else {
-                    $messages = $this->checkErrors($user);
+                    $messages = $this->checkErrors($accountUser);
                 }
             }  else {
                 $messages = $this->checkErrors($user);
             }
         } else {
-            $messages = $this->checkErrors($user);
+            $messages = $this->checkErrors($account);
         }
 
         $this->response->setJsonContent(array('messages' => $messages, 'token' => $token));
@@ -48,21 +56,27 @@ class AccountController extends BaseController {
     
     public function login() {
         $email = $this->request->getQuery('email');
-        $password = $this->request->getQuery('password');
+        $password = $this->request->getQuery('wachtwoord');
         
         $messages = '';
         
-        $token =  $this->loginAccount($email, $password);
+        $token = $this->loginAccount($email, $password, $messages);
         
         $this->response->setJsonContent(array('messages' => $messages, 'token' => $token));
     }
+
+    public function loginFacebook() {
+        $token = $this->request->getQuery('token');
+
+        
+    }
     
-    private function loginAccount($email, $password, $token = null) {
+    private function loginAccount($email, $password, &$messages, $token = null) {
         // login logic
         // Klopt niet, je moet findFirst waar email = email AND password = password
         $account = Account::findFirst(array(
-            'condition' => 'email = :email: AND password = :password:',
-            'bind' => array('email' => $email, 'password' => $password),
+            'conditions' => 'email = :email: AND wachtwoord = :wachtwoord:',
+            'bind' => array('email' => $email, 'wachtwoord' => $password),
         ));
         
         if ($account) {
@@ -71,7 +85,7 @@ class AccountController extends BaseController {
             
             $account->token = $token;
             if ($account->save()) {
-                $this->response->setJsonContent(array('token' => $token));
+                //$this->response->setJsonContent(array('token' => $token));
             } else {
                 $messages = $this->checkErrors($account);
                 $token = null;

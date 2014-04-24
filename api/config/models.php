@@ -212,7 +212,7 @@ return array(
 				'validation' => array('presenceOf'),
 				'default' => false,
 			),
-			'accountLevel_id' => array(
+			'accountlevel_id' => array(
 				'validation' => array('presenceOf')
 			),
 			'validatie_link',
