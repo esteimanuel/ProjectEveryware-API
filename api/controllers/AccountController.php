@@ -40,7 +40,7 @@ class AccountController extends BaseController {
                 $accountUser->account_id = $accountId;
                 $accountUser->gebruiker_id = $userId;
                 if($accountUser->save()) {
-                    $token = $this->loginAccount($email, $password);
+                    $token = $this->loginAccount($email, $password, $messages);
                 } else {
                     $messages = $this->checkErrors($accountUser);
                 }
