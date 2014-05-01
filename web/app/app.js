@@ -14,6 +14,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             //"left-nav":{templateUrl:'app/left-nav/nav.html'},
             "main":{templateUrl:'app/home/intro.html'}
         }
+    
     }).state('wijk', {
         url:'/wijk/:wid',
         title: 'Wijk',

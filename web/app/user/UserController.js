@@ -1,9 +1,5 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 console.log("loaded user controller");
-app.controller('UserCtrl', function($scope, $stateParams, $state, $location) {
+app.controller('UserCtrl', function($scope, $stateParams, $state, $location, $http) {
     $scope.views = {
         showLogin: ($location.search().login == 1)
     };
@@ -18,8 +14,26 @@ app.controller('UserCtrl', function($scope, $stateParams, $state, $location) {
     
     $scope.login = function() {
         $scope.toggleLogin();
-        localStorage.token = "tmp";
-        $scope.user.isLogged = true;
+
+        var url = "http://localhost/ProjectEveryware-API/api/AccountController/login";
+        var body = { username: $scope.user.email, password: $scope.user.password };
+
+        console.log($scope);
+        console.log(body);
+
+        $http.post(url, body)
+        .success(function (data, status)
+        {
+            // localStorage.token = "tmp";
+            // $scope.user.isLogged = true;
+            console.log(data);
+            console.log(status);
+        })
+        .error(function (data, status)
+        {
+            console.log(data);
+            console.log(status);
+        });
     };
     
     $scope.logout = function() {
