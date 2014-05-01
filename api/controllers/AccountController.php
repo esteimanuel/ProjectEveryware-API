@@ -91,7 +91,7 @@ class AccountController extends BaseController {
                 $token = null;
             }
         } else {
-            $this->response->setStatusCode(404);
+            $this->response->setStatusCode(404, "Account not found");
             return null;
         }
         

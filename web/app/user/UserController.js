@@ -15,30 +15,38 @@ app.controller('UserCtrl', function($scope, $stateParams, $state, $location, $ht
     $scope.login = function() {
         $scope.toggleLogin();
 
-        var url = "http://localhost/ProjectEveryware-API/api/AccountController/login";
-        var body = { username: $scope.user.email, password: $scope.user.password };
+        var params = { email: $scope.user.email, wachtwoord: $scope.user.password };
 
-        console.log($scope);
-        console.log(body);
-
-        $http.post(url, body)
-        .success(function (data, status)
-        {
-            // localStorage.token = "tmp";
-            // $scope.user.isLogged = true;
-            console.log(data);
-            console.log(status);
+        $http({
+            url: '/ProjectEveryware-API/api/account/login',
+            method: 'GET',
+            params: params
         })
-        .error(function (data, status)
-        {
-            console.log(data);
-            console.log(status);
-        });
+            .success(function (data, status, headers, config) {
+                 localStorage.token = data.token;
+                 $scope.user.isLogged = true;
+            })
+            .error(function (data, status, headers, config) {
+            alert("Login information was wrong"); 
+        })
     };
     
     $scope.logout = function() {
         localStorage.removeItem("token");
         $scope.user.isLogged = false;
+    };
+
+    $scope.register = function () {
+        var body = { email: $scope.user.email, wachtwoord: $scope.user.password };
+        var url = "http://localhost/ProjectEveryware-API/api/account/register";
+
+        $http.post(url, body)
+        .success(function(data, status, headers, config) {
+            console.log("gelukt");
+        })
+        .error(function(data, status, headers, config){
+            console.log("fail");
+        });
     };
     
 });
