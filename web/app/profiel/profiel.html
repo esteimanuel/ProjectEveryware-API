@@ -83,7 +83,7 @@
 
 <form class="form-horizontal" style="margin-top: 35px">
     <fieldset id="Fieldset1">
-        <legend>Buddy gegevens</legend>
+        <legend>Glasvezel buddy gegevens</legend>
 
         <div class="form-group">
             <label for="contactemail" class="col-sm-2 control-label">Contact email: </label>
@@ -107,11 +107,16 @@
         </div>
 
         <div class="form-group">
-            <label for="locatie" class="col-sm-2 control-label">Beschickbaar van: </label>
-            <div data-ng-model="from" style="display: inline-block;">
-                <timepicker hour-step="1" minute-step="1" show-meridian="false"></timepicker>
+            <label for="locatie" class="col-sm-2 control-label">Aanwezig van: </label>
+            <div class="col-sm-3">
+                <input type="time" class="form-control" data-ng-model="buddy.from">
+            </div>
+            <label for="locatie" class="col-sm-2 control-label">Aanwezig tot: </label>
+            <div class="col-sm-3">
+                <input type="time" class="form-control" data-ng-model="buddy.till">
             </div>
         </div>
-    </fieldset>
 
+        <button type="submit" class="btn btn-primary pull-right">Wijzig  </button>
+    </fieldset>
 </form>
