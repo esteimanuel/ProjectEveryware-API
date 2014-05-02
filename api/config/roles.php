@@ -7,6 +7,7 @@ return array(
             'Account' => array('get', 'register', 'login', 'logout'),
             'User' => array('get'),
             'AccountLevel' => array('get', 'post'),
+            'Actie' => array('get'),
         ),
         'isAdmin' => false
     ),
