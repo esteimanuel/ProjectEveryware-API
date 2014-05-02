@@ -2,7 +2,7 @@
     <td ng-repeat="cell in cells track by $index" >
         <span class="cell-text" ng-show="!editMode">{{cell.value}}</span>
         <span ng-if="allowEdit" class="edit-mode" ng-show="editMode">
-            <input type="text" class="form-control" ng-model="cell.tmpValue"/>
+            <input type="{{cell.type}}" class="form-control" ng-model="cell.tmpValue"/>
         </span>
     </td>
     <td ng-if="allowEdit || allowDelete" class="button-column">

@@ -16,14 +16,24 @@ angular.module('gl.table', [])
             var _sortOrder = 1;
             
             _this.observers = [];
+            _this.pagerObservers = [];
+            
+            _this.pagerData = {
+                totalRows: _this.$scope.rows.length,
+                activeRows: 0
+            };
             
             if(!$scope.cellOrder) {
-                $scope.cellOrder = $scope.headers;
+                var headers = [];
+                for(var i = 0; i < $scope.headers.length; i++) {
+                    headers.push($scope.headers[i].name);
+                }
+                $scope.cellOrder = headers;
             }
             
             this.compare = function(a,b) {
-                a = a[_sortField].value;
-                b = b[_sortField].value;
+                a = (a[_sortField]) ? a[_sortField].value : a[$scope.cellOrder[_sortField]];
+                b = (b[_sortField]) ? b[_sortField].value : b[$scope.cellOrder[_sortField]];
 
                 var result = (a < b) ? -1 : (a > b) ? 1 : 0;
                 return result * _sortOrder;
@@ -41,8 +51,22 @@ angular.module('gl.table', [])
                 _this.notifyChange();
             }
             
+            this.setRowIndexes = function(startIndex) {
+                angular.forEach(_this.observers, function(observer) {
+                    observer.setRowIndex(startIndex++);
+                });
+            }
+            
             this.addObserver = function(observer) {
                 _this.observers.push(observer);
+                
+                console.log("Set page count");
+                _this.$scope.pageCount = _this.$scope.rows.length / _this.observers.length;
+                _this.pagerData.activeRows++;
+            }
+            
+            this.addPagerObserver = function(observer) {
+                _this.pagerObservers.push(observer);
             }
             
             this.notifyChange = function() {
@@ -56,6 +80,17 @@ angular.module('gl.table', [])
                     _this.observers[i].rowRemoved(removedRowIndex);
                 }
             }
+            
+            this.draw = function() {
+                for(var i = 0; i < _this.observers.length; i++) {
+                    _this.observers[i].initRowData();
+                }
+                for(var x = 0; x < _this.pagerObservers.length; x++) {
+                    _this.pagerObservers[x].init();
+                }
+            }
+            //this.draw();
+            _this.$scope.draw = _this.draw;
 //            $scope.tableClass = "table";
 //            $scope.headers = ["header1", "header2", "header3"];
 //            
@@ -80,18 +115,21 @@ angular.module('gl.table', [])
             $scope.allowSort = true;
             var _activeSortIndex = -1;
             
-            var newHeaders = [];
+            var sortIndex = -1;
             for(var i = 0; i < $scope.headers.length; i++) {
-                var header = $scope.headers[i];
-                newHeaders[i] = {
-                    name: header,
-                    id: i
-                };
+                $scope.headers[i].id = i;
+                if(!("header" in $scope.headers[i]))
+                    $scope.headers[i].header = $scope.headers[i].name;
                 if($scope.allowSort) {
-                    newHeaders[i].sortOrder = null;
+                    if(!("sortOrder" in $scope.headers[i]))
+                        $scope.headers[i].sortOrder = null;
+                    else 
+                        sortIndex = i;
                 }
             }
-            $scope.headers = newHeaders;
+            if(sortIndex !== -1) {
+                tableCtrl.sortByHeader($scope.headers[sortIndex]);
+            }
             
             $scope.headerClick = function(i) {
                 if(_activeSortIndex != -1 && i != _activeSortIndex) 
@@ -126,30 +164,40 @@ angular.module('gl.table', [])
             
             var _rowNr = attributes.row;
             
+            $scope.cellOrder = tableCtrl.$scope.cellOrder;
+            
             tableCtrl.addObserver($scope);
             
             $scope.sortCells = function() {
                 var newOrder = [];
-                console.log($scope.cells);
+                //console.log($scope.cells);
                 for(var i = 0; i < $scope.cellOrder.length; i++) {
                     var key = $scope.cellOrder[i];
+                    var header = null;
+                    for(var x = 0; x < tableCtrl.$scope.headers.length; x++) {
+                        if(key == tableCtrl.$scope.headers[x].name) {
+                            header = tableCtrl.$scope.headers[x];
+                        }
+                    }
                     newOrder[i] = {
                         value: (key in $scope.cells) ? $scope.cells[key] : null,
-                        key: key
+                        key: key,
+                        type: (header.type) ? header.type : "text"
                     };
                     newOrder[i].tmpValue = newOrder[i].value;
-                    console.log(i + ", " + key + ", " + newOrder[i]);
+                    //console.log(newOrder[i]);
                 }
                 $scope.cells = newOrder;
-                tableCtrl.$scope.rows[_rowNr] = $scope.cells;
+                //tableCtrl.$scope.rows[_rowNr] = $scope.cells;
             };
             
-            $scope.cellOrder = tableCtrl.$scope.cellOrder;
-            if(parseInt(_rowNr) >= 0 && tableCtrl.$scope.rows) {
-                var rowData = tableCtrl.$scope.rows[_rowNr];
-                if(rowData) {
-                    $scope.cells = rowData;
-                    $scope.sortCells();
+            $scope.initRowData = function() {
+                if(parseInt(_rowNr) >= 0 && tableCtrl.$scope.rows) {
+                    var rowData = tableCtrl.$scope.rows[_rowNr];
+                    if(rowData) {
+                        $scope.cells = rowData;
+                        $scope.sortCells();
+                    }
                 }
             }
             
@@ -197,10 +245,24 @@ angular.module('gl.table', [])
                 }
             }
             
+            $scope.setRowIndex = function(newIndex) {
+                _rowNr = newIndex;
+                attributes.row = _rowNr;
+                
+                $scope.initRowData();
+                
+            }
+            
             // observer method
             $scope.updateData = function() {
                 $scope.cells = tableCtrl.$scope.rows[_rowNr];
+                //console.log($scope.cells);
+                if(typeof $scope.cells === 'object' && !( Object.prototype.toString.call($scope.cells) === '[object Array]' ))
+                    $scope.sortCells();
+                //console.log($scope.cells);
             }
+            
+            //$scope.initRowData();
         },
         templateUrl: config.directive.path + 'table/main-table-row.html'
     }
@@ -211,5 +273,47 @@ angular.module('gl.table', [])
         transclude: true,
         replace: true,
         template: '<tbody data-ng-transclude></tbody>'
+    }
+})
+.directive('glTablePager', function() {
+    return {
+        require: '^glTable',
+        restrict: 'E',
+        transclude: true,
+        replace: true,
+        link: function($scope, element, attributes, tableCtrl) {
+            tableCtrl.addPagerObserver($scope);
+            $scope.pagerData = tableCtrl.pagerData;
+            
+            $scope.init = function() {
+                $scope.pageCount = tableCtrl.$scope.pageCount;
+                console.log($scope.pageCount);
+                $scope.pageList = [];
+                for(var i = 0; i < $scope.pageCount; i++) {
+                    $scope.pageList[i] = {
+                        active: false,
+                        disabled: false,
+                        number: i+1
+                    };
+                }
+                $scope.pageList[0].active = true;
+                console.log($scope.pageList);
+            }
+            
+            $scope.pageButtonClick = function(pageNr) {
+                var index = pageNr - 1;
+                if(!$scope.pageList[index].active) {
+                    for(var i = 0; i < $scope.pageList.length; i++) {
+                        $scope.pageList[i].active = false;
+                    }
+                    $scope.pageList[index].active = true;
+                    alert(pageNr);
+                    var startIndex = $scope.pagerData.activeRows * (pageNr-1);
+                    alert(startIndex);
+                    tableCtrl.setRowIndexes(startIndex);
+                }
+            }
+        },
+        templateUrl: config.directive.path + 'table/main-table-pager.html'
     }
 });

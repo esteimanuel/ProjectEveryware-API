@@ -1,0 +1,5 @@
+<div style="position:absolute;left:0;right:0;">
+    <ul class="pagination pull-right">
+      <li ng-repeat="page in pageList" ng-class="{'active':page.active, 'disabled':page.disabled}"><a ng-click="pageButtonClick(page.number)">{{page.number}}</a></li>
+    </ul>
+</div>
