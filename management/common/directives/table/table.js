@@ -61,7 +61,6 @@ angular.module('gl.table', [])
                 _this.observers.push(observer);
                 
                 console.log("Set page count");
-                _this.$scope.pageCount = _this.$scope.rows.length / _this.observers.length;
                 _this.pagerData.activeRows++;
             }
             
@@ -85,6 +84,8 @@ angular.module('gl.table', [])
                 for(var i = 0; i < _this.observers.length; i++) {
                     _this.observers[i].initRowData();
                 }
+                
+                _this.$scope.pageCount = _this.$scope.rows.length / _this.observers.length;
                 for(var x = 0; x < _this.pagerObservers.length; x++) {
                     _this.pagerObservers[x].init();
                 }
@@ -296,7 +297,8 @@ angular.module('gl.table', [])
                         number: i+1
                     };
                 }
-                $scope.pageList[0].active = true;
+                if($scope.pageList.length > 0)
+                    $scope.pageList[0].active = true;
                 console.log($scope.pageList);
             }
             
@@ -307,9 +309,9 @@ angular.module('gl.table', [])
                         $scope.pageList[i].active = false;
                     }
                     $scope.pageList[index].active = true;
-                    alert(pageNr);
+                    //alert(pageNr);
                     var startIndex = $scope.pagerData.activeRows * (pageNr-1);
-                    alert(startIndex);
+                    //alert(startIndex);
                     tableCtrl.setRowIndexes(startIndex);
                 }
             }

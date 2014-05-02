@@ -17,8 +17,9 @@ class AccountController extends BaseController {
         $token = null;
         
         if (!isset($email) && !isset($password)) {
-            $email = $this->request->getPost('email');
-            $password = $this->request->getPost('password');
+            $data = $this->getRequestData();
+            $email = $data['email'];
+            $password = $data['password'];
         }
 
         $accountLevel = AccountLevel::findFirst(array('level' => 'user'));

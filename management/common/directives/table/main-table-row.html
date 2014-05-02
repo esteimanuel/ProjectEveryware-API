@@ -1,8 +1,9 @@
 <tr class="gl-table-row">
     <td ng-repeat="cell in cells track by $index" >
         <span class="cell-text" ng-show="!editMode">{{cell.value}}</span>
-        <span ng-if="allowEdit" class="edit-mode" ng-show="editMode">
-            <input type="{{cell.type}}" class="form-control" ng-model="cell.tmpValue"/>
+        <span ng-if="allowEdit" class="edit-mode" ng-show="editMode" ng-switch="cell.type">
+            <input ng-switch-when="checkbox" type="{{cell.type}}" ng-model="cell.tmpValue" />
+            <input ng-switch-default type="{{cell.type}}" class="form-control" ng-model="cell.tmpValue"/>
         </span>
     </td>
     <td ng-if="allowEdit || allowDelete" class="button-column">

@@ -267,7 +267,7 @@ class BaseController extends \Phalcon\Mvc\Controller {
         }
     }
     
-    private function getRequestData() {
+    protected function getRequestData() {
         $data;
         switch($this->request->getHeader("CONTENT_TYPE")) {
             case 'application/x-www-form-urlencoded':

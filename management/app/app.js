@@ -27,7 +27,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }).state('user', {
         url: '/user',
         views: {
-            'main':{templateUrl: 'app/user/index.html'}
+            'main':{templateUrl: 'app/user/index.html', controller:'UserTableCtrl'}
         }
     });
 
