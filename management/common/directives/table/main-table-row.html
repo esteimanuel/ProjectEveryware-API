@@ -1,4 +1,4 @@
-<tr class="gl-table-row">
+<tr class="gl-table-row" ng-class="{'hidden':!visible}">
     <td ng-repeat="cell in cells track by $index" >
         <span class="cell-text" ng-show="!editMode">{{cell.value}}</span>
         <span ng-if="allowEdit" class="edit-mode" ng-show="editMode" ng-switch="cell.type">

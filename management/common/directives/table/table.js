@@ -162,6 +162,7 @@ angular.module('gl.table', [])
             $scope.allowEdit = true;
             $scope.allowDelete = true;
             $scope.editMode = false;
+            $scope.visible = false;
             
             var _rowNr = attributes.row;
             
@@ -170,6 +171,7 @@ angular.module('gl.table', [])
             tableCtrl.addObserver($scope);
             
             $scope.sortCells = function() {
+                console.log("Sort cells");
                 var newOrder = [];
                 //console.log($scope.cells);
                 for(var i = 0; i < $scope.cellOrder.length; i++) {
@@ -197,7 +199,12 @@ angular.module('gl.table', [])
                     var rowData = tableCtrl.$scope.rows[_rowNr];
                     if(rowData) {
                         $scope.cells = rowData;
-                        $scope.sortCells();
+                        console.log($scope.cells);
+                        if( !(Object.prototype.toString.call( rowData ) === '[object Array]'))
+                            $scope.sortCells();
+                        $scope.visible = true;
+                    } else {
+                        $scope.visible = false;
                     }
                 }
             }
@@ -207,9 +214,14 @@ angular.module('gl.table', [])
                     angular.forEach($scope.cells, function(cell) {
                         cell.value = cell.tmpValue;
                     });
-                }
-                if($scope.updateRow) { 
-                    if($scope.updateRow())
+                    //var rowData = {};
+                    var rowData = angular.copy($scope.cells);
+                    //console.log(rowData);
+                    tableCtrl.$scope.rows[_rowNr] = rowData;
+                    if($scope.updateRow) {     
+                        if($scope.updateRow())
+                            $scope.toggleEditMode();
+                    } else 
                         $scope.toggleEditMode();
                 } else 
                     $scope.toggleEditMode();
