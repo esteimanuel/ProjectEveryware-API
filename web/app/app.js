@@ -44,16 +44,6 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             //"left-nav": { templateUrl: 'app/left-nav/nav.html' },
             "main": { templateUrl: 'app/faq/faq.html' }
         }
-    })
-    .state('mijnWijk', {
-        url: '/mijnWijk',
-        views: {
-            "left-nav": { templateUrl: 'app/left-nav/nav.html' },
-            "main": { templateUrl: 'app/wijk/mijn-wijk.html' }
-        }
-    })
-    .state('mijnWijk.progress', {
-        "progress": { templateUrl: 'app/wijk/mijn-wijk.progress.html' }
     });
 
     //    .state('login', {
