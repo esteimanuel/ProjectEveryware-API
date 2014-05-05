@@ -48,5 +48,21 @@ app.controller('UserCtrl', function($scope, $stateParams, $state, $location, $ht
             console.log("fail");
         });
     };
+
+    $scope.getUserInfo = function () {
+        var params = { token: localStorage.token }
+
+        $http({
+            url: '',
+            method: 'GET',
+            params: params
+        })
+        .success(function (data, status, headers, config) {
+            console.log("gelukt");
+        })
+        .error(function (data, status, headers, config) {
+            console.log("fail");
+        });
+    };
     
 });
