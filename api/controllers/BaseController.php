@@ -28,10 +28,11 @@ class BaseController extends \Phalcon\Mvc\Controller {
             $token = $this->request->get("_token");
         }
         if(isset($token)) {
-            if(!$this->request->isSecureRequest()) {
-                $this->response->setStatusCode(400, "Insecure connection request")->send();
-                return;
-            }
+            // Secure connection
+//            if(!$this->request->isSecureRequest()) {
+//                $this->response->setStatusCode(400, "Insecure connection request")->send();
+//                return;
+//            }
             
             $this->_account = Account::findFirst(array(
                 "conditions" => "token = ?1",

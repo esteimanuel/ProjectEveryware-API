@@ -13,6 +13,7 @@ angular.module('gl.table', [])
             this.$scope = $scope;
             var _this = this;
             var _sortField = null;
+            var _sortFieldType = null;
             var _sortOrder = 1;
             
             _this.observers = [];
@@ -32,8 +33,14 @@ angular.module('gl.table', [])
             }
             
             this.compare = function(a,b) {
+                //console.log(_sortFieldType);
                 a = (a[_sortField]) ? a[_sortField].value : a[$scope.cellOrder[_sortField]];
                 b = (b[_sortField]) ? b[_sortField].value : b[$scope.cellOrder[_sortField]];
+
+                if(_sortFieldType === 'number') {
+                    a = Number(a);
+                    b = Number(b);
+                }
 
                 var result = (a < b) ? -1 : (a > b) ? 1 : 0;
                 return result * _sortOrder;
@@ -43,6 +50,7 @@ angular.module('gl.table', [])
 //                console.log(header);
 //                console.log(_this.$scope.rows);
                 _sortField = header.id;
+                _sortFieldType = (header.type) ? header.type : "text";
                 _sortOrder = (header.sortOrder === 'DESC') ? -1 : 1;
                 
                 if(_sortField !== null)
