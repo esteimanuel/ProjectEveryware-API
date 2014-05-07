@@ -16,14 +16,15 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
         var params = { email: $scope.login.email, wachtwoord: $scope.login.password };
 
         $http({
+            //url: config.api.url + 'account/login',
             url: '/ProjectEveryware-API/api/account/login',
             method: 'GET',
             params: params
         })
             .success(function (data, status, headers, config) {
                 localStorage.token = data.account.token;
-                $rootScope.user.name = data.account.email;
-                $rootScope.user.fotolink = data.account.foto_link;
+                    $rootScope.user.name = data.account.email;
+                    $rootScope.user.fotolink = data.account.foto_link;
                 $rootScope.user.isLogged = true;
 
                 $scope.toggleLogin();

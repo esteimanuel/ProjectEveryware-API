@@ -63,7 +63,7 @@ class AccountController extends BaseController {
         
         $account = $this->loginAccount($email, $password, $messages);
         
-        $this->response->setJsonContent(array('messages' => $messages, 'token' => $account));
+        $this->response->setJsonContent(array('messages' => $messages, 'account' => $account));
     }
 
     public function loginFacebook() {
@@ -97,7 +97,7 @@ class AccountController extends BaseController {
             return null;
         }
 		
-        return $token;
+        return $account;
     }
     
 //	public function register() {
