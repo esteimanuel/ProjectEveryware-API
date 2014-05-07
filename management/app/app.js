@@ -38,7 +38,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }).state('login', {
         url: '/login',
         views: {
-            'main':{templateUrl:'app/user/login.html', controller:'LoginCtrl'}
+            'content':{templateUrl:'app/user/login.html', controller:'LoginCtrl'}
         }
     }).state('user', {
         url: '/user',

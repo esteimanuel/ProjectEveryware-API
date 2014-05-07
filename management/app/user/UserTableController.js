@@ -31,4 +31,6 @@ app.controller('UserTableCtrl', function($scope, $http) {
         });
     }
     
+    $scope.getData(); 
+    
 });
