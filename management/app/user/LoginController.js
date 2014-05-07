@@ -1,17 +1,12 @@
 app.controller('LoginCtrl', function($scope, $http) {
 	$scope.login = function(credentials) {
-		$eMail = credentials.email;
-		$password = credentials.wachtwoord;	
-		
-		console.log("fuck");
-		
 		console.log(credentials);
-		$http({url:'/school/api/account/login',method:'GET',params:credentials}).success(function(data, status) {
-			alert("Binnen");
+		$http({url: 'http://glassy-api.avans-project.nl/api/account/login',method:'GET',params:credentials}).success(function(data, status) {
+			console.log("Token has been received");
 			console.log(data);
+			localStorage.token = data.token;
 		}).error(function(data, status, headers, config) {
-			alert("Buiten");
-			console.log(data);
+			console.log("Login file data not accepted");
 		})
 	}
 });
