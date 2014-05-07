@@ -202,7 +202,7 @@ return array(
                     props => array(
                         'account_id',
 			'email' => array(
-				'validation' => array('email', 'presenceOf')
+				'validation' => array('email', 'presenceOf', 'uniqueness')
 			),
 			'wachtwoord' => array(
 				'validation' => array('presenceOf')
@@ -291,7 +291,8 @@ return array(
 			'email' => 'not a valid email format',
 			'regex' => 'not a valid pattern',
 			'inclusionIn' => 'not a valid value',
-                        'url' => ' not a valid url format'
+            'url' => 'not a valid url format',
+			'uniqueness' => 'not unique',
 		)
 	)
 );

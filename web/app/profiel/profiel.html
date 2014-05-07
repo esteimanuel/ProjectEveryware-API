@@ -1,7 +1,7 @@
 <form class="form-horizontal">
 
     <div style="margin: 15px;">
-        <img src="http://www.uceestation.nl/images/dummy_profiel.jpg?isleeg" class="img-circle img-responsive" style="display: block; margin: auto; box-shadow: 2px 2px 10px">
+        <img ng-src="{{user.fotolink}}" class="img-circle img-responsive" style="display: block; margin: auto; box-shadow: 2px 2px 10px; max-width: 25%">
     </div>
 
     <fieldset id="personal">
@@ -13,14 +13,14 @@
                 <input type="text" class="form-control" id="profile-name" placeholder="Voornaam" data-ng-model="name" />
             </div>
             <div class="col-sm-3">
-                <input type="text" class="form-control" id="profile-prefix" placeholder="Tussenvoegsel" data-ng-model="name-prefix" />
+                <input type="text" class="form-control" id="profile-prefix" placeholder="Tussenvoegsel" data-ng-model="name_prefix" />
             </div>
         </div>
 
         <div class="form-group">
             <label for="profile-surname" class="col-sm-2 control-label">Achternaam: </label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="profile-surname" placeholder="Achternaam" data-ng-model="name-surname" />
+                <input type="text" class="form-control" id="profile-surname" placeholder="Achternaam" data-ng-model="name_surname" />
             </div>
         </div>
 
@@ -57,7 +57,7 @@
                 <input type="text" class="form-control" id="postalcode" placeholder="1234" data-ng-model="postalcode">
             </div>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="postalcode-aa" placeholder="AA" data-ng-model="postalcode-AA">
+                <input type="text" class="form-control" id="postalcode-aa" placeholder="AA" data-ng-model="postalcode_AA">
             </div>
         </div>
     </fieldset>
@@ -88,21 +88,21 @@
         <div class="form-group">
             <label for="contactemail" class="col-sm-2 control-label">Contact email: </label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="contact-email" placeholder="E-mail" data-ng-model="contact-email">
+                <input type="text" class="form-control" id="contact-email" placeholder="E-mail" data-ng-model="contact_email">
             </div>
         </div>
 
         <div class="form-group">
             <label for="contacttel" class="col-sm-2 control-label">Contact tel-nr: </label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="contact-telnummer" placeholder="Telefoon nummer" data-ng-model="contact-telnummer">
+                <input type="text" class="form-control" id="contact-telnummer" placeholder="Telefoon nummer" data-ng-model="contact_telnummer">
             </div>
         </div>
 
         <div class="form-group">
             <label for="locatie" class="col-sm-2 control-label">Locatie: </label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="contact-locatie" placeholder="locatie" data-ng-model="contact-locatie">
+                <input type="text" class="form-control" id="contact-locatie" placeholder="locatie" data-ng-model="contact_locatie">
             </div>
         </div>
 
