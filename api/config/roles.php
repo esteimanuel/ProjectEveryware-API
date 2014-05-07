@@ -10,7 +10,7 @@ return array(
             'Actie' => array('get'),
 			'Wijk' => array('get'),
         ),
-        'isAdmin' => false
+        'isAdmin' => true
     ),
     'user' => array(
         'rights' => array(
