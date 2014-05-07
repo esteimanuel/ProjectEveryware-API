@@ -10,7 +10,11 @@ class PostcodeController extends BaseController {
         $wijk_id = $this->request->getQuery('id');
         $postalCodes = null;
         if(isset($wijk_id) && $wijk_id > 0) {
-            $postalCodes = Postcode::find(array('wijk_id' => $wijk_id));
+            $pCodes = Postcode::find(array('wijk_id' => $wijk_id));
+            $postalCodes = array();
+            foreach($pCodes as $obj) {
+                $postalCodes[] = $obj;
+            }
         } else {
             $this->response->setStatusCode(400, "Invalid or no id");
         }
