@@ -14,7 +14,7 @@ class PostcodeController extends BaseController {
         } else {
             $this->response->setStatusCode(400, "Invalid or no id");
         }
-        $this->response->setJsonContent(array('postalcodes' => $postalCodes));
+        $this->response->setJsonContent($postalCodes);
     }
 
 }
