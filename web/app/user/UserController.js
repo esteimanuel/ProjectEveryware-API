@@ -1,68 +1,58 @@
 console.log("loaded user controller");
-app.controller('UserCtrl', function($scope, $stateParams, $state, $location, $http) {
+app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $location, $http) {
     $scope.views = {
         showLogin: ($location.search().login == 1)
     };
-    $scope.user = {
+    $rootScope.user = {
         isLogged: !!(localStorage.token),
-        token: localStorage.token,
-        name: 'Guest',
-        isAdmin: false
+        token: localStorage.token
     };
     
     $scope.toggleLogin = function() { $scope.views.showLogin = !$scope.views.showLogin; };
     
     $scope.login = function() {
-        $scope.toggleLogin();
+       
 
-        var params = { email: $scope.user.email, wachtwoord: $scope.user.password };
+        var params = { email: $scope.login.email, wachtwoord: $scope.login.password };
 
         $http({
+            //url: config.api.url + 'account/login',
             url: '/ProjectEveryware-API/api/account/login',
             method: 'GET',
             params: params
         })
             .success(function (data, status, headers, config) {
-                 localStorage.token = data.token;
-                 $scope.user.isLogged = true;
+                localStorage.token = data.account.token;
+                    $rootScope.user.name = data.account.email;
+                    $rootScope.user.fotolink = data.account.foto_link;
+                $rootScope.user.isLogged = true;
+
+                $scope.toggleLogin();
             })
             .error(function (data, status, headers, config) {
-            alert("Login information was wrong"); 
+                $scope.login.errorMessage = "Er ging iets fout probeer het opnieuw!";
         })
     };
     
     $scope.logout = function() {
         localStorage.removeItem("token");
-        $scope.user.isLogged = false;
+        $rootScope.user.isLogged = false;
     };
 
     $scope.register = function () {
-        var body = { email: $scope.user.email, wachtwoord: $scope.user.password };
+        var body = { email: $scope.register.email, wachtwoord: $scope.register.password };
         var url = "http://localhost/ProjectEveryware-API/api/account/register";
 
         $http.post(url, body)
-        .success(function(data, status, headers, config) {
-            console.log("gelukt");
+        .success(function (data, status, headers, config) {
+            console.log(data);
+            localStorage.token = data.account.token;
+            $scope.user.isLogged = true;
+
         })
         .error(function(data, status, headers, config){
-            console.log("fail");
+            $scope.register.errorMessage = "Account is al in gebruik";
+            console.log(data, status, "ik ben gefaald");
         });
-    };
-
-    $scope.getUserInfo = function () {
-        var params = { token: localStorage.token }
-
-        $http({
-            url: '',
-            method: 'GET',
-            params: params
-        })
-        .success(function (data, status, headers, config) {
-            console.log("gelukt");
-        })
-        .error(function (data, status, headers, config) {
-            console.log("fail");
-        });
-    };
-    
+    };  
 });

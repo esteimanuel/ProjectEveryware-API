@@ -18,12 +18,12 @@ class AccountController extends BaseController {
         
         if (!isset($email) && !isset($password)) {
             $data = $this->getRequestData();
-            $email = $data['email'];
-            $password = $data['password'];
+            $email = $data->email;
+            $password = $data->wachtwoord;
         }
 
         $accountLevel = AccountLevel::findFirst(array('level' => 'user'));
-        
+		
         $account = new Account();
         $account->email = $email;
         $account->wachtwoord = $password;
@@ -61,15 +61,14 @@ class AccountController extends BaseController {
         
         $messages = '';
         
-        $token = $this->loginAccount($email, $password, $messages);
+        $account = $this->loginAccount($email, $password, $messages);
         
-        $this->response->setJsonContent(array('messages' => $messages, 'token' => $token));
+        $this->response->setJsonContent(array('messages' => $messages, 'account' => $account));
     }
 
     public function loginFacebook() {
         $token = $this->request->getQuery('token');
-
-        
+ 
     }
     
     private function loginAccount($email, $password, &$messages, $token = null) {
@@ -79,7 +78,7 @@ class AccountController extends BaseController {
             'conditions' => 'email = :email: AND wachtwoord = :wachtwoord:',
             'bind' => array('email' => $email, 'wachtwoord' => $password),
         ));
-        
+		
         if ($account) {
             if(!isset($token))
                 $token = hash('md5', time() . uniqid() . $account->account_id);
@@ -87,6 +86,8 @@ class AccountController extends BaseController {
             $account->token = $token;
             if ($account->save()) {
                 //$this->response->setJsonContent(array('token' => $token));
+				unset($account->wachtwoord);
+				unset($account->validated);
             } else {
                 $messages = $this->checkErrors($account);
                 $token = null;
@@ -95,8 +96,8 @@ class AccountController extends BaseController {
             $this->response->setStatusCode(404, "Account not found");
             return null;
         }
-        
-        return $token;
+		
+        return $account;
     }
     
 //	public function register() {
