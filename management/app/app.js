@@ -13,11 +13,27 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
 
     app.registerCtrl = $controllerProvider.register;
 
-    $stateProvider.state('home', {
-        url:'/',
+    $stateProvider.state('main', {
+        url:'/home',
         views: {
-            //"left-nav":{templateUrl:'app/left-nav/nav.html'},
-            "main":{templateUrl:'app/home/index.html'}
+            "top-nav":{templateUrl:'app/main/nav.html'},
+            "left-nav":{templateUrl:'app/main/left-nav.html'},
+            "content":{templateUrl:'app/main/index.html'}
+        }
+    }).state('main.dashboard',{
+        url: '/dashboard',
+        views: {
+            "main":{templateUrl:"app/dashboard/index.html"}
+        }
+    }).state('main.users',{
+        url: '/gebruikers',
+        views: {
+            "main": {templateUrl:'app/user/index.html', controller:'UserTableCtrl'}
+        }
+    }).state('main.districts', {
+        url: '/wijken',
+        views: {
+            "main": {templateUrl:'app/district/index.html'}
         }
     }).state('login', {
         url: '/login',
