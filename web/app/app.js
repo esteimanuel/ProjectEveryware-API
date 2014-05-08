@@ -73,16 +73,45 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     $urlRouterProvider.otherwise('/');
 
 })
-.run(function ($rootScope, $state) {
+.run(function ($rootScope, $state, $window, srvAuth) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
         console.log("State change");
         console.log(toState);
         console.log(toParams);
-        console.log(fromState);
-        
-        
-        
+        console.log(fromState);  
     });
+
+    $rootScope.user = {};
+    $window.fbAsyncInit = function () {
+
+        FB.init({
+            appId: '608467429234622',
+            channelUrl: 'app/channel/channel.html',
+            status: true,
+            cookie: true,
+            xfbml: true
+        });
+
+        srvAuth.watchLoginChange();
+    };
+
+    (function (d) {
+        var js;
+        id = 'facebook-jssdk',
+        ref = d.getElementsByTagName('script')[0];
+
+        if (d.getElementById(id)) {
+            return;
+        }
+
+        js = d.createElement('script');
+        js.id = id;
+        js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+
 });
 //.directive("ddDraggable", Draggable)
 //.directive("ddDropTarget", DropTarget);
