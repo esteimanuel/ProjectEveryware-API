@@ -12,8 +12,8 @@ class ActieController extends BaseController {
             $data = User::find(array('actie_id' => $actie_id));
             $users = array();
             foreach($data as $user) {
-                $user->account = $user->getAccount();
-                $user->buddy = $user->getBuddy();
+                $user->a = $user->Account;
+                $user->b = $user->Buddy;
                 $users[] = $user;
             }
             
