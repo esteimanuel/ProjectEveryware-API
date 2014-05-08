@@ -10,7 +10,10 @@ class PostcodeController extends BaseController {
         $wijk_id = $this->request->getQuery('id');
         $postalCodes = null;
         if(isset($wijk_id) && $wijk_id > 0) {
-            $pCodes = Postcode::find(array('wijk_id' => $wijk_id));
+            $pCodes = Postcode::find(array(
+                'conditions' => 'wijk_id = :wid:',
+                'bind' => array('wid' => $wijk_id),
+            ));
             $postalCodes = array();
             foreach($pCodes as $obj) {
                 $postalCodes[] = $obj;
