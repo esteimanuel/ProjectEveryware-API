@@ -43,7 +43,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
     $scope.register = function () {
         var body = { email: $scope.register.email, wachtwoord: $scope.register.password };
         //var url = "http://localhost/ProjectEveryware-API/api/account/register";
-        var url = config.api.url + 'account/login',
+        var url = config.api.url + 'account/login';
 
         $http.post(url, body)
         .success(function (data, status, headers, config) {
