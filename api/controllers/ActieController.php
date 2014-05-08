@@ -9,11 +9,16 @@ class ActieController extends BaseController {
     public function users() {
         $actie_id = $this->request->getQuery('id');
         if(isset($actie_id) && $actie_id > 0) {
-            $data = User::find(array('actie_id' => $actie_id));
+            $data = User::find(array(
+                'conditions' => 'actie_id = :aid:',
+                'bind' => array('aid' => $actie_id),
+            ));
             $users = array();
             foreach($data as $user) {
-                $user->a = $user->Account;
-                $user->b = $user->Buddy;
+//                var_dump($user->Account);
+//                var_dump($user->Buddy);
+                $user->account = $user->Account;
+                $user->buddy = $user->Buddy;
                 $users[] = $user;
             }
             

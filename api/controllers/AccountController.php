@@ -18,8 +18,8 @@ class AccountController extends BaseController {
         
         if (!isset($email) && !isset($password)) {
             $data = $this->getRequestData();
-            $email = $data->email;
-            $password = $data->wachtwoord;
+            $email = $data['email'];
+            $password = $data['wachtwoord'];
         }
 
         $accountLevel = AccountLevel::findFirst(array('level' => 'user'));
@@ -37,7 +37,7 @@ class AccountController extends BaseController {
                 echo $userId;
                 echo $accountId;
                 
-                $accountUser = new AccountGebruiker();
+                $accountUser = new AccountGebruikerLink();
                 $accountUser->account_id = $accountId;
                 $accountUser->gebruiker_id = $userId;
                 if($accountUser->save()) {

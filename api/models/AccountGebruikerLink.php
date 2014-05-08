@@ -6,11 +6,11 @@
  */
 
 /**
- * Description of AccountGebruiker
+ * Description of AccountGebruikerLink
  *
  * @author Remi Sloot
  */
-class AccountGebruiker extends BaseModel {
+class AccountGebruikerLink extends BaseModel {
     //put your code here
 }
 

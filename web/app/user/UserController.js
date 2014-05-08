@@ -1,5 +1,5 @@
 console.log("loaded user controller");
-app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $location, $http) {
+app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $location, $http, srvAuth) {
     $scope.views = {
         showLogin: ($location.search().login == 1)
     };
@@ -16,8 +16,8 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
         var params = { email: $scope.login.email, wachtwoord: $scope.login.password };
 
         $http({
-            //url: config.api.url + 'account/login',
-            url: '/ProjectEveryware-API/api/account/login',
+            url: config.api.url + 'account/login',
+           // url: '/ProjectEveryware-API/api/account/login',
             method: 'GET',
             params: params
         })
@@ -25,7 +25,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
                 localStorage.token = data.account.token;
                     $rootScope.user.name = data.account.email;
                     $rootScope.user.fotolink = data.account.foto_link;
-                $rootScope.user.isLogged = true;
+                    $rootScope.user.isLogged = true;
 
                 $scope.toggleLogin();
             })
@@ -37,11 +37,13 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
     $scope.logout = function() {
         localStorage.removeItem("token");
         $rootScope.user.isLogged = false;
+        srvAuth.logout();
     };
 
     $scope.register = function () {
         var body = { email: $scope.register.email, wachtwoord: $scope.register.password };
-        var url = "http://localhost/ProjectEveryware-API/api/account/register";
+        //var url = "http://localhost/ProjectEveryware-API/api/account/register";
+        var url = config.api.url + 'account/login';
 
         $http.post(url, body)
         .success(function (data, status, headers, config) {

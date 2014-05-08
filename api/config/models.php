@@ -4,7 +4,7 @@ if(!defined('hasMany')) {
     define('hasMany',       'hasMany');         //Defines a 1-n relationship, 'key' => 'tableKey (id)', 'f_table' => 'foreign_table', 'f_key' => 'foreign_key (table_id)'
     define('hasOne',        'hasOne');          //Defines a 1-1 relationship, 'key' => 'tableKey (id)', 'f_table' => 'foreign_table', 'f_key' => 'foreign_key (table_id)'
     define('belongsTo',     'belongsTo');       //Defines a n-1 relationship, 'f_key' => 'foreign_key (f_table_id)', => 'f_table' => 'foreign_table', 'key' => 'tableKey (id)'
-    define('hasManyToMany', 'hasManyToMany');   //Defines a n-n relationship, 'key' => 'id', 'k_table' => 'koppel_table', 'k_key1' => 'kt_key1_id', 'k_key2' => 'kt_key1_id', 'f_table' => 'foreign_talbe', 'f_key' => 'ftable_id'),
+    define('hasManyToMany', 'hasManyToMany');   //Defines a n-n relationship, 'key' => 'id', 'k_table' => 'koppel_table', 'k_key1' => 'kt_key1_id', 'k_key2' => 'kt_key1_id', 'f_table' => 'foreign_table', 'f_key' => 'ftable_id'),
 
     define('props',         'properties');
     define('relations',     'relations');
@@ -39,8 +39,8 @@ return array(
                         array('type' => belongsTo, 'f_table' => 'postcode'),
                         array('type' => belongsTo, 'f_table' => 'providerpakket'),
                         array('type' => hasOne, 'f_table' => 'interesse'),
-                        array('type' => hasOne, 'f_table' => 'buddy'),
-                        array('type' => hasManyToMany, 'k_table' => 'accountgebruikerlink', 'f_table' => 'account'),
+                        array('type' => hasOne, 'key' => 'gebruiker_id','f_table' => 'buddy', 'f_key' => 'gebruiker_id'),
+                        array('type' => hasManyToMany, 'key' => 'gebruiker_id', 'k_table' => 'accountgebruikerlink', 'k_key1' => 'gebruiker_id', 'f_table' => 'account'),
                         array('type' => hasMany, 'f_table' => 'media'),
                     )
                 ),
@@ -104,12 +104,18 @@ return array(
 			'postcode_id',
 			'plaats',
 			'gemeente',
-			'wijkcode' => array(
-				'validation' => array('presenceOf', 'regex' => array('pattern' => '^[1-9][0-9]{3}\s')),
-			),
-                        'lettercombinatie' => array(
-                            'validation' => array('regex' => array('pattern' => '?[a-zA-Z]{2}$'))
+//			'wijkcode' => array(
+//				'validation' => array('presenceOf', 'regex' => array('pattern' => '^[1-9][0-9]{3}\s')),
+//			),
+//                        'lettercombinatie' => array(
+//                            'validation' => array('regex' => array('pattern' => '?[a-zA-Z]{2}$'))
+//                        ),
+                        'postcode' => array(
+                            'validation' => array('presenceOf')
                         ),
+                        'straat',
+                        'provincie',
+                        'provincie_code',
 			'latitude' => array(
 				'validation' => array('presenceOf')
 			),
@@ -237,6 +243,16 @@ return array(
                         array('type' => hasMany, 'f_table' => 'account'),
                     )
 		),
+                'accountGebruikerLink' => array(
+                    settings => array(
+                        't_name' => 'accountgebruikerlink'
+                    ),
+                    props => array(
+                        'account_id',
+                        'gebruiker_id',
+                    ),
+                    relations => array()
+                ),
 		'provider' => array(
                     settings => array(
                         't_name' => 'provider'
@@ -271,19 +287,19 @@ return array(
                         array('type' => belongsTo, 'f_table' => 'provider'),
                     )
 		),
-                'accountGebruiker' => array(
-                    settings => array(
-                        't_name' => 'accountgebruikerlink'
-                    ),
-                    props => array(
-                        'account_id',
-                        'gebruiker_id'
-                    ),
-                    relations => array(
-                        array('type' => hasOne, 'f_table' => 'account'),
-                        array('type' => hasOne, 'f_table' => 'gebruiker')
-                    )
-                )
+//                'accountGebruiker' => array(
+//                    settings => array(
+//                        't_name' => 'accountgebruikerlink'
+//                    ),
+//                    props => array(
+//                        'account_id',
+//                        'gebruiker_id'
+//                    ),
+//                    relations => array(
+//                        array('type' => hasOne, 'f_table' => 'account'),
+//                        array('type' => hasOne, 'f_table' => 'gebruiker')
+//                    )
+//                )
 	),
 	'globalConfig' => array(
 		'messages' => array(

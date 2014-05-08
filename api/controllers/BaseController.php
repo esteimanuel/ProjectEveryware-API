@@ -83,7 +83,7 @@ class BaseController extends \Phalcon\Mvc\Controller {
         $rights = $roleSettings['rights'];
         
         if(isset($rights[$controller]) || $roleSettings['isAdmin']) {
-            if(in_array($method, $rights[$controller]) || $roleSettings['isAdmin']) {
+            if($roleSettings['isAdmin'] || in_array($method, $rights[$controller])) {
                 return true;
             }
         }
@@ -275,7 +275,10 @@ class BaseController extends \Phalcon\Mvc\Controller {
                 $data = $this->request->getPost();
                 break;
             default: // application/json
-                $data = $this->request->getJsonRawBody();
+                $dataTmp = $this->request->getJsonRawBody();
+                foreach($dataTmp as $key => $value) {
+                    $data[$key] = $value;
+                }
                 break;
         }
         return (isset($data)) ? $data : array();
