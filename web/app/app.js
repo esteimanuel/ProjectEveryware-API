@@ -88,7 +88,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             appId: '608467429234622',
             channelUrl: 'app/channel/channel.html',
             status: true,
-            cookie: true,
+            //cookie: true,
             xfbml: true
         });
 
