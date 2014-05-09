@@ -35,13 +35,13 @@ return array(
                         'pakket_id',
                     ),
                     relations => array(
-                        array('type' => belongsTo, 'f_key' => 'actie_id', 'f_table' => 'actie', 'key' => 'id'),
+                        array('type' => belongsTo, 'f_table' => 'actie', 'key' => 'gebruiker_id'),
                         array('type' => belongsTo, 'f_table' => 'postcode'),
                         array('type' => belongsTo, 'f_table' => 'providerpakket'),
                         array('type' => hasOne, 'f_table' => 'interesse'),
                         array('type' => hasOne, 'key' => 'gebruiker_id','f_table' => 'buddy', 'f_key' => 'gebruiker_id'),
                         array('type' => hasManyToMany, 'key' => 'gebruiker_id', 'k_table' => 'accountgebruikerlink', 'k_key1' => 'gebruiker_id', 'f_table' => 'account'),
-                        array('type' => hasMany, 'f_table' => 'media'),
+                        array('type' => hasMany, 'key' => 'gebruiker_id', 'f_table' => 'media'),
                     )
                 ),
                 'actie' => array(

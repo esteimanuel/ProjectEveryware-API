@@ -12,15 +12,19 @@
  */
 class AccountController extends BaseController {
 
-    public function register($email = null, $password = null) {
-        $messages = '';
-        $token = null;
+    public function register() {
+        $data = $this->getRequestData();
+        $email = $data['email'];
+        $password = $data['wachtwoord'];
         
         if (!isset($email) && !isset($password)) {
-            $data = $this->getRequestData();
-            $email = $data['email'];
-            $password = $data['wachtwoord'];
+            $this->registerAccount($email, $password);
         }
+    }
+    
+    private function registerAccount($email, $password) {
+        $messages = '';
+        $uAccount = null;
 
         $accountLevel = AccountLevel::findFirst(array('level' => 'user'));
 		
@@ -33,15 +37,12 @@ class AccountController extends BaseController {
             if($user->save()) {
                 $userId = $user->gebruiker_id;
                 $accountId = $account->account_id;
-
-                echo $userId;
-                echo $accountId;
                 
                 $accountUser = new AccountGebruikerLink();
                 $accountUser->account_id = $accountId;
                 $accountUser->gebruiker_id = $userId;
                 if($accountUser->save()) {
-                    $token = $this->loginAccount($email, $password, $messages);
+                    $uAccount = $this->loginAccount($email, $password, $messages);
                 } else {
                     $messages = $this->checkErrors($accountUser);
                 }
@@ -52,7 +53,7 @@ class AccountController extends BaseController {
             $messages = $this->checkErrors($account);
         }
 
-        $this->response->setJsonContent(array('messages' => $messages, 'token' => $token));
+        $this->response->setJsonContent(array('messages' => $messages, 'account' => $uAccount));
     }
     
     public function login() {
