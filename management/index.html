@@ -22,6 +22,7 @@
         
         <!--Load Controllers-->
         <script src="app/MainController.js"></script>
+		<script src="app/user/LoginController.js"></script>
         <script src="app/user/UserController.js"></script>
         <script src="app/user/UserTableController.js"></script>
         
@@ -34,8 +35,12 @@
         <link type="text/css" rel="stylesheet" href="../global/styles/main.css" />
         <link type="text/css" rel="stylesheet" href="styles/main.css"/>
         <link type="text/css" rel="stylesheet" href="styles/table.css"/>
+        <link type="text/css" rel="stylesheet" href="styles/login.css"/>
+        <link type="text/css" rel="stylesheet" href="styles/custom.css"/>
     </head>
     <body data-ng-controller="UserCtrl">
-        <div class="container" ui-view="main"></div>
+        <div ui-view="top-nav"></div>
+        <div ui-view="left-nav"></div>
+        <div ui-view="content"></div>
     </body>
 </html>

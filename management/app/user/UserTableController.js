@@ -18,8 +18,9 @@ app.controller('UserTableCtrl', function($scope, $http) {
     $scope.rows = [];
     
     $scope.getData = function() {
+        var url = config.api.url+'account';
         $http({
-            url: '/glassy-api/'+config.api.pathPrefix+'account',
+            url: url,
             method: 'GET'
         }).success(function(data, status, headers, config) {
             console.log(data);
@@ -29,5 +30,7 @@ app.controller('UserTableCtrl', function($scope, $http) {
             console.log(data);
         });
     }
+    
+    $scope.getData(); 
     
 });

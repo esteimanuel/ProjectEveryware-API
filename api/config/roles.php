@@ -8,8 +8,9 @@ return array(
             'User' => array('get'),
             'AccountLevel' => array('get', 'post'),
             'Actie' => array('get'),
+			'Wijk' => array('get'),
         ),
-        'isAdmin' => false
+        'isAdmin' => true
     ),
     'user' => array(
         'rights' => array(

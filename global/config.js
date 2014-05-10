@@ -8,7 +8,7 @@ var config = {
         name: 'Glassy'
     },
     api: {
-        pathPrefix: '/api/'
+        url: 'http://glassy-api.avans-project.nl/api/'
     },
     directive: {
         path: 'common/directives/'

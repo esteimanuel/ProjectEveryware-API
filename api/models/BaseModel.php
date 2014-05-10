@@ -101,7 +101,7 @@ Class BaseModel extends Phalcon\Mvc\Model
 	}
 
 	public function __set($prop, $value) {
-            if(in_array($prop, $this->props))
+            //if(in_array($prop, $this->props))
                 parent::__set($prop, $value);
 //            else 
 //                throw new Exception('Invalid property', 400);
