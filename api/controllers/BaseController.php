@@ -231,12 +231,12 @@ class BaseController extends \Phalcon\Mvc\Controller {
     }
     
     public function put() {
-        $args = $this->request->getJsonRawBody();
+        $args = $this->getRequestData();
         
-        $model = call_user_func(array($this->short_controller_name, 'findFirst'),$args->id);
+        $model = call_user_func(array($this->short_controller_name, 'findFirst'),$args['id']);
         
         if($model) {
-            unset($args->id);
+            unset($args['id']);
             foreach($args as $key => $value) {
                 $model->$key = $value;
             }
