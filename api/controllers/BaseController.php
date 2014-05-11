@@ -236,7 +236,7 @@ class BaseController extends \Phalcon\Mvc\Controller {
         $model = call_user_func(array($this->short_controller_name, 'findFirst'),$args->id);
         
         if($model) {
-            unset($args->provider_id);
+            unset($args->id);
             foreach($args as $key => $value) {
                 $model->$key = $value;
             }
