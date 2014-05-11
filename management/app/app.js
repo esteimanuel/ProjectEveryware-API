@@ -27,13 +27,13 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         url: '/dashboard',
         views: {
             "left-nav":{templateUrl:'app/main/left-nav-dashboard.html'},
-            "main":{templateUrl:"app/dashboard/index.html"},
+            "main":{templateUrl:"app/dashboard/index.html"}
         }
         
         }).state('main.dashboard.districts',{
             url: '/wijken',
             views: {
-                "content":{templateUrl:"app/dashboard/districts.html"}
+                "content":{templateUrl:"app/dashboard/districts.html", controller:'DashBoardDistrictsCtrl'}
             }
         
         }).state('main.dashboard.users',{

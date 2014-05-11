@@ -191,8 +191,8 @@ angular.module('gl.table', [])
             
         },
         link: function($scope, element, attributes, tableCtrl) {
-            $scope.allowEdit = true;
-            $scope.allowDelete = true;
+            $scope.allowEdit = (tableCtrl.$scope.allowEdit !== undefined) ? tableCtrl.$scope.allowEdit : true;
+            $scope.allowDelete = (tableCtrl.$scope.allowDelete !== undefined) ? tableCtrl.$scope.allowDelete : true;;
             $scope.editMode = false;
             $scope.visible = false;
             
