@@ -215,7 +215,7 @@ angular.module('gl.table', [])
                         }
                     }
                     newOrder[i] = {
-                        value: (key in $scope.cells) ? $scope.cells[key] : null,
+                        value: (key in $scope.cells) ? $scope.processKeyToValue(key, $scope.cells) /* $scope.cells[key] */ : null,
                         key: key,
                         type: (header.type) ? header.type : "text"
                     };
@@ -311,6 +311,16 @@ angular.module('gl.table', [])
                     //console.log($scope.cells);
                 } else
                     $scope.visible = false;
+            }
+            
+            $scope.processKeyToValue = function(key, value) {
+                var keyParts = key.split('.');
+                var obj = value;
+                for(var index in keyParts) {
+                    var keyPart = keyParts[index];
+                    obj = obj[keyPart];
+                }
+                return obj;
             }
             
             //$scope.initRowData();
