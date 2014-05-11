@@ -63,12 +63,30 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
 /// District redirs
 //////////////////////////
         
-    }).state('main.districts', {
+    }).state('main.district', {
         url: '/wijken',
         views: {
-            "left-nav":{templateUrl:'app/main/left-nav.html'},
-            "main": {templateUrl:'app/district/index.html'}
+            "left-nav":{templateUrl:'app/main/left-nav-district.html'},
+            "main": {templateUrl:'app/district/index.html'},
         }
+        
+        }).state('main.district.addDistrict',{
+            url: '/Wijktoevoegen',
+            views: {
+                "content":{templateUrl:"app/district/addDistrict.html"}
+            }
+        
+        }).state('main.district.editDistrict',{
+            url: '/wijkbeheer',
+            views: {
+                "content":{templateUrl:"app/district/editDistrict.html", controller:'editDistrictCtrl'}
+            }
+       
+//////////////////////////
+/// Login redirs
+//////////////////////////
+            
+            
     }).state('login', {
         url: '/login',
         views: {
