@@ -1,5 +1,9 @@
 <div style="position:absolute;left:0;right:0;">
     <ul class="pagination pull-right">
+      <li ng-class="{'disabled':activeIndex <= 0}"><a ng-click="setToFirstPage()"><<</a></li>
+      <li ng-class="{'disabled':activeIndex <= 0}"><a ng-click="pagePrev()"><</a></li>
       <li ng-repeat="page in pageList" ng-class="{'active':page.active, 'disabled':page.disabled}"><a ng-click="pageButtonClick(page.number)">{{page.number}}</a></li>
+      <li ng-class="{'disabled':activeIndex+1 >= pageList.length}"><a ng-click="pageNext()">></a></li>
+      <li ng-class="{'disabled':activeIndex+1 >= pageList.length}"><a ng-click="setToLastPage()">>></a></li>
     </ul>
 </div>
