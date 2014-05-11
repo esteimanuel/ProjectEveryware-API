@@ -1,0 +1,17 @@
+<div>
+  <h1 class="page-header">Wijk beheren</h1>
+</div>
+
+<gl-table>
+
+        <gl-table-head></gl-table-head>
+
+        <gl-table-body>
+            <gl-table-row ng-repeat="n in indexList(10) track by $index" row="{{$index}}"></gl-table-row>
+        </gl-table-body>
+<!--        <gl-table-row row="0"></gl-table-row>
+        <gl-table-row row="2"></gl-table-row>-->
+
+<gl-table-pager></gl-table-pager>
+
+</gl-table>
