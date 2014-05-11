@@ -11,6 +11,8 @@ angular.module('gl.table', [])
         transclude: true,
         controller: function($scope) {
             this.$scope = $scope;
+//            this.$compile = $compile;
+            
             var _this = this;
             var _sortField = null;
             var _sortFieldType = null;
@@ -68,7 +70,7 @@ angular.module('gl.table', [])
             this.addObserver = function(observer) {
                 _this.observers.push(observer);
                 
-                console.log("Set page count");
+                //console.log("Set page count");
                 _this.pagerData.activeRows++;
             }
             
@@ -82,10 +84,11 @@ angular.module('gl.table', [])
                 }
             }
             
-            this.notifyRowRemoved = function(removedRowIndex) {
-                for(var i = 0; i < _this.observers.length; i++) {
-                    _this.observers[i].rowRemoved(removedRowIndex);
-                }
+            this.notifyRowRemoved = function() {
+//                for(var i = 0; i < _this.observers.length; i++) {
+//                    _this.observers[i].rowRemoved(removedRowIndex);
+//                }
+                _this.updatePageCount();
             }
             
             this.draw = function() {
@@ -98,6 +101,27 @@ angular.module('gl.table', [])
                     _this.pagerObservers[x].init();
                 }
             }
+            
+            this.updatePageCount = function() {
+                var pageCount = _this.$scope.rows.length / _this.observers.length;
+                for(var x = 0; x < _this.pagerObservers.length; x++) {    
+                    _this.pagerObservers[x].setPageCount(pageCount);
+                }
+            }
+            
+            this.pageSetLast = function() {
+                for(var x = 0; x < _this.pagerObservers.length; x++) {    
+                    _this.pagerObservers[x].setToLastPage();
+                }
+            }
+            
+            $scope.addNewRows = function() {
+                //console.log("Add");
+                _this.updatePageCount();
+                _this.pageSetLast();
+                _this.notifyChange();
+            }
+            
             //this.draw();
             _this.$scope.draw = _this.draw;
 //            $scope.tableClass = "table";
@@ -167,8 +191,8 @@ angular.module('gl.table', [])
             
         },
         link: function($scope, element, attributes, tableCtrl) {
-            $scope.allowEdit = true;
-            $scope.allowDelete = true;
+            $scope.allowEdit = (tableCtrl.$scope.allowEdit !== undefined) ? tableCtrl.$scope.allowEdit : true;
+            $scope.allowDelete = (tableCtrl.$scope.allowDelete !== undefined) ? tableCtrl.$scope.allowDelete : true;;
             $scope.editMode = false;
             $scope.visible = false;
             
@@ -179,7 +203,7 @@ angular.module('gl.table', [])
             tableCtrl.addObserver($scope);
             
             $scope.sortCells = function() {
-                console.log("Sort cells");
+                //console.log("Sort cells");
                 var newOrder = [];
                 //console.log($scope.cells);
                 for(var i = 0; i < $scope.cellOrder.length; i++) {
@@ -191,7 +215,7 @@ angular.module('gl.table', [])
                         }
                     }
                     newOrder[i] = {
-                        value: (key in $scope.cells) ? $scope.cells[key] : null,
+                        value: (key in $scope.cells) ? $scope.processKeyToValue(key, $scope.cells) /* $scope.cells[key] */ : null,
                         key: key,
                         type: (header.type) ? header.type : "text"
                     };
@@ -207,7 +231,7 @@ angular.module('gl.table', [])
                     var rowData = tableCtrl.$scope.rows[_rowNr];
                     if(rowData) {
                         $scope.cells = rowData;
-                        console.log($scope.cells);
+                        //console.log($scope.cells);
                         if( !(Object.prototype.toString.call( rowData ) === '[object Array]'))
                             $scope.sortCells();
                         $scope.visible = true;
@@ -252,19 +276,21 @@ angular.module('gl.table', [])
                 
                 tableCtrl.$scope.rows.splice(_rowNr, 1);
                 // element.parent().find(attr[row>_rowNr]).scope.rowNr - 1
-                tableCtrl.notifyRowRemoved(_rowNr);
-                element.remove();
+                tableCtrl.notifyRowRemoved();
+                //element.addClass("remove");
+                tableCtrl.notifyChange();
+                //element.remove();
 //                console.log($scope.cells);
 //                console.log(tableCtrl.$scope.rows);
             }
             
-            $scope.rowRemoved = function(removedRow) {
-                if(_rowNr > removedRow) {
-                    var lowerCount = 1;
-                    _rowNr = _rowNr - lowerCount;
-                    attributes.row = _rowNr - lowerCount;
-                }
-            }
+//            $scope.rowRemoved = function(removedRow) {
+//                if(_rowNr > removedRow) {
+//                    var lowerCount = 1;
+//                    _rowNr = _rowNr - lowerCount;
+//                    attributes.row = _rowNr - lowerCount;
+//                }
+//            }
             
             $scope.setRowIndex = function(newIndex) {
                 _rowNr = newIndex;
@@ -277,10 +303,24 @@ angular.module('gl.table', [])
             // observer method
             $scope.updateData = function() {
                 $scope.cells = tableCtrl.$scope.rows[_rowNr];
-                //console.log($scope.cells);
-                if(typeof $scope.cells === 'object' && !( Object.prototype.toString.call($scope.cells) === '[object Array]' ))
-                    $scope.sortCells();
-                //console.log($scope.cells);
+                if($scope.cells) {
+                    //console.log($scope.cells);
+                    if(typeof $scope.cells === 'object' && !( Object.prototype.toString.call($scope.cells) === '[object Array]' ))
+                        $scope.sortCells();
+                    $scope.visible = true;
+                    //console.log($scope.cells);
+                } else
+                    $scope.visible = false;
+            }
+            
+            $scope.processKeyToValue = function(key, value) {
+                var keyParts = key.split('.');
+                var obj = value;
+                for(var index in keyParts) {
+                    var keyPart = keyParts[index];
+                    obj = obj[keyPart];
+                }
+                return obj;
             }
             
             //$scope.initRowData();
@@ -291,8 +331,22 @@ angular.module('gl.table', [])
 .directive('glTableBody', function() {
     return {
         restrict: 'E',
+        require: '^glTable',
         transclude: true,
         replace: true,
+        link: function($scope, element, attributes, tableCtrl) {
+//            tableCtrl.$scope.addRow = function() {
+//                $scope.addRow();
+//            }
+//            
+//            $scope.addRow = function() {
+//                var newRowIndex = tableCtrl.$scope.rows.length+1;
+//                var html = '<gl-table-row row="'+newRowIndex+'"></gl-table-row>';
+//                var el = tableCtrl.$compile(html)($scope);
+//                console.log(el);
+//                element.append(el);
+//            }
+        },
         template: '<tbody data-ng-transclude></tbody>'
     }
 })
@@ -305,10 +359,11 @@ angular.module('gl.table', [])
         link: function($scope, element, attributes, tableCtrl) {
             tableCtrl.addPagerObserver($scope);
             $scope.pagerData = tableCtrl.pagerData;
+            $scope.activeIndex = -1;
             
             $scope.init = function() {
                 $scope.pageCount = tableCtrl.$scope.pageCount;
-                console.log($scope.pageCount);
+                //console.log($scope.pageCount);
                 $scope.pageList = [];
                 for(var i = 0; i < $scope.pageCount; i++) {
                     $scope.pageList[i] = {
@@ -317,22 +372,76 @@ angular.module('gl.table', [])
                         number: i+1
                     };
                 }
-                if($scope.pageList.length > 0)
+                if($scope.pageList.length > 0) {
                     $scope.pageList[0].active = true;
-                console.log($scope.pageList);
+                    $scope.activeIndex = 0;
+                }
+                //console.log($scope.pageList);
             }
             
             $scope.pageButtonClick = function(pageNr) {
                 var index = pageNr - 1;
                 if(!$scope.pageList[index].active) {
-                    for(var i = 0; i < $scope.pageList.length; i++) {
-                        $scope.pageList[i].active = false;
+//                    for(var i = 0; i < $scope.pageList.length; i++) {
+//                        $scope.pageList[i].active = false;
+//                    }
+                    if($scope.activeIndex > -1) {
+                        $scope.pageList[$scope.activeIndex].active = false;
                     }
+                    
                     $scope.pageList[index].active = true;
+                    $scope.activeIndex = index;
                     //alert(pageNr);
                     var startIndex = $scope.pagerData.activeRows * (pageNr-1);
                     //alert(startIndex);
                     tableCtrl.setRowIndexes(startIndex);
+                }
+            }
+            
+            $scope.pagePrev = function() {
+                if(0 < $scope.activeIndex)
+                    $scope.pageButtonClick($scope.activeIndex);
+            }
+            
+            $scope.pageNext = function() {
+                if($scope.pageList.length > $scope.activeIndex+1)
+                    $scope.pageButtonClick($scope.activeIndex+2);
+            }
+        
+            $scope.setToFirstPage = function() {
+                $scope.pageButtonClick(1);
+            }
+        
+            $scope.setToLastPage = function() {
+                $scope.pageButtonClick($scope.pageList.length);
+            }
+            
+            $scope.setPageCount = function(count) {
+                count = Math.ceil(count);
+                if($scope.pageList.length > count) {
+                    var difference = $scope.pageList.length - count;
+                    var wasActiveIndex = -1;
+                    for(var i = count; i < $scope.pageList.length ; i++) {
+                        if($scope.pageList[i].active)
+                            wasActiveIndex = i;
+                    }
+                    $scope.pageList.splice(count, difference);
+                    if($scope.pageList.length > 0 && wasActiveIndex > -1) {
+                        // Set to previous page
+                        $scope.pageButtonClick(count);
+                    }
+                } else if(count > $scope.pageList.length) {
+                    //var newNr = $scope.pageList.length+1;
+                    //var difference = count - $scope.pageList.length;
+                    for(var x = $scope.pageList.length+1; x < count+1; x++) {
+                        $scope.pageList.push({
+                            active: false,
+                            disabled: false,
+                            number: x
+                        });
+                    }
+                    
+                    $scope.pageButtonClick(count);
                 }
             }
         },

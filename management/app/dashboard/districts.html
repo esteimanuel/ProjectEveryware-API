@@ -25,6 +25,15 @@
   </div>
 
   <h2 class="sub-header">Open wijken</h2>
+  <gl-table>
+      <gl-table-head></gl-table-head>
+
+        <gl-table-body>
+            <gl-table-row ng-repeat="n in indexList(5) track by $index" row="{{$index}}"></gl-table-row>
+        </gl-table-body>
+      
+        <gl-table-pager></gl-table-pager>
+  </gl-table>
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>

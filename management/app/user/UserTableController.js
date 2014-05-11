@@ -26,9 +26,26 @@ app.controller('UserTableCtrl', function($scope, $http) {
             console.log(data);
             $scope.rows = data;
             $scope.draw();
+            //$scope.addNewRows();
         }).error(function(data, status, headers, config) {
             console.log(data);
         });
+    }
+    
+    $scope.add = function() {
+        $scope.rows.push({
+            account_id: 100,
+            email: "Iets@Iets.Iets",
+            validated: false,
+            token: "token please"
+        });
+        $scope.rows.push({
+            account_id: 100,
+            email: "Iets@Iets.Iets",
+            validated: false,
+            token: "token please"
+        });
+        $scope.addNewRows();
     }
     
     $scope.getData(); 
