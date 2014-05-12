@@ -43,9 +43,13 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
     $scope.register = function () {
         var body = { email: $scope.register.email, wachtwoord: $scope.register.password };
         //var url = "http://localhost/ProjectEveryware-API/api/account/register";
-        var url = config.api.url + 'account/login';
+        var url = config.api.url+'account/register';
 
-        $http.post(url, body)
+        $http({
+            url:url,
+            method:"POST",
+            data: body
+        })
         .success(function (data, status, headers, config) {
             console.log(data);
             localStorage.token = data.account.token;
