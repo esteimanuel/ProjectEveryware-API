@@ -14,7 +14,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
        
 
         var params = { email: $scope.login.email, wachtwoord: $scope.login.password };
-
+        
         $http({
             url: config.api.url + 'account/login',
            // url: '/ProjectEveryware-API/api/account/login',
@@ -30,7 +30,12 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
                 $scope.toggleLogin();
             })
             .error(function (data, status, headers, config) {
-                $scope.login.errorMessage = "Er ging iets fout probeer het opnieuw!";
+                var message = "";
+                switch(status) {
+                    case 404:
+                        message = "Ongeldige gebruikersnaam of wachtwoord"
+                        break;
+                }
         })
     };
     
@@ -57,8 +62,22 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
 
         })
         .error(function(data, status, headers, config){
-            $scope.register.errorMessage = "Account is al in gebruik";
-            console.log(data, status, "ik ben gefaald");
+            var message = "";
+            switch(status) {
+                case 404:
+                    message = "De gebruiker kan niet worden gevonden om in te loggen";
+                    break;
+                case 400:
+                    for(var error in data.messages) {
+                        if(error.message.indexOf("unique") !== -1 && error.field === "email") {
+                            message = "Dit email adres is al in gebruik";
+                        }
+                    }
+                    break;
+            }
+            $scope.register.errorMessage = message;
+//            $scope.register.errorMessage = "Account is al in gebruik";
+//            console.log(data, status, "ik ben gefaald");
         });
     };  
 });

@@ -27,5 +27,5 @@ $app->delete('/{cont}/{act}', function($cont, $act) { return defaultControllerCa
 
 // Handle not found
 $app->notFound(function () use ($app) {
-    $app->response->setStatusCode(404, "Not Found")->sendHeaders();
+    $app->response->setStatusCode(404, "Not Found");
 });
