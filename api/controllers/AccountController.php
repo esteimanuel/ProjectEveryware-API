@@ -17,7 +17,7 @@ class AccountController extends BaseController {
         $email = $data['email'];
         $password = $data['wachtwoord'];
         
-        if (!isset($email) && !isset($password)) {
+        if (isset($email) && isset($password)) {
             $this->registerAccount($email, $password);
         }
     }
