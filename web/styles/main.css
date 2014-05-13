@@ -28,6 +28,58 @@
     margin-bottom: 15px
 }
 
+.left-district-nav {
+    position: absolute;
+    left: 0;
+    width:20%;
+    padding: 0 15px;
+}
+
+.right-district-content{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20%;
+    padding: 0 15px;
+}
+
+.main-container {
+    width: 60%;
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        width: 90%;
+    }
+    
+    .left-district-nav {
+        display:none;
+    }
+    
+    .right-district-content {
+        display: block;
+        position: static;
+        width: 100%;
+        float: right;
+    }
+}
+.participants-list {
+    padding: 0;
+}
+
+.participants-list > li {
+    display: inline-block;
+}
+
+.participants-list > li > img {
+    border-radius: 0;
+    width: 60px;
+    height: 60px;
+}
+
+.buddy-thumb {
+    border-color: green;
+}
 
 /*  //  #profile-form #profile-voornaam, #profile-achternaam, #profile-postcode, #profile-nummer, #profile-email, #profile-wachtwoord  {
    // margin-bottom: 15px;

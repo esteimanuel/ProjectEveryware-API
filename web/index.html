@@ -24,6 +24,7 @@ and open the template in the editor.
         <!--Load Controllers-->
         <script src="app/MainController.js"></script>
         <script src="app/user/UserController.js"></script>
+        <script src="app/wijk/WijkController.js"></script>
         
         <!--Load Models-->
         <script src="models/srvAuth.js"></script>
@@ -116,15 +117,15 @@ and open the template in the editor.
         <!-- START CONTENT -->
         <div class="main-content-placement">
             
-            <aside ui-view="left-nav" class="left-nav pull-left" style="width:20%;padding:0 15px;">
+<!--            <aside ui-view="left-nav" class="left-nav pull-left" style="width:20%;padding:0 15px;">
                 
             </aside>
             
             <aside ui-view="right-nav" class="right-content pull-right" style="width:20%;padding:0 15px;">
-                <!-- Hier kunnen bijv. de buddies en statussen van de actie komen te staan -->
-            </aside>
+                 Hier kunnen bijv. de buddies en statussen van de actie komen te staan 
+            </aside>-->
             
-            <div ui-view="main" class="container" style="width:60%;">
+            <div ui-view="main" class="container main-container">
 <!--                <ul class="nav nav-tabs nav-justified">
                     <li class="active"><a href="#">Item1</a></li>
                     <li><a href="#">Item2</a></li>

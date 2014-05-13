@@ -19,9 +19,9 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         url:'/wijk/:wid',
         title: 'Wijk',
         views: {
-            "left-nav":{templateUrl:'app/left-nav/wijk.html'},
-            "main":{templateUrl:'app/wijk/index.html'},
-            "right-nav": {templateUrl: 'app/right-nav/wijk.html'}
+//            "left-nav":{templateUrl:'app/left-nav/wijk.html'},
+            "main":{templateUrl:'app/wijk/index.html', controller:'WijkCtrl'}
+//            "right-nav": {templateUrl: 'app/right-nav/wijk.html'}
         }
     })
     .state('register', {
