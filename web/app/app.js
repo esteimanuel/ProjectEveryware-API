@@ -42,8 +42,8 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         url: '/faq',
         views: {
             //"left-nav": { templateUrl: 'app/left-nav/nav.html' },
-            "main": { templateUrl: 'app/faq/faq.html' }
-        }
+            "main": { templateUrl: 'app/faq/faq.html', controller: 'FaqCtrl' }
+        }  
     });
 
     //    .state('login', {

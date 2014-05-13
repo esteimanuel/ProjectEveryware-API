@@ -287,6 +287,19 @@ return array(
                         array('type' => belongsTo, 'f_table' => 'provider'),
                     )
 		),
+        'faq' => array(
+                settings => array(
+                        't_name' => 'faq'
+                    ),
+                props => array(
+                    'faq_id',
+                    'question',
+                    'answer',
+                    ),
+                relations => array(
+                    // no relations
+                    )
+        ),
 //                'accountGebruiker' => array(
 //                    settings => array(
 //                        't_name' => 'accountgebruikerlink'
