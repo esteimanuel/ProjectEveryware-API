@@ -9,7 +9,7 @@ return array(
             'AccountLevel' => array('get', 'post'),
             'Actie' => array('get'),
 			'Wijk' => array('get'),
-            'faq' => array('get'),
+            'Faq' => array('get'),
         ),
         'isAdmin' => true
     ),
