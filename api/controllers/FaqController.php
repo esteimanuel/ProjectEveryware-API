@@ -1,6 +1,6 @@
 <?php 
 
-class faqController extends BaseController {
+class FaqController extends BaseController {
 
 }
 ?>
