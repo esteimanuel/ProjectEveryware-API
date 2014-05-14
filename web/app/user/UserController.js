@@ -1,5 +1,5 @@
 console.log("loaded user controller");
-app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $location, $http, srvAuth) {
+app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $location, $http, srvAuth, User) {
     $scope.views = {
         showLogin: ($location.search().login == 1)
     };
@@ -22,11 +22,14 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
             params: params
         })
             .success(function (data, status, headers, config) {
-                localStorage.token = data.account.token;
-                $rootScope.user = data.account;
-                $rootScope.user.isLogged = true;
+//                localStorage.token = data.account.token;
+//                $rootScope.user = data.account;
+//                $rootScope.user.isLogged = true;
+                User.setGebruiker(data.gebruiker, true);
+                delete data.gebruiker;
+                User.setAccount(data.account, true);
 
-                console.log($rootScope.user);
+//                console.log($rootScope.user);
 
                 $scope.toggleLogin();
             })
@@ -78,4 +81,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
             $scope.register.errorMessage = message;
         });
     };  
+    
+    User.init();
+    
 });
