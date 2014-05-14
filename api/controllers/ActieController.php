@@ -17,7 +17,9 @@ class ActieController extends BaseController {
             foreach($data as $user) {
 //                var_dump($user->Account);
 //                var_dump($user->Buddy);
-                $user->_account = $user->Account[0];
+                if(count($user->Account) > 0) {
+                    $user->_account = $user->Account[0];
+                }
                 $user->Buddy;
                 $users[] = $user;
             }
