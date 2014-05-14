@@ -3,13 +3,16 @@
 Class Wijk extends BaseModel
 {
 
-    public static function getCloseBy() {
+    public static function getCloseBy($lat, $long) {
         // Instantiate the Query
-        $query = new Phalcon\Mvc\Model\Query("SELECT *,(SELECT MIN(ST_Distance_Sphere(st_makePoint(51.6495230,5.6146460), st_makepoint(latitude,longitude))) FROM Postcode WHERE Postcode.wijk_id = Wijk.wijk_id) as distance FROM Wijk ORDER BY distance");
+        $wijk = new Wijk();
+        $pdo = $wijk->getWriteConnection();
+        $lat = $pdo->escapeString($lat);
+        $long = $pdo->escapeString($long);
+        
+        $sql = "SELECT *,(SELECT MIN(ST_Distance_Sphere(st_makePoint($lat,$long), st_makepoint(latitude,longitude))) FROM Postcode WHERE Postcode.wijk_id = Wijk.wijk_id) as distance FROM Wijk ORDER BY distance";
 
-        // Execute the query returning a result if any
-        $result = $query->execute();
-        return $result;
+        return new Phalcon\Mvc\Model\Resultset\Simple(null, $wijk, $wijk->getReadConnection()->query($sql));
     }
     
 }
