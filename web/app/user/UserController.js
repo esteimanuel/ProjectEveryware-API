@@ -3,10 +3,13 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
     $scope.views = {
         showLogin: ($location.search().login == 1)
     };
-    $rootScope.user = {
-        isLogged: !!(localStorage.token),
-        token: localStorage.token
-    };
+
+    $scope.user = {};
+
+    //$rootScope.user = {
+    //    isLogged: !!(localStorage.token),
+    //    token: localStorage.token
+    //};
     
     $scope.toggleLogin = function() { $scope.views.showLogin = !$scope.views.showLogin; };
     
@@ -25,10 +28,11 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
 //                localStorage.token = data.account.token;
 //                $rootScope.user = data.account;
 //                $rootScope.user.isLogged = true;
-                User.setGebruiker(data.gebruiker, true);
-                delete data.gebruiker;
+                User.setGebruiker(data.account.gebruiker, true);
+                delete data.account.gebruiker;
                 User.setAccount(data.account, true);
-
+                User.setLogged(true);
+                $scope.user.isLogged = true;
 //                console.log($rootScope.user);
 
                 $scope.toggleLogin();
@@ -83,5 +87,6 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
     };  
     
     User.init();
+    $scope.user.isLogged = User.isLogged;
     
 });
