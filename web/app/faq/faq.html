@@ -4,33 +4,13 @@
     <accordion close-others="oneAtATime = true">
 
         <div ng-repeat="faq in faqs">
-            <accordion-group is-open="{{faq.id}}">
+            <accordion-group is-open="{{faq.isOpen}}">
                 <accordion-heading>
                     {{faq.question}}
-                    <i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': {{faq.id}}, 'glyphicon-chevron-right': !{{faq.id}}}"></i>
+                    <i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': faq.isOpen, 'glyphicon-chevron-right': !faq.isOpen}"></i>
                 </accordion-heading>
                 {{faq.answer}}
             </accordion-group>
         </div>
-
-
-        <accordion-group is-open="q1">
-            <accordion-heading>
-                Question 1
-                <i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': q1, 'glyphicon-chevron-right': !q1}"></i>
-            </accordion-heading>
-            Answer 1
-        </accordion-group>
-
-
-        <accordion-group is-open="q2">
-            <accordion-heading>
-                Question 2
-                <i class="pull-right glyphicon" data-ng-class="{'glyphicon-chevron-down': q2, 'glyphicon-chevron-right': !q2}"></i>
-            </accordion-heading>
-            Answer 2
-        </accordion-group>
-
-
     </accordion>
 </div>

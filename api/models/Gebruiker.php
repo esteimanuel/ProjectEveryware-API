@@ -1,6 +1,6 @@
 <?php
 
-Class User extends BaseModel {
+Class Gebruiker extends BaseModel {
     
     public function isAdmin() {
         return ($this->accountlevel->level === 'admin');

@@ -23,9 +23,12 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
         })
             .success(function (data, status, headers, config) {
                 localStorage.token = data.account.token;
-                    $rootScope.user.name = data.account.email;
-                    $rootScope.user.fotolink = data.account.foto_link;
-                    $rootScope.user.isLogged = true;
+                $rootScope.user = data.account;
+
+                console.log($rootScope.user);
+                   // $rootScope.user.name = data.account.email;
+                    //$rootScope.user.fotolink = data.account.foto_link;
+                   // $rootScope.user.isLogged = true;
 
                 $scope.toggleLogin();
             })
@@ -56,7 +59,6 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
             data: body
         })
         .success(function (data, status, headers, config) {
-            console.log(data);
             localStorage.token = data.account.token;
             $scope.user.isLogged = true;
 
@@ -76,8 +78,6 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
                     break;
             }
             $scope.register.errorMessage = message;
-//            $scope.register.errorMessage = "Account is al in gebruik";
-//            console.log(data, status, "ik ben gefaald");
         });
     };  
 });
