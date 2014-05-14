@@ -67,19 +67,27 @@
         <div class="form-group">
             <label for="email" class="col-sm-2 control-label">E-mail: </label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="email" placeholder="Email" data-ng-model="email">
+                <input type="text" class="form-control" id="email" placeholder="Email" data-ng-model="account.email">
             </div>
         </div>
         <div class="form-group">
             <label for="wachtwoord" class="col-sm-2 control-label">Wachtwoord: </label>
             <div class="col-sm-8">
-                <input type="password" class="form-control" id="wachtwoord" placeholder="Wachtwoord" data-ng-model="wachtwoord">
+                <input type="password" class="form-control" id="wachtwoord" placeholder="Wachtwoord" data-ng-model="account.wachtwoord">
             </div>
         </div>
+
+        <label class="checkbox">
+            <input type="checkbox" data-ng-model="account.buddy">
+            Meld je aan als glasvezel buddy.
+        </label>
     </fieldset>
 
     <button type="submit" class="btn btn-primary pull-right">Wijzig  </button>
 </form>
+
+
+
 
 <form class="form-horizontal" style="margin-top: 35px">
     <fieldset id="Fieldset1">
