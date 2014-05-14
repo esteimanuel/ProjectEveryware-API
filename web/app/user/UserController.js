@@ -24,11 +24,9 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
             .success(function (data, status, headers, config) {
                 localStorage.token = data.account.token;
                 $rootScope.user = data.account;
+                $rootScope.user.isLogged = true;
 
                 console.log($rootScope.user);
-                   // $rootScope.user.name = data.account.email;
-                    //$rootScope.user.fotolink = data.account.foto_link;
-                   // $rootScope.user.isLogged = true;
 
                 $scope.toggleLogin();
             })
@@ -60,8 +58,8 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
         })
         .success(function (data, status, headers, config) {
             localStorage.token = data.account.token;
-            $scope.user.isLogged = true;
-
+            $rootScope.user = data.account;
+            $rootScope.user.isLogged = true;
         })
         .error(function(data, status, headers, config){
             var message = "";
