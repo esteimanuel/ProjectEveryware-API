@@ -7,10 +7,10 @@ app.controller('FaqCtrl', function ($scope, $rootScope, $http) {
             method: 'GET'
         })
         .success(function (data, status) {
-            console.log(data);
+            $scope.faqs = data;
         })
         .error(function (data, status) {
-
+            console.log("db error");
         });
     }
 
