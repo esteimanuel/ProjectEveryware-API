@@ -38,7 +38,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce) 
         var params = { id: $scope.actie.actie_id}
 
         $http({
-            url: '/glassy/Glassy/api/' + 'actie/users',
+            url: config.api.url + 'actie/users',
             method: 'GET',
             params: params
         })
