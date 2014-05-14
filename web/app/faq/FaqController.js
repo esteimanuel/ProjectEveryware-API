@@ -1,8 +1,6 @@
-app.controller('FaqCtrl', function ($scope, $rootScope) {
-    console.log("faq loaded");
-
+app.controller('FaqCtrl', function ($scope, $rootScope, $http) {
+   
     $scope.getFaq = function () {
-        çonsole.log("i got to the method");
 
         $http({
             url: config.api.url + 'faq',
@@ -15,4 +13,6 @@ app.controller('FaqCtrl', function ($scope, $rootScope) {
 
         });
     }
+
+    $scope.getFaq();
 });
