@@ -1,24 +1,40 @@
+<style>
+    .largeFontIcon{
+        font-size: 35px;
+        color: #3355cc;
+    }    
+    
+    .backgroundHoverColor{
+        padding: 10px 0;
+    }
+    
+    .backgroundHoverColor:hover{
+        background-color: #efefef!important;
+        cursor:pointer;
+    }
+</style>
+
 <div>
   <h1 class="page-header">Wijken</h1>
 
   <div class="row placeholders">
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+    <div class="col-xs-6 col-sm-3 placeholder backgroundHoverColor">
+      <span class="glyphicon glyphicon-ok largeFontIcon"></span>
       <h4>Wijk</h4>
       <span class="text-muted">Succesvol</span>
     </div>
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+    <div class="col-xs-6 col-sm-3 placeholder backgroundHoverColor">
+      <span class="glyphicon glyphicon-remove largeFontIcon"></span>
       <h4>Wijk</h4>
       <span class="text-muted">Gefaald</span>
     </div>
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+    <div class="col-xs-6 col-sm-3 placeholder backgroundHoverColor">
+      <span class="glyphicon glyphicon-home largeFontIcon"></span>
       <h4>Wijk</h4>
       <span class="text-muted">Open</span>
     </div>
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+    <div class="col-xs-6 col-sm-3 placeholder backgroundHoverColor">
+      <span class="glyphicon glyphicon-euro largeFontIcon"></span>
       <h4>Wijk</h4>
       <span class="text-muted">Borg</span>
     </div>
@@ -34,47 +50,4 @@
       
         <gl-table-pager></gl-table-pager>
   </gl-table>
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Postcode</th>
-          <th>Naam</th>
-          <th>Doel (%)</th>
-          <th>Behaald (%)</th>
-          <th>Borg betaald (%)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>5384</td>
-          <td>Heesch</td>
-          <td>30</td>
-          <td>28</td>
-          <td>3</td>
-        </tr>
-        <tr>
-          <td>1020</td>
-          <td>Amsterdam zuid ofzo</td>
-          <td>20</td>
-          <td>15</td>
-          <td>1</td>
-        </tr>
-        <tr>
-          <td>4444</td>
-          <td>Ergens in nl</td>
-          <td>35</td>
-          <td>30</td>
-          <td>0</td>
-        </tr>
-        <tr>
-          <td>1000</td>
-          <td>Amsterdam</td>
-          <td>30</td>
-          <td>35</td>
-          <td>0</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 </div>
