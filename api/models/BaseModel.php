@@ -52,18 +52,20 @@ Class BaseModel extends Phalcon\Mvc\Model
                 $f_table = $relation['f_table'];
                 $f_key = (isset($relation['f_key'])) ? $relation['f_key'] : $f_table.'_id';
                 
+                $uf_table = ucfirst($f_table);
+                
                 switch($type) {
                     case hasOne:
                     case hasMany:
-                        $this->$type($key, $f_table, $key);
+                        $this->$type($key, $uf_table, $key);
                         break;
                     case belongsTo:
-                        $this->belongsTo($f_key, $f_table, $key);
+                        $this->belongsTo($f_key, $uf_table, $key);
                         break;
                     case hasManyToMany:
                         $k_key1 = (isset($relation['k_key1'])) ? $relation['k_key1'] : $this->modelName.'_id';
                         $k_key2 = (isset($relation['k_key2'])) ? $relation['k_key2'] : $f_table.'_id';
-                        $this->hasManyToMany($key, $relation['k_table'], $k_key1, $k_key2, $f_table, $f_key);
+                        $this->hasManyToMany($key, ucfirst($relation['k_table']), $k_key1, $k_key2, $uf_table, $f_key);
                         break;
                 }
             }
