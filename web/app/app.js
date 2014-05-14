@@ -73,12 +73,17 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     $urlRouterProvider.otherwise('/');
 
 })
-.run(function ($rootScope, $state, $window, srvAuth) {
+.run(function ($rootScope, $state, $window, srvAuth, User) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
         console.log("State change");
         console.log(toState);
         console.log(toParams);
-        console.log(fromState);  
+        console.log(fromState); 
+        
+        if(toState.name === 'wijk' && !User.isLogged) {
+            $state.transitionTo('home');
+            return;
+        }
     });
 
     $rootScope.user = {};
