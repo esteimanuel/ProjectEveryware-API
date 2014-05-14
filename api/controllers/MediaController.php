@@ -13,13 +13,13 @@
 class MediaController extends BaseController {
     //put your code here
     
-    public function get() {
-        
-    }
-    
-    public function post() {
-        
-    }
+//    public function get() {
+//        
+//    }
+//    
+//    public function post() {
+//        
+//    }
     
 }
 
