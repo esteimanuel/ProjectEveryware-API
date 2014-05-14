@@ -29,10 +29,10 @@
 }
 
 .left-district-nav {
-    position: absolute;
+    position: fixed;
     left: 0;
     width:20%;
-    padding: 0 15px;
+    padding: 15px 15px;
 }
 
 .right-district-content{
