@@ -1,4 +1,4 @@
-app.service('srvAuth', function () {
+app.service('srvAuth', function ($rootScope) {
 
     this.watchLoginChange = function () {
 
