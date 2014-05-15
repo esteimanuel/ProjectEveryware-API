@@ -12,7 +12,7 @@ app.service('District', function(User, $http) {
         _this.getLatLong(function() {
             if(_this.locationData) {
                 $http({
-                    url:config.api.url + "wijk/closeby",
+                    url: '/glassy/Glassy/api/' + "wijk/closeby",
                     method:"GET",
                     params: {lat:_this.locationData.latitude, "long":_this.locationData.longitude, limit: 10}
                 }).success(function(data, status) {

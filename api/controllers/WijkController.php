@@ -19,11 +19,13 @@ class WijkController extends BaseController {
 
             $result = array();
             foreach($districts as $district) {
-                $actie = Actie::findFirst(array('wijk_id' => $district->wijk_id));
-                if($actie) {
-                    $district->actie_id = $actie->actie_id;
-                    $district->actie_name = $actie->naam;
+//                $actie = Actie::find(array('wijk_id' => $district->wijk_id));
+                $actions = array();
+                foreach($district->Actie as $action) {
+                    $actions[] = $action;
                 }
+//                $district->acties = $actions;
+                $district->actie = $actions;
                 $result[] = $district;
             }
             $this->response->setJsonContent($result);
