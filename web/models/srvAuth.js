@@ -6,7 +6,7 @@ app.service('srvAuth', function () {
 
         console.log("111111111111111");
 
-        FB.Event.subscribe('srvAuth.watchLoginChange', function (reponse) {
+        FB.Event.subscribe('auth.authResponseChange', function (reponse) {
 
             console.log("222222222");
             if (reponse.status === 'connected') {
