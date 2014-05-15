@@ -4,12 +4,11 @@ app.service('srvAuth', function () {
 
         var _self = this;
 
-        console.log("hallo ?");
+        console.log("111111111111111");
 
-        FB.Event.subscribe('auth.authReponseChange', function (reponse) {
+        FB.Event.subscribe('srvAuth.watchLoginChange', function (reponse) {
 
-            console.log("hallo ?");
-            console.log(reponse);
+            console.log("222222222");
             if (reponse.status === 'connected') {
                 _self.getUserInfo();
             }
@@ -24,17 +23,11 @@ app.service('srvAuth', function () {
 
         var _self = this;
 
-        console.log('ik werd aangeroepen');
-        console.log(reponse);
-
         FB.api('/me', function (reponse) {
 
             $rootScope.$apply(function () {
                 $rootScope.user = _self.user = reponse;
             });
-
-            console.log('ik ben nu hier');
-            console.log(reponse);
         });
     };
 

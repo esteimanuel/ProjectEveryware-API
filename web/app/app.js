@@ -99,7 +99,6 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         });
 
         srvAuth.watchLoginChange();
-        console.log("did we get here then ?");
     };
 
     (function (d) {
