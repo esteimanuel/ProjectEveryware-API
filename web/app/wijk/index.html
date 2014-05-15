@@ -1,77 +1,99 @@
 <aside ui-view="left-nav" class="left-district-nav">
     <div class="list-group">
         <a data-ng-click="scrollTo('map')" class="list-group-item">Kaart</a>
-        <a data-ng-click="scrollTo('video')" class="list-group-item active">Video</a>
-        <a data-ng-click="scrollTo('fake')" class="list-group-item">Deelnemers</a>
-        <a data-ng-click="scrollTo('fake')" class="list-group-item">Iets</a>
-        <a data-ng-click="scrollTo('fake')" class="list-group-item">Nog iets</a>
+        <a data-ng-click="scrollTo('video')" class="list-group-item">Video</a>
+        <a data-ng-click="scrollTo('goedeDoel')" class="list-group-item">Goed doel</a>
+        <a data-ng-click="scrollTo('chat')" class="list-group-item">Buurt forum</a>
     </div>    
 </aside>
 
 <div class="page-header">
     <h1>
         {{actie.naam}}
+        <button class="pull-right btn btn-primary" style="width:200px;" ng-show="actie.stateVisible">{{actie.userStateMessage}}</button>
     </h1>
 </div>
 
-<div class="map-frame" id="map">
-    <iframe ng-src="{{mapsUrl}}" frameborder="0" style="width:100%; height:100%;"></iframe>
-</div>
-
-<div class="video-frame" id="video">
-    <iframe style="width:100%; height:100%;" src="//www.youtube.com/embed/" frameborder="0" allowfullscreen></iframe>
-</div>
-
-<aside ui-view="right-nav" class="right-district-content">
-    <div class="page-header" style="margin-top:5px;">
-        <h1 style="margin-top:5px;">
-            <!--<small><b>50%</b></small><br/>-->
-            <small><b>Targets</b></small>
-        </h1>
+<h4>Jou buurt</h4>
+<hr />
+    <div class="map-frame" id="map">
+        <iframe ng-src="{{mapsUrl}}" frameborder="0" style="width:100%; height:100%;"></iframe>
     </div>
-    
-    <div class="progress-container" >
-        1. Bewoners verzamelen 22%
-        <div id="myProgressbar" class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-            </div>
-        </div>
-        2. Inschrijven 9%
-        <div id="Div1" class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 9%;">
-            </div>
-        </div>
-        3.Provider selecteren 2%
-        <div id="Div2" class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
-            </div>
-        </div>
-        4. Glasvezel aandeel 0%
-        <div id="Div3" class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-            </div>
-        </div>
-        5. Glasvezel aanleggen 0%
-        <div id="Div4" class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-            </div>
-        </div>
-        6. overstappen naar glasvezel 100%
-        <div id="Div5" class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+
+<h4>Buurt video</h4>
+<hr />
+    <div class="video-frame" id="video">
+        <iframe style="width:100%; height:100%;" src="//www.youtube.com/embed/" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+<h4>Goede doel</h4>
+<hr/>
+    <div class="goedeDoel-frame" id="goedeDoel">
+        {{actie.goedeDoel.informatie}}
+
+        Target 
+        <div id="goedeDoelTarget" class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
             </div>
         </div>
     </div>
-    
-    <div class="participants">
+
+<h4>Buurt forum</h4>
+<hr />
+    <div class="chat-frame" id="chat">
+        <h1>Hallo chat</h1>
+    </div>
+
+    <aside ui-view="right-nav" class="right-district-content">
         <div class="page-header" style="margin-top:5px;">
             <h1 style="margin-top:5px;">
-                <small style="display:block;"><b>Deelnemers</b> <span class="pull-right">{{actie.deelnemersCount}}</span></small>
+                <!--<small><b>50%</b></small><br/>-->
+                <small><b>Targets</b></small>
             </h1>
         </div>
-        
-        <ul class="participants-list">
-            <li ng-repeat="deelnemer in actie.deelnemers" ><img ng-src="{{deelnemer.account.foto_link}}" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}"/></li>
-        </ul>
-    </div>
-</aside>
+
+        <div class="progress-container">
+            1. Bewoners verzamelen 22%
+            <div id="myProgressbar" class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                </div>
+            </div>
+            2. Inschrijven 9%
+            <div id="Div1" class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 9%;">
+                </div>
+            </div>
+            3.Provider selecteren 2%
+            <div id="Div2" class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
+                </div>
+            </div>
+            4. Glasvezel aandeel 0%
+            <div id="Div3" class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                </div>
+            </div>
+            5. Glasvezel aanleggen 0%
+            <div id="Div4" class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                </div>
+            </div>
+            6. overstappen naar glasvezel 100%
+            <div id="Div5" class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+
+        <div class="participants">
+            <div class="page-header" style="margin-top:5px;">
+                <h1 style="margin-top:5px;">
+                    <small style="display:block;"><b>Deelnemers</b> <span class="pull-right">{{actie.deelnemersCount}}</span></small>
+                </h1>
+            </div>
+
+            <ul class="participants-list">
+                <li ng-repeat="deelnemer in actie.deelnemers"><img ng-src="{{deelnemer.account.foto_link}}" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" /></li>
+            </ul>
+        </div>
+    </aside>

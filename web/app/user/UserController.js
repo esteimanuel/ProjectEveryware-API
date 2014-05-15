@@ -1,19 +1,22 @@
 console.log("loaded user controller");
-app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $location, $http, srvAuth) {
+app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $location, $http, srvAuth, User) {
     $scope.views = {
         showLogin: ($location.search().login == 1)
     };
-    $rootScope.user = {
-        isLogged: !!(localStorage.token),
-        token: localStorage.token
-    };
+
+    $scope.user = {};
+
+    //$rootScope.user = {
+    //    isLogged: !!(localStorage.token),
+    //    token: localStorage.token
+    //};
     
-    $scope.toggleLogin = function() { $scope.views.showLogin = !$scope.views.showLogin; };
+    $scope.toggleLogin = function() {$scope.views.showLogin = !$scope.views.showLogin;};
     
     $scope.login = function() {
        
 
-        var params = { email: $scope.login.email, wachtwoord: $scope.login.password };
+        var params = {email: $scope.login.email, wachtwoord: $scope.login.password};
         
         $http({
             url: config.api.url + 'account/login',
@@ -22,10 +25,18 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
             params: params
         })
             .success(function (data, status, headers, config) {
-                localStorage.token = data.account.token;
-                    $rootScope.user.name = data.account.email;
-                    $rootScope.user.fotolink = data.account.foto_link;
-                    $rootScope.user.isLogged = true;
+//                localStorage.token = data.account.token;
+//                $rootScope.user = data.account;
+//                $rootScope.user.isLogged = true;
+                User.setGebruiker(data.account.gebruiker, true);
+                delete data.account.gebruiker;
+                User.setAccount(data.account, true);
+                User.setLogged(true);
+                $scope.setValuesFromUser();
+                
+                $rootScope.$broadcast('onUserLogin');
+                //$scope.user.isLogged = true;
+//                console.log($rootScope.user);
 
                 $scope.toggleLogin();
             })
@@ -40,13 +51,16 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
     };
     
     $scope.logout = function() {
-        localStorage.removeItem("token");
-        $rootScope.user.isLogged = false;
+//        localStorage.removeItem("token");
+//        $rootScope.user.isLogged = false;
+        User.reset();
+        $scope.setValuesFromUser();
         srvAuth.logout();
+        $rootScope.$broadcast('onUserLogout');
     };
 
     $scope.register = function () {
-        var body = { email: $scope.register.email, wachtwoord: $scope.register.password };
+        var body = {email: $scope.register.email, wachtwoord: $scope.register.password};
         //var url = "http://localhost/ProjectEveryware-API/api/account/register";
         var url = config.api.url+'account/register';
 
@@ -56,10 +70,9 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
             data: body
         })
         .success(function (data, status, headers, config) {
-            console.log(data);
             localStorage.token = data.account.token;
-            $scope.user.isLogged = true;
-
+            $rootScope.user = data.account;
+            $rootScope.user.isLogged = true;
         })
         .error(function(data, status, headers, config){
             var message = "";
@@ -76,8 +89,18 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
                     break;
             }
             $scope.register.errorMessage = message;
-//            $scope.register.errorMessage = "Account is al in gebruik";
-//            console.log(data, status, "ik ben gefaald");
         });
     };  
+    
+    $scope.setValuesFromUser = function() {
+        $scope.user.isLogged = User.isLogged;
+        $scope.user.account = User.account;
+        $scope.user.gebruiker = User.gebruiker;
+    }
+    
+    User.init();
+    $scope.setValuesFromUser();
+    $rootScope.initDistrict();
+//    $scope.user.isLogged = User.isLogged;
+    
 });

@@ -15,7 +15,7 @@ $config = include 'config.php';
 
 return array(
 	'models' => array(
-		'user' => array(
+		'gebruiker' => array(
                     settings => array(
                         't_name' => 'gebruiker'
                     ),
@@ -40,7 +40,7 @@ return array(
                         array('type' => belongsTo, 'f_table' => 'providerpakket'),
                         array('type' => hasOne, 'f_table' => 'interesse'),
                         array('type' => hasOne, 'key' => 'gebruiker_id','f_table' => 'buddy', 'f_key' => 'gebruiker_id'),
-                        array('type' => hasManyToMany, 'key' => 'gebruiker_id', 'k_table' => 'accountgebruikerlink', 'k_key1' => 'gebruiker_id', 'f_table' => 'account'),
+                        array('type' => hasManyToMany, 'key' => 'gebruiker_id', 'k_table' => 'accountGebruikerLink', 'k_key1' => 'gebruiker_id', 'f_table' => 'account'),
                         array('type' => hasMany, 'key' => 'gebruiker_id', 'f_table' => 'media'),
                     )
                 ),
@@ -225,8 +225,9 @@ return array(
                         'token',
                     ),
                     relations => array(
-                        array('type' => hasManyToMany, 'k_table' => 'accountgebruikerlink', 'f_table' => 'gebruiker'),
+//                        array('type' => hasManyToMany, 'k_table' => 'accountGebruikerLink', 'f_table' => 'gebruiker'),
                         array('type' => belongsTo, 'f_table' => 'accountlevel'),
+                        array('type' => hasManyToMany, 'key' => 'account_id', 'k_table' => 'accountGebruikerLink', 'k_key1' => 'account_id', 'f_table' => 'gebruiker'),
                     )
 		),
 		'accountLevel' => array(

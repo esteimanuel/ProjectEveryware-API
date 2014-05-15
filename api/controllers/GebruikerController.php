@@ -1,6 +1,6 @@
 <?php
 
-class UserController extends BaseController
+class GebruikerController extends BaseController
 {
 //     public function get($app) {
 // //        $phql = 'SELECT * FROM gebruiker';

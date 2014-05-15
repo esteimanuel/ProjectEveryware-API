@@ -1,18 +1,18 @@
-app.controller('FaqCtrl', function ($scope, $rootScope) {
-    console.log("faq loaded");
-
+app.controller('FaqCtrl', function ($scope, $rootScope, $http) {
+   
     $scope.getFaq = function () {
-        console.log("i got to the method");
 
         $http({
             url: config.api.url + 'faq',
             method: 'GET'
         })
         .success(function (data, status) {
-            console.log(data);
+            $scope.faqs = data;
         })
         .error(function (data, status) {
-
+            console.log("db error");
         });
     }
+
+    $scope.getFaq();
 });

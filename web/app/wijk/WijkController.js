@@ -1,4 +1,4 @@
-app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce) {
+app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, User) {
 
     $scope.actie = {};
     $scope.mapsUrl = "";
@@ -10,7 +10,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce) 
             return;
         }
         
-        var params = { id: $stateParams.wid }
+        var params = {id: $stateParams.wid}
 
         $http({
             url: config.api.url + 'actie',
@@ -24,6 +24,8 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce) 
             
             $scope.actie = data;
             
+            $scope.initUserStateMessage();
+            
             document.title = $scope.actie.naam + " - " + config.app.name;
             $scope.getActieDeelnemers();
             $scope.mapsUrl = $sce.trustAsResourceUrl($scope.getMapsUrl());
@@ -35,10 +37,10 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce) 
 
     //get all wijk deelnemers
     $scope.getActieDeelnemers = function () {
-        var params = { id: $scope.actie.actie_id}
+        var params = {id: $scope.actie.actie_id}
 
         $http({
-            url: '/glassy-api/api/' + 'actie/users',
+            url: config.api.url + 'actie/users',
             method: 'GET',
             params: params
         })
@@ -54,6 +56,29 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce) 
     $scope.getMapsUrl = function() {
         return "http://glassy-web.avans-project.nl/?wijk=" + $scope.actie.wijk_id;
     }
+    
+    $scope.initUserStateMessage = function() {
+//        console.log(User);
+        if(User.isLogged) {
+            $scope.actie.stateVisible = true;
+            if(User.gebruiker.actie_id == $scope.actie.actie_id)
+                $scope.actie.userStateMessage = "De wijk van de gebruiker";
+            else if(User.gebruiker.actie_id > 0)
+                $scope.actie.stateVisible = false;
+            else
+                $scope.actie.userStateMessage = "Ik doe mee!";
+        } else {
+            $scope.actie.stateVisible = false;
+        }
+    }
+    
+    $scope.$on('onUserLogin', function() {
+        $scope.initUserStateMessage();
+    });
+    
+    $scope.$on('onUserLogout', function() {
+        $scope.initUserStateMessage();
+    });
     
 //    $scope.initBuddies = function() {
 //        $scope.actie.buddies = [];

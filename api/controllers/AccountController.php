@@ -33,7 +33,7 @@ class AccountController extends BaseController {
         $account->wachtwoord = $password;
         $account->accountlevel_id = $accountLevel->accountlevel_id;
         if($account->save()) {
-            $user = new User();
+            $user = new Gebruiker();
             if($user->save()) {
                 $userId = $user->gebruiker_id;
                 $accountId = $account->account_id;
@@ -87,8 +87,10 @@ class AccountController extends BaseController {
             $account->token = $token;
             if ($account->save()) {
                 //$this->response->setJsonContent(array('token' => $token));
-				unset($account->wachtwoord);
-				unset($account->validated);
+                unset($account->wachtwoord);
+                unset($account->validated);
+                $account->gebruiker = $account->Gebruiker[0];
+                $account->gebruiker->postcode = Postcode::findFirst($account->gebruiker->postcode_id);
             } else {
                 $messages = $this->checkErrors($account);
                 $token = null;

@@ -35,14 +35,14 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         url: '/profiel',
         views: {
             //"left-nav": { templateUrl: 'app/left-nav/nav.html' },
-            "main": { templateUrl: 'app/profiel/profiel.html' }
+            "main": {templateUrl: 'app/profiel/profiel.html'}
         }
     })
     .state('faq', {
         url: '/faq',
         views: {
             //"left-nav": { templateUrl: 'app/left-nav/nav.html' },
-            "main": { templateUrl: 'app/faq/faq.html', controller: 'FaqCtrl' }
+            "main": {templateUrl: 'app/faq/faq.html', controller: 'FaqCtrl'}
         }  
     });
 
@@ -73,12 +73,18 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     $urlRouterProvider.otherwise('/');
 
 })
-.run(function ($rootScope, $state, $window, srvAuth) {
+.run(function ($rootScope, $state, $window, srvAuth, User) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
         console.log("State change");
         console.log(toState);
         console.log(toParams);
-        console.log(fromState);  
+        console.log(fromState); 
+        
+//        if(toState.name === 'wijk' && !User.isLogged) {
+//            event.preventDefault();
+//            $state.transitionTo('home');
+//            return;
+//        }
     });
 
     $rootScope.user = {};
@@ -88,7 +94,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             appId: '608467429234622',
             channelUrl: 'app/channel/channel.html',
             status: true,
-            //cookie: true,
+            cookie: true,
             xfbml: true
         });
 
