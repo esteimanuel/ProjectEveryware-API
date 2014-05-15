@@ -75,15 +75,17 @@ and open the template in the editor.
                   <ul class="nav navbar navbar-nav" style="margin-left:5%;">
                       <li data-ng-show="user.isLogged"><a data-ui-sref="wijk({wid: user.gebruiker.actie_id})">Mijn wijk</a></li>
                       <li class="dropdown" ng-show="district.closeby.length">
-                          <a class="dropdown-toggle" data-toggle="-closeby-dropdown">Wijken in de buurt <b class="caret"></b></a>
+                          <a class="dropdown-toggle" data-toggle="closeby-dropdown">Wijken in de buurt <b class="caret"></b></a>
                           <ul class="dropdown-menu">
-                              <span ng-repeat="district in district.closeby">
-                                    <li class="dropdown-header">{{district.wijk_naam}}</li>
-                                    <li ng-repeat="actie in district.actie">
-                                        <a ui-sref="wijk({wid:actie.actie_id})">{{actie.naam}}</a>
-                                    </li>
-                                    <li class="divider"></li>
-                              </span>
+                              <li ng-repeat="district in district.closeby" ng-show="district.actie.length">
+                                    <span class="dropdown-header">{{district.wijk_naam}}</span>
+                                    <ul class="action-dropdown-section">
+                                        <li ng-repeat="actie in district.actie">
+                                            <a ui-sref="wijk({wid:actie.actie_id})">{{actie.naam}}</a>
+                                        </li>
+                                    </ul>
+                                    <span class="divider"></span>
+                              </li>
                           </ul>
                       </li>
                   </ul>
