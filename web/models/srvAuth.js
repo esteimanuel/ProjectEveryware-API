@@ -4,11 +4,8 @@ app.service('srvAuth', function () {
 
         var _self = this;
 
-        console.log("111111111111111");
-
         FB.Event.subscribe('auth.authResponseChange', function (reponse) {
 
-            console.log("222222222");
             if (reponse.status === 'connected') {
                 _self.getUserInfo();
             }
@@ -26,7 +23,7 @@ app.service('srvAuth', function () {
         FB.api('/me', function (reponse) {
 
             $rootScope.$apply(function () {
-                $rootScope.user = _self.user = reponse;
+                console.log(reponse);
             });
         });
     };
