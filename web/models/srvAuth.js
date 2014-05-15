@@ -24,9 +24,7 @@ app.service('srvAuth', function ($rootScope) {
 
             $rootScope.$apply(function () {
                 console.log(response);
-                console.log(response.id);
-                var foto = "https://graph.facebook.com/" + response.id + "/picture?type=normal";
-                console.log(foto);
+                var foto = "https://graph.facebook.com/" + response.id + "/picture?type=large";
             });
         });
     };
