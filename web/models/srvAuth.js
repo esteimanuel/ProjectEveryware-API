@@ -20,10 +20,11 @@ app.service('srvAuth', function ($rootScope) {
 
         var _self = this;
 
-        FB.api('/me', function (reponse) {
+        FB.api('/me', function (response) {
 
             $rootScope.$apply(function () {
-                console.log(reponse);
+                console.log(response);
+                var foto = "https://graph.facebook.com/" + response.id + "/picture?type=large";
             });
         });
     };
