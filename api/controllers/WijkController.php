@@ -20,8 +20,10 @@ class WijkController extends BaseController {
             $result = array();
             foreach($districts as $district) {
                 $actie = Actie::findFirst(array('wijk_id' => $district->wijk_id));
-                if($actie)
+                if($actie) {
                     $district->actie_id = $actie->actie_id;
+                    $district->actie_name = $actie->naam;
+                }
                 $result[] = $district;
             }
             $this->response->setJsonContent($result);

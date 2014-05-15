@@ -56,6 +56,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
         User.reset();
         $scope.setValuesFromUser();
         srvAuth.logout();
+        $rootScope.$broadcast('onUserLogout');
     };
 
     $scope.register = function () {

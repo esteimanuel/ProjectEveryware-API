@@ -76,6 +76,10 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
         $scope.initUserStateMessage();
     });
     
+    $scope.$on('onUserLogout', function() {
+        $scope.initUserStateMessage();
+    });
+    
 //    $scope.initBuddies = function() {
 //        $scope.actie.buddies = [];
 //        angular.forEach($scope.actie.deelnemers, function(deelnemer) {
