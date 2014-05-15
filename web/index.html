@@ -77,12 +77,13 @@ and open the template in the editor.
                       <li class="dropdown" ng-show="district.closeby.length">
                           <a class="dropdown-toggle" data-toggle="closeby-dropdown">Wijken in de buurt <b class="caret"></b></a>
                           <ul class="dropdown-menu">
-                              <li ng-repeat="district in district.closeby" ng-show="district.actie.length">
+                              <li ng-repeat="district in district.closeby">
                                     <span class="dropdown-header">{{district.wijk_naam}}</span>
                                     <ul class="action-dropdown-section">
-                                        <li ng-repeat="actie in district.actie">
+                                        <li ng-repeat="actie in district.actie" class="bg-success">
                                             <a ui-sref="wijk({wid:actie.actie_id})">{{actie.naam}}</a>
                                         </li>
+                                        <li ng-hide="district.actie.length" class="action-not-found"><a><small class="text-muted">Geen acties gevonden</small></a></li>
                                     </ul>
                                     <span class="divider"></span>
                               </li>

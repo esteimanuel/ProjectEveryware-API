@@ -18,11 +18,13 @@ class AccountController extends BaseController {
         $password = $data['wachtwoord'];
         
         if (isset($email) && isset($password)) {
-            $this->registerAccount($email, $password);
+            $messages = '';
+            $uAccount = $this->registerAccount($email, $password, $messages);
+            $this->response->setJsonContent(array('messages' => $messages, 'account' => $uAccount));
         }
     }
     
-    private function registerAccount($email, $password) {
+    private function registerAccount($email, $password, &$messages) {
         $messages = '';
         $uAccount = null;
 
@@ -52,8 +54,7 @@ class AccountController extends BaseController {
         } else {
             $messages = $this->checkErrors($account);
         }
-
-        $this->response->setJsonContent(array('messages' => $messages, 'account' => $uAccount));
+        return $uAccount;
     }
     
     public function login() {
@@ -68,8 +69,30 @@ class AccountController extends BaseController {
     }
 
     public function loginFacebook() {
-        $token = $this->request->getQuery('token');
- 
+        $fid = $this->request->getQuery('fid');
+        $f_email = $this->request->getQuery('femail');
+        
+        if(isset($fid) && isset($f_email)) {
+            $messages = '';
+            $tmpAccount = Account::findFirst(array('facebook_id' => $fid));
+            
+            if($tmpAccount) {
+                $account = $this->loginAccount($tmpAccount->email, $tmpAccount->password, $messages);
+                $this->response->setJsonContent(array('messages' => $messages, 'account' => $account));
+            } else {
+                $account = $this->registerAccount($f_email, hash('md5', time() . uniqid() . "random"), $messages);
+                if($messages === '') {
+                    $account->facebook_id = $fid;
+                    if(!$account->save()) {
+                        $messages = $this->checkErrors($account);
+                    }
+                }
+                $this->response->setJsonContent(array('messages' => $messages, 'account' => $account));
+            }
+            
+        } else {
+            $this->response->setStatusCode(400, "Bad value given");
+        }
     }
     
     private function loginAccount($email, $password, &$messages, $token = null) {
