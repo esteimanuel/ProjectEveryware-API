@@ -67,8 +67,14 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
                 $scope.actie.stateVisible = false;
             else
                 $scope.actie.userStateMessage = "Ik doe mee!";
+        } else {
+            $scope.actie.stateVisible = false;
         }
     }
+    
+    $scope.$on('onUserLogin', function() {
+        $scope.initUserStateMessage();
+    });
     
 //    $scope.initBuddies = function() {
 //        $scope.actie.buddies = [];
