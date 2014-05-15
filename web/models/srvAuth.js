@@ -4,6 +4,8 @@ app.service('srvAuth', function () {
 
         var _self = this;
 
+        console.log("hallo ?");
+
         FB.Event.subscribe('auth.authReponseChange', function (reponse) {
 
             console.log("hallo ?");
