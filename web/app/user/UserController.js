@@ -99,6 +99,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
     
     User.init();
     $scope.setValuesFromUser();
+    $rootScope.initDistrict();
 //    $scope.user.isLogged = User.isLogged;
     
 });

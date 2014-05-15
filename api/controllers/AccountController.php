@@ -90,6 +90,7 @@ class AccountController extends BaseController {
                 unset($account->wachtwoord);
                 unset($account->validated);
                 $account->gebruiker = $account->Gebruiker[0];
+                $account->gebruiker->postcode = Postcode::findFirst($account->gebruiker->postcode_id);
             } else {
                 $messages = $this->checkErrors($account);
                 $token = null;

@@ -58,7 +58,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
     }
     
     $scope.initUserStateMessage = function() {
-        console.log(User);
+//        console.log(User);
         if(User.isLogged) {
             $scope.actie.stateVisible = true;
             if(User.gebruiker.actie_id == $scope.actie.actie_id)
