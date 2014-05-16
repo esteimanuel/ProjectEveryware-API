@@ -76,7 +76,7 @@ class BaseController extends \Phalcon\Mvc\Controller {
     }
     
     public function checkAuth($method) {
-        $userRole = ($this->_account) ? $this->_account->accountlevel->level : 'guest';
+        $userRole = ($this->_account) ? AccountLevel::findFirst($this->_account->accountlevel_id)->level : 'guest';
         $roles = include __DIR__.'/../config/roles.php';
         $roleSettings = $roles[$userRole];
 

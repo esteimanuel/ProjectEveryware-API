@@ -226,7 +226,7 @@ return array(
                     ),
                     relations => array(
 //                        array('type' => hasManyToMany, 'k_table' => 'accountGebruikerLink', 'f_table' => 'gebruiker'),
-                        array('type' => belongsTo, 'f_table' => 'accountlevel'),
+                        array('type' => belongsTo, 'f_table' => 'accountLevel'),
                         array('type' => hasManyToMany, 'key' => 'account_id', 'k_table' => 'accountGebruikerLink', 'k_key1' => 'account_id', 'f_table' => 'gebruiker'),
                     )
 		),
