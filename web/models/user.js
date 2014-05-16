@@ -22,7 +22,10 @@ app.service('User', function() {
         if(setLocalStorage)
             localStorage.gebruiker = JSON.stringify(data);
         _this.gebruiker = data;
-        _this.gebruiker.naam = _this.gebruiker.voornaam + ((_this.gebruiker.tussenvoegsel) ? " "+_this.gebruiker.tussenvoegsel+" " : " ") + _this.gebruiker.achternaam;
+        if(_this.gebruiker.voornaam && _this.gebruiker.achternaam)
+            _this.gebruiker.naam = _this.gebruiker.voornaam + ((_this.gebruiker.tussenvoegsel) ? " "+_this.gebruiker.tussenvoegsel+" " : " ") + _this.gebruiker.achternaam;
+        else
+            _this.gebruiker.naam = _this.account.email;
     }
     
     this.reset = function() {

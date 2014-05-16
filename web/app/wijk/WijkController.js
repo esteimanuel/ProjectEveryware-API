@@ -1,4 +1,4 @@
-app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, User) {
+app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, User, $rootScope) {
 
     $scope.actie = {};
     $scope.mapsUrl = "";
@@ -56,14 +56,43 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
     $scope.getMapsUrl = function() {
         return "http://glassy-web.avans-project.nl/?wijk=" + $scope.actie.wijk_id;
     }
+
+    $scope.handleStateButton = function() {
+        //console.log(User.gebruiker.actie_id);
+        if(User.gebruiker.actie_id === $scope.actie.actie_id) {
+            // Handle state current user's action
+            
+        } else if(!User.gebruiker.actie_id)
+            // Handle add user to action
+            $scope.addUserToAction();
+    }
+    
+    $scope.addUserToAction = function() {
+        //User.gebruiker.actie_id = $scope.actie.actie_id;
+        var tempActieId = $scope.actie.actie_id;
+        $http({
+            url: "/glassy-api/api/" + "gebruiker",
+            method: "PUT",
+            data: {
+                _token: User.account.token,
+                actie_id: tempActieId
+            }
+        }).success(function(data, status) {
+            User.gebruiker.actie_id = tempActieId;
+            $scope.initUserStateMessage();
+            $rootScope.$broadcast('onUserDataChanged');
+        }).error(function(data, status) {
+            console.log("Something went wrong while adding user to action");
+        });
+    }
     
     $scope.initUserStateMessage = function() {
 //        console.log(User);
         if(User.isLogged) {
             $scope.actie.stateVisible = true;
-            if(User.gebruiker.actie_id == $scope.actie.actie_id)
+            if(User.gebruiker.actie_id == $scope.actie.actie_id) {
                 $scope.actie.userStateMessage = "De wijk van de gebruiker";
-            else if(User.gebruiker.actie_id > 0)
+            } else if(User.gebruiker.actie_id > 0)
                 $scope.actie.stateVisible = false;
             else
                 $scope.actie.userStateMessage = "Ik doe mee!";

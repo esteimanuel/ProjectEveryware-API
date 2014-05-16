@@ -110,7 +110,14 @@ class BaseController extends \Phalcon\Mvc\Controller {
     // ---------------------------
     
     public function get() {
-        $qStr = $this->request->getQuery();
+        $qStrData = $this->request->getQuery();
+        $data = $this->baseGet($qStrData);
+        if(isset($data))
+            $this->response->setJsonContent($data);
+    }
+    
+    protected function baseGet($qStrData) {
+        $qStr = $qStrData;
         $valid = true;
         
         $calcFunctions = array('count','sum', 'average', 'maximum', 'minimum');
@@ -148,8 +155,10 @@ class BaseController extends \Phalcon\Mvc\Controller {
                     break;
             }
 
-            $this->response->setJsonContent($data);
+//            $this->response->setJsonContent($data);
+            return $data;
         }
+        return null;
     }
     
     private function processQueryData($func, $config) {
@@ -206,11 +215,19 @@ class BaseController extends \Phalcon\Mvc\Controller {
     }
     
     public function post() {
+        $data = $this->getRequestData();
+        $messages = '';
+        $id = $this->basePost($data, $messages);
+        $this->response->setJsonContent(array('messages' => $messages, 'id' => $id));
+    }
+    
+    protected function basePost($postData, &$messages) {
         $modelStr = $this->short_controller_name;
         $model = new $modelStr();
         $idProp = $model->getIdPropName(); /* call_user_func(array($this->short_controller_name,'getIdPropName')); */
         
-        $data = $this->getRequestData();
+//        $data = $this->getRequestData();
+        $data = $postData;
         
         foreach($data as $key => $value) {
             $model->$key = $value;
@@ -227,11 +244,19 @@ class BaseController extends \Phalcon\Mvc\Controller {
             $id = -1;
         }
 
-        $this->response->setJsonContent(array('messages' => $messages, 'id' => $id));
+//        $this->response->setJsonContent(array('messages' => $messages, 'id' => $id));
+        return $id;
     }
     
     public function put() {
-        $args = $this->getRequestData();
+        $data = $this->getRequestData();
+        $messages = '';
+        $model = $this->basePut($data, $messages);
+        $this->response->setJsonContent(array('messages' => $messages, 'model' => $model));
+    }
+    
+    protected function basePut($putData, &$messages) {
+        $args = $putData;
         
         $model = call_user_func(array($this->short_controller_name, 'findFirst'),$args['id']);
         
@@ -245,14 +270,23 @@ class BaseController extends \Phalcon\Mvc\Controller {
             if(!$model->save()) {
                 $messages = $this->checkErrors($model);
             }
-            $this->response->setJsonContent(array('messages' => $messages, 'model' => $model));
+//            $this->response->setJsonContent(array('messages' => $messages, 'model' => $model));
+            return $model;
         } else {
             $this->response->setStatusCode(404, "Not found");
         }
+        return null;
     }
     
     public function delete() {
-        $args = $this->request->getJsonRawBody();
+        $data = $this->request->getJsonRawBody();
+        $messages = '';
+        $this->baseDelete($data, $messages);
+        $this->response->setJsonContent(array('messages' => $messages));
+    }
+    
+    protected function baseDelete($data, &$messages) {
+        $args = $data;
         
         $model = call_user_func(array($this->short_controller_name, 'findFirst'),$args->id);
         
@@ -262,7 +296,7 @@ class BaseController extends \Phalcon\Mvc\Controller {
                 $messages = $this->checkErrors($model);
             }
             $this->response->setStatusCode(204, "No content");
-            $this->response->setJsonContent(array('messages' => $messages));
+//            $this->response->setJsonContent(array('messages' => $messages));
         } else {
             $this->response->setStatusCode(404, "Not found");
         }

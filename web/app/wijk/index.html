@@ -10,7 +10,7 @@
 <div class="page-header">
     <h1>
         {{actie.naam}}
-        <button class="pull-right btn btn-primary" style="width:200px;" ng-show="actie.stateVisible">{{actie.userStateMessage}}</button>
+        <button class="pull-right btn btn-primary" style="width:200px;" ng-show="actie.stateVisible" ng-click="handleStateButton()">{{actie.userStateMessage}}</button>
     </h1>
 </div>
 
