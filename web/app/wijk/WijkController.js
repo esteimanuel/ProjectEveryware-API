@@ -71,7 +71,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
         //User.gebruiker.actie_id = $scope.actie.actie_id;
         var tempActieId = $scope.actie.actie_id;
         $http({
-            url: "/glassy-api/api/" + "gebruiker",
+            url: config.api.url + "gebruiker",
             method: "PUT",
             data: {
                 _token: User.account.token,
@@ -79,6 +79,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
             }
         }).success(function(data, status) {
             User.gebruiker.actie_id = tempActieId;
+            User.setGebruiker(User.gebruiker, true);
             $scope.initUserStateMessage();
             $rootScope.$broadcast('onUserDataChanged');
         }).error(function(data, status) {
