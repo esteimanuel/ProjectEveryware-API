@@ -30,7 +30,8 @@ class BaseController extends \Phalcon\Mvc\Controller {
             $token = $this->request->get("_token");
         }
         if(!isset($token)) {
-            $token = $this->getRequestData()['_token'];
+            $data = $this->getRequestData();
+            $token = (isset($data['_token']))? $data['_token'] : null;
         }
         if(isset($token)) {
             // Secure connection
@@ -317,8 +318,10 @@ class BaseController extends \Phalcon\Mvc\Controller {
                 break;
             default: // application/json
                 $dataTmp = $this->request->getJsonRawBody();
-                foreach($dataTmp as $key => $value) {
-                    $data[$key] = $value;
+                if(isset($dataTmp)) {
+                    foreach($dataTmp as $key => $value) {
+                        $data[$key] = $value;
+                    }
                 }
                 break;
         }
