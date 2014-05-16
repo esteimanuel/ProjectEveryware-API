@@ -11,13 +11,21 @@ class WijkController extends BaseController {
         //$districts = $query->execute();
         $lat = $this->request->getQuery('lat');
         $long = $this->request->getQuery('long');
+        $limit = $this->request->getQuery('limit');
         
         if(isset($lat) && isset($long)) {
 
-            $districts = Wijk::getCloseBy($lat, $long);
+            $districts = Wijk::getCloseBy($lat, $long, (isset($limit)) ? $limit : 0);
 
             $result = array();
             foreach($districts as $district) {
+//                $actie = Actie::find(array('wijk_id' => $district->wijk_id));
+                $actions = array();
+                foreach($district->Actie as $action) {
+                    $actions[] = $action;
+                }
+//                $district->acties = $actions;
+                $district->actie = $actions;
                 $result[] = $district;
             }
             $this->response->setJsonContent($result);

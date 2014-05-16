@@ -35,14 +35,14 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         url: '/profiel',
         views: {
             //"left-nav": { templateUrl: 'app/left-nav/nav.html' },
-            "main": { templateUrl: 'app/profiel/profiel.html' }
+            "main": {templateUrl: 'app/profiel/profiel.html'}
         }
     })
     .state('faq', {
         url: '/faq',
         views: {
             //"left-nav": { templateUrl: 'app/left-nav/nav.html' },
-            "main": { templateUrl: 'app/faq/faq.html', controller: 'FaqCtrl' }
+            "main": {templateUrl: 'app/faq/faq.html', controller: 'FaqCtrl'}
         }  
     });
 
@@ -80,10 +80,11 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         console.log(toParams);
         console.log(fromState); 
         
-        if(toState.name === 'wijk' && !User.isLogged) {
-            $state.transitionTo('home');
-            return;
-        }
+//        if(toState.name === 'wijk' && !User.isLogged) {
+//            event.preventDefault();
+//            $state.transitionTo('home');
+//            return;
+//        }
     });
 
     $rootScope.user = {};
@@ -93,7 +94,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             appId: '608467429234622',
             channelUrl: 'app/channel/channel.html',
             status: true,
-            //cookie: true,
+            cookie: true,
             xfbml: true
         });
 

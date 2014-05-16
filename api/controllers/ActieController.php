@@ -29,6 +29,29 @@ class ActieController extends BaseController {
             $this->response->setStatusCode(400, 'Bad value given');
         }
     }
+    
+    public function states() {
+        $actie_id = $this->request->getQuery('id');
+        if(isset($actie_id) && $actie_id > 0) {
+            $states = array();
+            
+            $actie = Actie::findFirst($actie_id);
+            
+            $wijk = Wijk::findFirst($actie->wijk_id);
+            $participants = count($actie->Gebruiker);
+            $houses = $wijk->aantal_huishoudens;
+            $target = count($actie->Gebruiker) / ($wijk->aantal_huishoudens / 100 * $wijk->target);
+            
+            $states['participants'] = $participants;
+            $states['houses'] = $houses;
+            $states['totalPerc'] = $participants / $houses;
+            $states['target'] = intval($target);
+            
+            $this->response->setJsonContent($states);
+        } else {
+            $this->response->setStatusCode(400, 'Bad value given');
+        }
+    }
 
 }
 
