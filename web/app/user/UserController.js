@@ -72,6 +72,8 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
 //            $rootScope.user.isLogged = true;
             $scope.fillUserWithData(data);
             $rootScope.$broadcast('onUserLogin');
+            
+            $rootScope.showMessage("Successvol geregistreerd!", "success");
         })
         .error(function(data, status, headers, config){
             var message = "";
@@ -116,6 +118,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
     User.init();
     $scope.setValuesFromUser();
     $rootScope.initDistrict();
+    console.log(User.account.token);
 //    $scope.user.isLogged = User.isLogged;
     
 });

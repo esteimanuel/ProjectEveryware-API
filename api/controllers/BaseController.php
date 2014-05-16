@@ -15,6 +15,8 @@ class BaseController extends \Phalcon\Mvc\Controller {
     
     protected $_account;
     private $short_controller_name;
+    
+    private $validToken = true;
 
 
     public function onConstruct() {
@@ -26,6 +28,9 @@ class BaseController extends \Phalcon\Mvc\Controller {
             $token = $this->request->getPost("_token");
         } else {
             $token = $this->request->get("_token");
+        }
+        if(!isset($token)) {
+            $token = $this->getRequestData()['_token'];
         }
         if(isset($token)) {
             // Secure connection
@@ -39,7 +44,8 @@ class BaseController extends \Phalcon\Mvc\Controller {
                 "bind"       => array(1 => $token)
             ));
             if(!$this->_account) {
-                $this->response->setStatusCode(404, "Token not found")->send();
+                $this->response->setStatusCode(404, "Token not found");
+                $this->validToken = false;
             }
         }
     }
@@ -54,7 +60,8 @@ class BaseController extends \Phalcon\Mvc\Controller {
     }
     
     public function methodConstructor($method) {
-        if(!$this->response->isSent()) {
+        //if(!$this->response->isSent()) {
+        if($this->validToken) {
             if(method_exists($this, $method)){
                 if($this->checkAuth($method)) {
                     $this->response->setContentType('application/json');

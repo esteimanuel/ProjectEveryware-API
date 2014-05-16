@@ -12,7 +12,7 @@ class GebruikerController extends BaseController
             $model = $this->basePut($putData, $messages);
             $this->response->setJsonContent(array('messages' => $messages, 'model' => $model));
         } else {
-            $this->response->setStatusCode(400, "Bad values given");
+            $this->response->setStatusCode(404, "No Account Found");
         }
     }
     

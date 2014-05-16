@@ -120,6 +120,10 @@ and open the template in the editor.
               
             </div><!-- /.container-fluid -->
           </nav>
+        <div ng-show="global._messageVisible" class="global-message alert alert-{{global._messageType}}">
+            <button type="button" class="close" ng-click="global._messageVisible = false;">&times;</button>
+            {{global._message}}
+        </div>
         <div data-ng-include="'app/user/login.html'" data-ng-show="views.showLogin"></div>
 <!--        <div class="basedialog">
             <div class="alert alert-info alert-dismissable" style="margin:0;">

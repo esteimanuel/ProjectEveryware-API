@@ -83,6 +83,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
             $scope.initUserStateMessage();
             $rootScope.$broadcast('onUserDataChanged');
         }).error(function(data, status) {
+            $rootScope.showMessage('Something went wrong while adding user to action', 'danger');
             console.log("Something went wrong while adding user to action");
         });
     }
