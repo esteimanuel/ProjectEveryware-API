@@ -92,6 +92,11 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
         });
     };  
     
+    $scope.$on('onUserDataChanged', function() {
+        $scope.setValuesFromUser();
+        $rootScope.$broadcast('onUserDataUpdated');
+    });
+    
     $scope.setValuesFromUser = function() {
         $scope.user.isLogged = User.isLogged;
         $scope.user.account = User.account;

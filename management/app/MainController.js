@@ -18,6 +18,8 @@ app.controller('MainCtrl', function($scope, $http, $state, User) {
                 User.data.token = data.account.token;
                 $state.transitionTo('main.dashboard.districts');
             }).error(function(data, status, headers, config) {
+                console.log("URL:" + {url: config.api.url + 'account/login',method:'GET',params:credentials})
+                console.log(data);
                 console.log("Login file data not accepted");
                 $scope.errorMessage = "Inloggegevens zijn incorrect";
             });
