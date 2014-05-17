@@ -18,6 +18,7 @@ app.controller('SearchCtrl', function($scope, $stateParams, $http) {
             
             $http({
                 url: config.api.url + 'wijk/search',
+//                url: '/glassy-api/api/' + 'wijk/search',
                 method: 'GET',
                 params: {pc:value},
                 headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'}
