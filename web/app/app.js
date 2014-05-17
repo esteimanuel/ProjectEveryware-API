@@ -44,6 +44,12 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             //"left-nav": { templateUrl: 'app/left-nav/nav.html' },
             "main": {templateUrl: 'app/faq/faq.html', controller: 'FaqCtrl'}
         }  
+    })
+    .state('search',{
+        url:'/search/:sq',
+        views: {
+            "main": {templateUrl:'app/search/index.html', controller:'SearchCtrl'}
+        }
     });
 
     //    .state('login', {

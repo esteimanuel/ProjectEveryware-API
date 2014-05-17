@@ -187,8 +187,8 @@ class BaseController extends \Phalcon\Mvc\Controller {
                 
                 $arguments['conditions'] = $conditionStr;
                 $arguments['bind'] = $params;
-                var_dump($conditionStr);
-                var_dump($params);
+//                var_dump($conditionStr);
+//                var_dump($params);
             }
             if(isset($config['order'])) { // CSV order arguments ex. name DESC, status
                 $arguments['order'] = $config['order'];

@@ -140,6 +140,15 @@
     box-shadow: 2px 2px 10px rgba(0,0,0, 0.35);
 }
 
+.list-group > .disabled {
+    cursor: none;
+    pointer-events: none;
+} 
+
+.search-loader {
+    float: right;
+    margin-top: 25px;
+}
 /*.action-dropdown-section > .action-not-found > a {
     color: #999;
 }*/

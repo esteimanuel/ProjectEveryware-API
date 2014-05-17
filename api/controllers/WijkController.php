@@ -33,6 +33,44 @@ class WijkController extends BaseController {
             $this->response->setStatusCode(400, "Bad values given");
         }
     }
+    
+    public function search() {
+        $postalcode = $this->request->getQuery('pc');
+        
+        $params = array();
+        $conditionStr = BaseModel::getCondition(array(
+            array('k' => 'postcode', 'v' => $postalcode.'%', 'op' => 'LIKE'),
+        ), $params);
+                
+        $arguments = array(
+            'conditions' => $conditionStr,
+            'bind' => $params,
+            'limit' => 10,
+        );
+        
+        $postalcodes = Postcode::find($arguments);
+        
+        $result = array();
+        $wijkIds = array();
+        foreach($postalcodes as $postalcode) {
+            if(isset($postalcode->wijk_id)) {
+//                $actie = Actie::find(array('wijk_id' => $district->wijk_id));
+                $district = Wijk::findFirst($postalcode->wijk_id);
+                if(!in_array($district->wijk_id, $wijkIds)) {
+                    $wijkIds[] = $district->wijk_id;
+
+                    $actions = array();
+                    foreach($district->Actie as $action) {
+                        $actions[] = $action;
+                    }
+
+                    $district->actie = $actions;
+                    $result[] = $district;
+                }
+            }
+        }
+        $this->response->setJsonContent($result);
+    }
 
 //    public function postalcodes() {
 //        $wijk_id = $this->request->getQuery('id');

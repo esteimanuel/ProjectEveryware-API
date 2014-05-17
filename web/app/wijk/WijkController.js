@@ -10,7 +10,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
             return;
         }
         
-        var params = {id: $stateParams.wid}
+        var params = {id: $stateParams.wid};
 
         $http({
             url: config.api.url + 'actie',
@@ -28,6 +28,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
             
             document.title = $scope.actie.naam + " - " + config.app.name;
             $scope.getActieDeelnemers();
+            $scope.getActieStats();
             $scope.mapsUrl = $sce.trustAsResourceUrl($scope.getMapsUrl());
         })
         .error(function (data, status, headers, config) {
@@ -37,7 +38,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
 
     //get all wijk deelnemers
     $scope.getActieDeelnemers = function () {
-        var params = {id: $scope.actie.actie_id}
+        var params = {id: $scope.actie.actie_id};
 
         $http({
             url: config.api.url + 'actie/users',
@@ -46,11 +47,26 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
         })
        .success(function (data, status, headers, config) {
             $scope.actie.deelnemers = data;
-            $scope.actie.deelnemersCount = $scope.actie.deelnemers.length;
+//            $scope.actie.deelnemersCount = $scope.actie.deelnemers.length;
          })
         .error(function (data, status, headers, config) {
             console.log("failure");
         })
+    }
+    
+    $scope.getActieStats = function() {
+        var params = {id: $scope.actie.actie_id};
+        
+        $http({
+            url: config.api.url + 'actie/stats',
+            method: 'GET',
+            params: params
+        }).success(function(data, status) {
+            $scope.actie.stats = data;
+            console.log($scope.actie.stats);
+        }).error(function(data, status) {
+            $rootScope.showMessage('Failed to get action stats', 'danger');
+        });
     }
     
     $scope.getMapsUrl = function() {
@@ -82,6 +98,12 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
             User.setGebruiker(User.gebruiker, true);
             $scope.initUserStateMessage();
             $rootScope.$broadcast('onUserDataChanged');
+            var user = User.gebruiker;
+            user.account = User.account;
+            user.buddy = false;
+            // Update deelnemers count, add deelnemer to front of array;
+            $scope.actie.deelnemers.unshift(user);
+            $scope.actie.stats.targetPartPerc = ($scope.actie.stats.participants / $scope.actie.stats.target) * 100;
         }).error(function(data, status) {
             $rootScope.showMessage('Something went wrong while adding user to action', 'danger');
             console.log("Something went wrong while adding user to action");
