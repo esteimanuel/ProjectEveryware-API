@@ -55,9 +55,21 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }).state('main.users',{
         url: '/gebruikers',
         views: {
-            "left-nav":{templateUrl:'app/main/left-nav.html'},
+            "left-nav":{templateUrl:'app/main/left-nav-users.html'},
             "main": {templateUrl:'app/user/index.html', controller:'UserTableCtrl'}
         }
+        
+        }).state('main.users.addUser',{
+            url: '/Gebruiker_toevoegen',
+            views: {
+                "content":{templateUrl:"app/user/addUser.html", controller:'AddUserCtrl'}
+            }
+        
+        }).state('main.users.editUser',{
+            url: '/Gebruiker_bewerken',
+            views: {
+                "content":{templateUrl:"app/user/editUser.html", controller:'EditUserCtrl'}
+            }
        
 //////////////////////////
 /// District redirs

@@ -1,15 +1,3 @@
-<div>
-  <h1 class="page-header">Gebruikers beheren</h1>
-</div>
-
-<button ng-click="add()">Add Row</button>
-<gl-table>
-    <gl-table-head></gl-table-head>
-
-    <gl-table-body>
-        <gl-table-row ng-repeat="n in indexList(10) track by $index" row="{{$index}}"></gl-table-row>
-    </gl-table-body>
+<div ui-view="content">
     
-    <gl-table-pager></gl-table-pager>
-</gl-table>
-
+</div>
