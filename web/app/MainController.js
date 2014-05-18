@@ -22,8 +22,8 @@ app.controller('MainCtrl', function($rootScope, $scope, $location, $anchorScroll
     
     $rootScope.initDistrict = function() {
         District.init(function() {
-            console.log(District.locationData);
-            console.log(District.closeby);
+//            console.log(District.locationData);
+//            console.log(District.closeby);
             $scope.district.closeby = District.closeby;
         });
     }

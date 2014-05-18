@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-app.controller('SearchCtrl', function($scope, $stateParams, $http) {
+app.controller('SearchCtrl', function($scope, $rootScope, $stateParams, $http) {
     $scope.search.value = $stateParams.sq;
     $scope.search.searchedValue = $stateParams.sq;
     //$scope.search.results = [];
@@ -31,6 +31,7 @@ app.controller('SearchCtrl', function($scope, $stateParams, $http) {
             }).error(function(data, status) {
                 console.log("Failed to search");
                 $scope.search.isLoading = false;
+                $rootScope.showMessage('Failed to get search results', 'danger');
             });
         }
     }

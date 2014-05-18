@@ -76,7 +76,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
     $scope.handleStateButton = function() {
         //console.log(User.gebruiker.actie_id);
         if(User.gebruiker.actie_id === $scope.actie.actie_id) {
-            // Handle state current user's action
+            // Handle state for current user's action
             
         } else if(!User.gebruiker.actie_id)
             // Handle add user to action
@@ -115,6 +115,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
         if(User.isLogged) {
             $scope.actie.stateVisible = true;
             if(User.gebruiker.actie_id == $scope.actie.actie_id) {
+                // Set state text for current user
                 $scope.actie.userStateMessage = "De wijk van de gebruiker";
             } else if(User.gebruiker.actie_id > 0)
                 $scope.actie.stateVisible = false;

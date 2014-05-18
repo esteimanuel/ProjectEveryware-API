@@ -93,7 +93,10 @@
             </div>
 
             <ul class="participants-list">
-                <li ng-repeat="deelnemer in actie.deelnemers" title="{{deelnemer.voornaam}}"><img ng-src="{{deelnemer.account.foto_link}}" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" /></li>
+                <li ng-repeat="deelnemer in actie.deelnemers" title="{{deelnemer.voornaam}}">
+                    <img ng-if="deelnemer.account.foto_link" ng-src="{{deelnemer.account.foto_link}}" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" />
+                    <img ng-if="!deelnemer.account.foto_link" src="assets/user.png" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" />
+                </li>
             </ul>
         </div>
     </aside>

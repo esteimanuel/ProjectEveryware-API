@@ -48,6 +48,17 @@ app.controller('UserTableCtrl', function($scope, $http) {
         $scope.addNewRows();
     }
     
+    $scope.filterList = function() {
+        $scope.filter({
+            'email':'c',
+            'validated': true
+        });
+    }
+    
+    $scope.clear = function() {
+        $scope.clearFilter();
+    }
+    
     $scope.getData(); 
     
 });

@@ -1,8 +1,5 @@
 console.log("loaded user controller");
 app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $location, $http, srvAuth, User) {
-    $scope.views = {
-        showLogin: ($location.search().login == 1)
-    };
 
     $scope.user = {};
 
@@ -118,7 +115,11 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
     User.init();
     $scope.setValuesFromUser();
     $rootScope.initDistrict();
-    console.log(User.account.token);
+//    console.log(User.account.token);
+    
+    $scope.views = {
+        showLogin: ($location.search().login == 1 && !User.isLogged)
+    };
 //    $scope.user.isLogged = User.isLogged;
     
 });

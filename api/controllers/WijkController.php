@@ -2,6 +2,8 @@
 
 class WijkController extends BaseController {
 
+    private $_searchLimit = 30;
+    
     public function addToAction() {
 
     }
@@ -45,7 +47,7 @@ class WijkController extends BaseController {
         $arguments = array(
             'conditions' => $conditionStr,
             'bind' => $params,
-            'limit' => 10,
+            'limit' => $this->_searchLimit,
         );
         
         $postalcodes = Postcode::find($arguments);
