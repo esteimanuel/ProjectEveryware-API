@@ -39,7 +39,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         }).state('main.dashboard.users',{
             url: '/gebruikers',
             views: {
-                "content":{templateUrl:"app/dashboard/users.html"}
+                "content":{templateUrl:"app/dashboard/users.html", controller:'DashBoardUsersCtrl'}
             }
         
         }).state('main.dashboard.media',{
