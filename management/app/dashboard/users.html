@@ -1,25 +1,49 @@
+<style>
+    .largeFontIcon{
+        font-size: 35px;
+        color: #428BCA;
+    }    
+    
+    .backgroundHoverColor{
+        padding: 10px 0;
+    }
+    
+    .backgroundHoverColor:hover{
+        background-color: #efefef!important;
+        cursor:pointer;
+    }
+</style>
+
+
 <div>
   <h1 class="page-header">Gebruikers</h1>
+
   <div class="row placeholders">
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-      <h4>Wijk</h4>
-      <span class="text-muted">Succesvol</span>
+    <div class="col-xs-6 col-sm-4 placeholder backgroundHoverColor">
+      <span class="glyphicon glyphicon-user largeFontIcon"></span>
+      <h4>Gebruiker</h4>
+      <span class="text-muted">Geregistreed</span>
     </div>
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-      <h4>Wijk</h4>
-      <span class="text-muted">Gefaald</span>
+    <div class="col-xs-6 col-sm-4 placeholder backgroundHoverColor">
+      <span class="glyphicon glyphicon-heart-empty largeFontIcon"></span>
+      <h4>Gebruiker</h4>
+      <span class="text-muted">Buddy</span>
     </div>
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-      <h4>Wijk</h4>
-      <span class="text-muted">Open</span>
-    </div>
-    <div class="col-xs-6 col-sm-3 placeholder">
-      <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-      <h4>Wijk</h4>
-      <span class="text-muted">Borg</span>
+    <div class="col-xs-6 col-sm-4 placeholder backgroundHoverColor">
+      <span class="glyphicon glyphicon-credit-card largeFontIcon"></span>
+      <h4>Gebruiker</h4>
+      <span class="text-muted">Betaald</span>
     </div>
   </div>
+
+  <h3 class="sub-header">Gebruikers</h3>
+  <gl-table>
+      <gl-table-head></gl-table-head>
+
+        <gl-table-body>
+            <gl-table-row ng-repeat="n in indexList(5) track by $index" row="{{$index}}"></gl-table-row>
+        </gl-table-body>
+      
+        <gl-table-pager></gl-table-pager>
+  </gl-table>
 </div>
