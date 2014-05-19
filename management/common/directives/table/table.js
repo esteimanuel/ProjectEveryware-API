@@ -339,10 +339,10 @@ angular.module('gl.table', [])
                     } else 
                         $scope.toggleEditMode();
                 } else {
-                    if($scope.onEditClick)
+                    if($scope.onEditClick) {
                         if($scope.onEditClick($scope.cells))
                             $scope.toggleEditMode();
-                    else
+                    } else
                         $scope.toggleEditMode();
                 }
             };
