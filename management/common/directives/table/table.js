@@ -338,8 +338,13 @@ angular.module('gl.table', [])
                             $scope.toggleEditMode();
                     } else 
                         $scope.toggleEditMode();
-                } else 
-                    $scope.toggleEditMode();
+                } else {
+                    if($scope.onEditClick)
+                        if($scope.onEditClick($scope.cells))
+                            $scope.toggleEditMode();
+                    else
+                        $scope.toggleEditMode();
+                }
             };
             
             $scope.cancelValues = function() {

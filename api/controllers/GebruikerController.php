@@ -6,6 +6,13 @@ class GebruikerController extends BaseController
         $putData = $this->getRequestData();
         if(isset($this->_account)) {
             unset($putData['_token']);
+            if(isset($putData['_gebruiker'])) {
+                foreach($putData['_gebruiker'] as $key => $value) {
+                    $putData[$key] = $value;
+                }
+                unset($putData['_gebruiker']);
+                unset($putData['gebruiker_id']);
+            }
             $putData['id'] = $this->_account->account_id;
             
             $messages = '';
