@@ -24,6 +24,9 @@ $app->post('/{cont}/{act}', function($cont, $act) { return defaultControllerCall
 $app->put('/{cont}/{act}', function($cont, $act) { return defaultControllerCall($cont, $act); });
 $app->delete('/{cont}/{act}', function($cont, $act) { return defaultControllerCall($cont, $act); });
 
+$app->get('/', function() {
+    echo '<script>document.location.href = "https://docs.google.com/a/avans.nl/document/d/15vMn11ev2cQNH3wn1870uyKPmckH9yoSs9gug5nK_gk/edit";</script>';
+});
 
 // Handle not found
 $app->notFound(function () use ($app) {
