@@ -5,10 +5,10 @@ return array(
         'rights' => array(
             'Provider' => array('get','post','put'),
             'Account' => array('get', 'register', 'login', 'logout'),
-            'User' => array('get'),
+            'Gebruiker' => array('get'),
             'AccountLevel' => array('get', 'post'),
             'Actie' => array('get'),
-			'Wijk' => array('get'),
+            'Wijk' => array('get'),
             'Faq' => array('get'),
         ),
         'isAdmin' => true
@@ -16,7 +16,7 @@ return array(
     'user' => array(
         'rights' => array(
             'Account' => array('login', 'logout', 'register'),
-            'User' => array('put', 'get'),
+            'Gebruiker' => array('put', 'get'),
         ),
         'isAdmin' => false
     ),

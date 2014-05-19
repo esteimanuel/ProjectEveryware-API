@@ -15,6 +15,8 @@ class BaseController extends \Phalcon\Mvc\Controller {
     
     protected $_account;
     private $short_controller_name;
+    
+    private $validToken = true;
 
 
     public function onConstruct() {
@@ -26,6 +28,10 @@ class BaseController extends \Phalcon\Mvc\Controller {
             $token = $this->request->getPost("_token");
         } else {
             $token = $this->request->get("_token");
+        }
+        if(!isset($token)) {
+            $data = $this->getRequestData();
+            $token = (isset($data['_token']))? $data['_token'] : null;
         }
         if(isset($token)) {
             // Secure connection
@@ -39,7 +45,8 @@ class BaseController extends \Phalcon\Mvc\Controller {
                 "bind"       => array(1 => $token)
             ));
             if(!$this->_account) {
-                $this->response->setStatusCode(404, "Token not found")->send();
+                $this->response->setStatusCode(404, "Token not found");
+                $this->validToken = false;
             }
         }
     }
@@ -54,7 +61,8 @@ class BaseController extends \Phalcon\Mvc\Controller {
     }
     
     public function methodConstructor($method) {
-        if(!$this->response->isSent()) {
+        //if(!$this->response->isSent()) {
+        if($this->validToken) {
             if(method_exists($this, $method)){
                 if($this->checkAuth($method)) {
                     $this->response->setContentType('application/json');
@@ -68,7 +76,7 @@ class BaseController extends \Phalcon\Mvc\Controller {
     }
     
     public function checkAuth($method) {
-        $userRole = ($this->_account) ? $this->_account->accountlevel->level : 'guest';
+        $userRole = ($this->_account) ? AccountLevel::findFirst($this->_account->accountlevel_id)->level : 'guest';
         $roles = include __DIR__.'/../config/roles.php';
         $roleSettings = $roles[$userRole];
 
@@ -179,8 +187,8 @@ class BaseController extends \Phalcon\Mvc\Controller {
                 
                 $arguments['conditions'] = $conditionStr;
                 $arguments['bind'] = $params;
-                var_dump($conditionStr);
-                var_dump($params);
+//                var_dump($conditionStr);
+//                var_dump($params);
             }
             if(isset($config['order'])) { // CSV order arguments ex. name DESC, status
                 $arguments['order'] = $config['order'];
@@ -310,8 +318,10 @@ class BaseController extends \Phalcon\Mvc\Controller {
                 break;
             default: // application/json
                 $dataTmp = $this->request->getJsonRawBody();
-                foreach($dataTmp as $key => $value) {
-                    $data[$key] = $value;
+                if(isset($dataTmp)) {
+                    foreach($dataTmp as $key => $value) {
+                        $data[$key] = $value;
+                    }
                 }
                 break;
         }

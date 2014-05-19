@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-app.controller('UserTableCtrl', function($scope, $http) {
+app.controller('EditUserCtrl', function($scope, $http) {
     $scope.tableClasses = "table-striped";
     $scope.headers = [
         {name: "account_id", type:"number", header:"Custom"},
@@ -46,17 +46,6 @@ app.controller('UserTableCtrl', function($scope, $http) {
             token: "token please"
         });
         $scope.addNewRows();
-    }
-    
-    $scope.filterList = function() {
-        $scope.filter({
-            'email':'c',
-            'validated': true
-        });
-    }
-    
-    $scope.clear = function() {
-        $scope.clearFilter();
     }
     
     $scope.getData(); 

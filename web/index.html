@@ -26,6 +26,7 @@ and open the template in the editor.
         <script src="app/user/UserController.js"></script>
         <script src="app/wijk/WijkController.js"></script>
         <script src="app/faq/FaqController.js"></script>
+        <script src="app/search/SearchController.js"></script>
         
         <!--Load Models-->
         <script src="models/srvAuth.js"></script>
@@ -80,7 +81,7 @@ and open the template in the editor.
                               <li ng-repeat="district in district.closeby" ng-if="district.beschikbaar">
                                     <span class="dropdown-header">{{district.wijk_naam}}</span>
                                     <ul class="action-dropdown-section">
-                                        <li ng-repeat="actie in district.actie" class="bg-success">
+                                        <li ng-repeat="actie in district.actie" ng-class="{'bg-success': actie.actie_id != user.gebruiker.actie_id, 'bg-info':actie.actie_id == user.gebruiker.actie_id}">
                                             <a ui-sref="wijk({wid:actie.actie_id})">{{actie.naam}}</a>
                                         </li>
                                         <li ng-hide="district.actie.length" class="action-not-found"><a><small class="text-muted">Geen acties gevonden</small></a></li>
@@ -105,9 +106,9 @@ and open the template in the editor.
                       </li>
                   </ul>
                   
-                  <form class="navbar-form navbar-right" role="search" style="margin-right:5%;">
+                  <form class="navbar-form navbar-right" role="search" style="margin-right:5%;" ng-submit="search(search.value)">
                       <div class="form-group input-group">
-                          <input type="text" class="form-control" placeholder="Zoek een wijk" style="width:auto;">
+                          <input type="text" class="form-control" placeholder="Zoek een wijk" style="width:auto;" ng-model="search.value">
                           <span class="input-group-btn" style="display:inline-block;">
                               <button class="btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i></button>
                           </span>
@@ -120,6 +121,10 @@ and open the template in the editor.
               
             </div><!-- /.container-fluid -->
           </nav>
+        <div ng-show="global._messageVisible" class="global-message alert alert-{{global._messageType}}">
+            <button type="button" class="close" ng-click="global._messageVisible = false;">&times;</button>
+            {{global._message}}
+        </div>
         <div data-ng-include="'app/user/login.html'" data-ng-show="views.showLogin"></div>
 <!--        <div class="basedialog">
             <div class="alert alert-info alert-dismissable" style="margin:0;">

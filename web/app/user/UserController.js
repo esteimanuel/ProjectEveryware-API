@@ -1,8 +1,5 @@
 console.log("loaded user controller");
 app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $location, $http, srvAuth, User) {
-    $scope.views = {
-        showLogin: ($location.search().login == 1)
-    };
 
     $scope.user = {};
 
@@ -28,11 +25,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
 //                localStorage.token = data.account.token;
 //                $rootScope.user = data.account;
 //                $rootScope.user.isLogged = true;
-                User.setGebruiker(data.account.gebruiker, true);
-                delete data.account.gebruiker;
-                User.setAccount(data.account, true);
-                User.setLogged(true);
-                $scope.setValuesFromUser();
+                $scope.fillUserWithData(data);
                 
                 $rootScope.$broadcast('onUserLogin');
                 //$scope.user.isLogged = true;
@@ -47,6 +40,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
                         message = "Ongeldige gebruikersnaam of wachtwoord"
                         break;
                 }
+                $scope.login.errorMessage = message;
         })
     };
     
@@ -70,9 +64,13 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
             data: body
         })
         .success(function (data, status, headers, config) {
-            localStorage.token = data.account.token;
-            $rootScope.user = data.account;
-            $rootScope.user.isLogged = true;
+//            localStorage.token = data.account.token;
+//            $rootScope.user = data.account;
+//            $rootScope.user.isLogged = true;
+            $scope.fillUserWithData(data);
+            $rootScope.$broadcast('onUserLogin');
+            
+            $rootScope.showMessage("Successvol geregistreerd!", "success");
         })
         .error(function(data, status, headers, config){
             var message = "";
@@ -103,9 +101,25 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
         $scope.user.gebruiker = User.gebruiker;
     }
     
+    $scope.fillUserWithData = function(data) {
+        var tmpGebruiker = data.account.gebruiker;
+        delete data.account.gebruiker;
+
+        User.setAccount(data.account, true);
+        User.setGebruiker(tmpGebruiker, true);
+        User.setLogged(true);
+
+        $scope.setValuesFromUser();
+    }
+    
     User.init();
     $scope.setValuesFromUser();
     $rootScope.initDistrict();
+//    console.log(User.account.token);
+    
+    $scope.views = {
+        showLogin: ($location.search().login == 1 && !User.isLogged)
+    };
 //    $scope.user.isLogged = User.isLogged;
     
 });
