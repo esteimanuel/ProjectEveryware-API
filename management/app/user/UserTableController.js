@@ -59,6 +59,11 @@ app.controller('UserTableCtrl', function($scope, $http) {
         $scope.clearFilter();
     }
     
+    $scope.onEditClick = function(data) {
+        alert(data);
+        return true;
+    }
+    
     $scope.getData(); 
     
 });

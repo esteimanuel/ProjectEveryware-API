@@ -48,6 +48,23 @@ app.controller('EditUserCtrl', function($scope, $http) {
         $scope.addNewRows();
     }
     
+    $scope.filterList = function() {
+        $scope.filter({
+            'email':'c',
+            'validated': true
+        });
+    }
+    
+    $scope.clear = function() {
+        $scope.clearFilter();
+    }
+    
+    $scope.onEditClick = function(data) {
+        alert("Edit click");
+        console.log(data);
+        return true;
+    }
+    
     $scope.getData(); 
     
 });

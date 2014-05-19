@@ -79,7 +79,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         url: '/wijken',
         views: {
             "left-nav":{templateUrl:'app/main/left-nav-district.html'},
-            "main": {templateUrl:'app/district/index.html'},
+            "main": {templateUrl:'app/district/index.html'}
         }
         
         }).state('main.district.addDistrict',{

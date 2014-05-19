@@ -64,6 +64,10 @@ angular.module('gl.table', [])
             }
             
             this.setRowIndexes = function(startIndex) {
+                angular.forEach(_this.$scope.rows, function(row) {
+                    row.taken = false;
+                });
+                
                 angular.forEach(_this.observers, function(observer) {
                     observer.setRowIndex(startIndex++);
                 });
@@ -280,6 +284,7 @@ angular.module('gl.table', [])
             $scope.visible = false;
             
             var _rowNr = attributes.row;
+            var _searchIndex = -1;
             
             $scope.cellOrder = tableCtrl.$scope.cellOrder;
             
@@ -311,7 +316,8 @@ angular.module('gl.table', [])
             
             $scope.initRowData = function() {
                 if(parseInt(_rowNr) >= 0 && tableCtrl.$scope.rows) {
-                    var rowData = tableCtrl.$scope.rows[_rowNr];
+//                    var rowData = tableCtrl.$scope.rows[_rowNr];
+                    var rowData = $scope.getFirstValidRow();
                     if(rowData) {
                         $scope.cells = rowData;
                         //console.log($scope.cells);
@@ -333,14 +339,14 @@ angular.module('gl.table', [])
                     var rowData = angular.copy($scope.cells);
                     //console.log(rowData);
                     tableCtrl.$scope.rows[_rowNr] = rowData;
-                    if($scope.updateRow) {     
-                        if($scope.updateRow())
+                    if(tableCtrl.$scope.updateRow) {     
+                        if(tableCtrl.$scope.updateRow())
                             $scope.toggleEditMode();
                     } else 
                         $scope.toggleEditMode();
                 } else {
-                    if($scope.onEditClick) {
-                        if($scope.onEditClick($scope.cells))
+                    if(tableCtrl.$scope.onEditClick) {
+                        if(tableCtrl.$scope.onEditClick($scope.cells))
                             $scope.toggleEditMode();
                     } else
                         $scope.toggleEditMode();
@@ -359,8 +365,8 @@ angular.module('gl.table', [])
             }
             
             $scope.deleteRow = function() {
-                if($scope.removeRow)
-                    $scope.removeRow();
+                if(tableCtrl.$scope.removeRow)
+                    tableCtrl.$scope.removeRow();
                 
                 tableCtrl.$scope.rows.splice(_rowNr, 1);
                 // element.parent().find(attr[row>_rowNr]).scope.rowNr - 1
@@ -383,9 +389,11 @@ angular.module('gl.table', [])
             $scope.setRowIndex = function(newIndex) {
                 _rowNr = newIndex;
                 attributes.row = _rowNr;
+                _searchIndex = newIndex;
                 
                 $scope.initRowData();
                 
+//                _searchIndex = -1;
             }
             
             // observer method
@@ -404,16 +412,29 @@ angular.module('gl.table', [])
             
             $scope.getFirstValidRow = function() {
                 var newRow = null;
+                var index = 0;
                 angular.forEach(tableCtrl.$scope.rows, function(row) {
 //                    if('filtered' in row) {
 //                        if('taken' in row) {
                     if(newRow == null) {
-                        if(!row.filtered && !row.taken){
-                            row.taken = true;
-                            newRow = row;
-//                                console.log(row);
+                        if(_searchIndex != -1) {
+                            if(index >= _searchIndex) {
+                                // check value
+                                if(!row.filtered && !row.taken){
+                                    row.taken = true;
+                                    newRow = row;
+                                }
+                            }
+                        } else {
+                            // check value
+                            if(!row.filtered && !row.taken){
+                                row.taken = true;
+                                newRow = row;
+                            }
                         }
+                        
                     }
+                    index++;
 //                        }
 //                    }
                 });
