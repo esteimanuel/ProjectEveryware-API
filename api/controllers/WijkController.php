@@ -2,7 +2,7 @@
 
 class WijkController extends BaseController {
 
-    private $_searchLimit = 30;
+    private $_searchLimit = 300;
     
     public function addToAction() {
 
@@ -37,41 +37,61 @@ class WijkController extends BaseController {
     }
     
     public function search() {
-        $postalcode = $this->request->getQuery('pc');
+//        $postalcode = $this->request->getQuery('pc');
+        $searchQuery = $this->request->getQuery('sq');
         
-        $params = array();
-        $conditionStr = BaseModel::getCondition(array(
-            array('k' => 'postcode', 'v' => $postalcode.'%', 'op' => 'LIKE'),
-        ), $params);
-                
-        $arguments = array(
-            'conditions' => $conditionStr,
-            'bind' => $params,
-            'limit' => $this->_searchLimit,
-        );
-        
-        $postalcodes = Postcode::find($arguments);
-        
-        $result = array();
-        $wijkIds = array();
-        foreach($postalcodes as $postalcode) {
-            if(isset($postalcode->wijk_id)) {
-//                $actie = Actie::find(array('wijk_id' => $district->wijk_id));
-                $district = Wijk::findFirst($postalcode->wijk_id);
-                if(!in_array($district->wijk_id, $wijkIds)) {
-                    $wijkIds[] = $district->wijk_id;
+        if(isset($searchQuery)) {
+            $isPostalCode = preg_match('/^\d/', $searchQuery) === 1;
+            $params = array();
+            $conditionStr = BaseModel::getCondition(array(
+                array('k' => ($isPostalCode) ? 'postcode' : 'wijk_naam', 'v' => $searchQuery.'%', 'op' => 'LIKE'),
+            ), $params);
 
+            $arguments = array(
+                'conditions' => $conditionStr,
+                'bind' => $params,
+                'limit' => $this->_searchLimit,
+            );
+            
+            $result = array();
+            if($isPostalCode) {
+                $postalcodes = Postcode::find($arguments);
+
+                
+                $wijkIds = array();
+                foreach($postalcodes as $postalcode) {
+                    if(isset($postalcode->wijk_id)) {
+                        if(!in_array($postalcode->wijk_id, $wijkIds)) {
+        //                $actie = Actie::find(array('wijk_id' => $district->wijk_id));
+                            $district = Wijk::findFirst($postalcode->wijk_id);
+
+                            $wijkIds[] = $postalcode->wijk_id;
+
+                            $actions = array();
+                            foreach($district->Actie as $action) {
+                                $actions[] = $action;
+                            }
+
+                            $district->actie = $actions;
+                            $result[] = $district;
+                        }
+                    }
+                }
+            } else {
+                $districts = Wijk::find($arguments);
+                foreach($districts as $district) {
+                    
                     $actions = array();
                     foreach($district->Actie as $action) {
                         $actions[] = $action;
                     }
-
+                    
                     $district->actie = $actions;
                     $result[] = $district;
                 }
             }
+            $this->response->setJsonContent($result);
         }
-        $this->response->setJsonContent($result);
     }
 
 //    public function postalcodes() {
