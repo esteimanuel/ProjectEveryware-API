@@ -85,7 +85,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         }).state('main.district.addDistrict',{
             url: '/Wijktoevoegen',
             views: {
-                "content":{templateUrl:"app/district/addDistrict.html"}
+                "content":{templateUrl:"app/district/addDistrict.html", controller:'addDistrictCtrl'}
             }
         
         }).state('main.district.editDistrict',{
