@@ -3,14 +3,6 @@
   <h1 class="page-header">Wijk toevoegen</h1>
 </div>
 
-
-<!--        {name: "wijk_id", type:"number", header:"Wijk nummer"},
-        {name:"wijk_naam", type:"text", header:"Wijk naam"},
-        {name:"beschikbaar", type:"checkbox", header:"Beschikbaar"},
-        {name:"target", type:"text", header:"Target"},
-        {name:"aantal_huishoudens", type:"text", header:"Huishoudes"},
-        {name:"actie_duur_dagen", type:"text", header:"Duur"},-->
-
 <form class="form-horizontal">
 
 
@@ -25,9 +17,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="profile-name" class="col-sm-2 control-label">Target: </label>
+            <label for="profile-name" class="col-sm-2 control-label">Aantal huishoudens </label>
             <div class="col-sm-3">
-                <input type="text" class="form-control" id="wijk.target" placeholder="Aantal huishouden nodig" data-ng-model="wijk.target" />
+                <input type="text" class="form-control" id="wijk.totalHousholds" placeholder="Aantal huishouden in wijk" data-ng-model="wijk.totalHousholds" />
             </div>
             <label for="profile-name" class="col-sm-2 control-label">Beschikbaar: </label>
             <div class="col-sm-3">
@@ -35,6 +27,10 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="profile-name" class="col-sm-2 control-label">Target: </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="wijk.target" placeholder="Aantal huishouden nodig" data-ng-model="wijk.target" />
+            </div>
             <label for="profile-name" class="col-sm-2 control-label">Beschikbaar: </label>
             <div class="col-sm-1">
                 <input type="checkbox" class="form-control" id="wijk.avalible" placeholder="Voornaam" data-ng-model="wijk.avalible" />
@@ -67,33 +63,33 @@
             </div>
         </div>  
         <div class='col-sm-12'>
-    <button type="submit" class="btn btn-primary pull-right">Toevoegen</button>    
+            <button type="submit" class="btn btn-primary pull-right" ng-click="addPostcode(postcode)">Toevoegen</button>    
         </div>
     
         <div>
             <div class="col-sm-5" style="height: 100%;">
-        <div class="map-frame" id="map" style='height: 100%;'>
-            <iframe ng-src="{{mapsUrl}}" frameborder="0" style="width:100%; height:100%;"></iframe>
-        </div>
-    </div>
+                <div class="map-frame" id="map" style='height: 100%;'>
+                    <iframe ng-src="{{mapsUrl}}" frameborder="0" style="width:100%; height:100%;"></iframe>
+                </div>
+            </div>
     
-    <div class="col-sm-7">
-        <gl-table>
+            <div class="col-sm-7">
+                <gl-table>
 
-            <gl-table-head></gl-table-head>
+                    <gl-table-head></gl-table-head>
 
-            <gl-table-body>
-                <gl-table-row ng-repeat="n in indexList(10) track by $index" row="{{$index}}"></gl-table-row>
-            </gl-table-body>
-            <gl-table-pager></gl-table-pager>
+                    <gl-table-body>
+                        <gl-table-row ng-repeat="n in indexList(10) track by $index" row="{{$index}}"></gl-table-row>
+                    </gl-table-body>
+                    <gl-table-pager></gl-table-pager>
 
-        </gl-table>
-    </div>
+                </gl-table>
+            </div>
         </div>
     </fieldset>
 
     <fieldset>
         <legend>Opslaan</legend>
     </fieldset>
-    <button type="submit" class="btn btn-primary pull-right">Opslaan</button>    
+    <button type="submit" class="btn btn-primary pull-right" ng-click="addWijk(wijk)">Opslaan</button>    
 </form>
