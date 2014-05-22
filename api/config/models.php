@@ -45,7 +45,7 @@ return array(
                 array('type' => hasOne, 'key' => 'gebruiker_id', 'f_table' => 'buddy', 'f_key' => 'gebruiker_id'),
                 array('type' => hasManyToMany, 'key' => 'gebruiker_id', 'k_table' => 'accountGebruikerLink', 'k_key1' => 'gebruiker_id', 'f_table' => 'account'),
                 array('type' => hasMany, 'key' => 'gebruiker_id', 'f_table' => 'media'),
-                array('type' => hasOne, 'f_table' => 'status'),
+                array('type' => hasOne, 'f_table' => 'statuslist'),
             )
         ),
         'actie' => array(
@@ -160,9 +160,7 @@ return array(
                 ),
                 'url',
                 'gebruiker_id',
-                'actie_id' => array(
-                    'validation' => array('presenceOf')
-                ),
+                'actie_id',
             ),
             relations => array(
                 array('type' => belongsTo, 'f_table' => 'gebruiker'),
