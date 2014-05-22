@@ -3,8 +3,14 @@
  * and open the template in the editor.
  */
 
-app.controller('addDistrictCtrl', function($scope, $http, $timeout) {
+app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
+    $toAddWijkNumber = 1;
+    
+    //Set the map RUL default 99999999
+    $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $toAddWijkNumber);
+    
     $scope.tableClasses = "table-striped";
+    $scope.allowEdit = false;
     
     //Set header names for binding
     $scope.headers = [

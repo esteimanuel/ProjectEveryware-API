@@ -65,19 +65,31 @@
             <div class='col-sm-3'>
                 <input type="text" class="form-control" id="postcode.rangeEnd" placeholder="9999zz" data-ng-model="postcode.rangeEnd" />
             </div>
-        </div>        
+        </div>  
+        <div class='col-sm-12'>
     <button type="submit" class="btn btn-primary pull-right">Toevoegen</button>    
+        </div>
     
-    <gl-table>
+        <div>
+            <div class="col-sm-5" style="height: 100%;">
+        <div class="map-frame" id="map" style='height: 100%;'>
+            <iframe ng-src="{{mapsUrl}}" frameborder="0" style="width:100%; height:100%;"></iframe>
+        </div>
+    </div>
+    
+    <div class="col-sm-7">
+        <gl-table>
 
-        <gl-table-head></gl-table-head>
+            <gl-table-head></gl-table-head>
 
-        <gl-table-body>
-            <gl-table-row ng-repeat="n in indexList(10) track by $index" row="{{$index}}"></gl-table-row>
-        </gl-table-body>
-        <gl-table-pager></gl-table-pager>
+            <gl-table-body>
+                <gl-table-row ng-repeat="n in indexList(10) track by $index" row="{{$index}}"></gl-table-row>
+            </gl-table-body>
+            <gl-table-pager></gl-table-pager>
 
-    </gl-table>
+        </gl-table>
+    </div>
+        </div>
     </fieldset>
 
     <fieldset>
