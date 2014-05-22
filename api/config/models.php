@@ -155,9 +155,7 @@ return array(
 			),
 			'url',
 			'gebruiker_id',
-			'actie_id' => array(
-				'validation' => array('presenceOf')
-			),
+			'actie_id',
                     ),
                     relations => array(
                         array('type' => belongsTo, 'f_table' => 'gebruiker'),

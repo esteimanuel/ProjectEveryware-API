@@ -162,6 +162,30 @@
     background-color: rgb(211, 224, 255) !important;
     border-color: rgb(142, 175, 255);
 }
+
+/*fieldset.disabled .form-control {
+    cursor: not-allowed;
+    background-color: #eee;
+    opacity: 1;
+}
+
+fieldset.disabled .btn {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: .65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+fieldset.disabled .btn-primary {
+    background-color: #428bca;
+    border-color: #357ebd;
+}
+
+fieldset.disabled input[type=checkbox] {
+    cursor: not-allowed;
+}*/
 /*.action-dropdown-section > .action-not-found > a {
     color: #999;
 }*/

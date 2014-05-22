@@ -54,40 +54,62 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
     };
 
     $scope.register = function () {
-        var body = {email: $scope.register.email, wachtwoord: $scope.register.password};
-        //var url = "http://localhost/ProjectEveryware-API/api/account/register";
-        var url = config.api.url+'account/register';
+        $scope.register.working = true;
+//        $scope.register.error.email = false;
+//        $scope.register.error.password = false;
+//        $scope.register.error.summary = false;
+//        var valid = true;
+//        if(!$scope.register.email) {
+//            $scope.register.error.email = "Email is required";
+//            valid = false;
+//        }
+//        if(!$scope.register.password) {
+//            $scope.register.error.password = "Password is required";
+//            valid = false;
+//        }
+        
+//        if(valid) {
+            var body = {email: $scope.register.email, wachtwoord: $scope.register.password};
+            //var url = "http://localhost/ProjectEveryware-API/api/account/register";
+            var url = config.api.url+'account/register';
 
-        $http({
-            url:url,
-            method:"POST",
-            data: body
-        })
-        .success(function (data, status, headers, config) {
-//            localStorage.token = data.account.token;
-//            $rootScope.user = data.account;
-//            $rootScope.user.isLogged = true;
-            $scope.fillUserWithData(data);
-            $rootScope.$broadcast('onUserLogin');
-            
-            $rootScope.showMessage("Successvol geregistreerd!", "success");
-        })
-        .error(function(data, status, headers, config){
-            var message = "";
-            switch(status) {
-                case 404:
-                    message = "De gebruiker kan niet worden gevonden om in te loggen";
-                    break;
-                case 400:
-                    for(var error in data.messages) {
-                        if(error.message.indexOf("unique") !== -1 && error.field === "email") {
-                            message = "Dit email adres is al in gebruik";
+            $http({
+                url:url,
+                method:"POST",
+                data: body
+            })
+            .success(function (data, status, headers, config) {
+    //            localStorage.token = data.account.token;
+    //            $rootScope.user = data.account;
+    //            $rootScope.user.isLogged = true;
+                $scope.fillUserWithData(data);
+                $rootScope.$broadcast('onUserLogin');
+                
+                $rootScope.showMessage("Successvol geregistreerd!", "success");
+                $scope.register.working = false;
+            })
+            .error(function(data, status, headers, config){
+                var message = "";
+                switch(status) {
+                    case 404:
+                        message = "De gebruiker kan niet worden gevonden om in te loggen";
+                        break;
+                    case 400:
+                        for(var error in data.messages) {
+                            if(error.message.indexOf("unique") !== -1 && error.field === "email") {
+                                message = "Dit email adres is al in gebruik";
+                            }
                         }
-                    }
-                    break;
-            }
-            $scope.register.errorMessage = message;
-        });
+                        break;
+                }
+                $scope.register.summary = message;
+                $scope.register.working = false;
+            });
+//        } else {
+//            var message = (($scope.register.error.email) ? $scope.register.error.email + "\n" : '') + (($scope.register.error.password) ? $scope.register.error.password + "\n" : '');
+//            
+//            $scope.error.register.summary = message;
+//        }
     };  
     
     $scope.$on('onUserDataChanged', function() {
@@ -110,6 +132,10 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
         User.setLogged(true);
 
         $scope.setValuesFromUser();
+    }
+    
+    $scope.setProfileValues = function() {
+        $scope.profile = $scope.user;
     }
     
     User.init();
