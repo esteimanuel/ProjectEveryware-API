@@ -364,7 +364,23 @@ return array(
             relations => array(
                 array('type' => hasOne, 'f_table' => 'thread'),
             )
-        )
+        ),
+		'goededoel' => array(
+			settings => array(
+				't_name' => 'goededoel'
+			),
+			props => array(
+				'goededoel_id',
+				'title',
+				'description',
+				'message',
+				'target',
+				'actie_id',
+			),
+			relations => array(
+				array('type' => hasOne, 'f_table' => 'actie'),
+			)
+		),
 //                'accountGebruiker' => array(
 //                    settings => array(
 //                        't_name' => 'accountgebruikerlink'
