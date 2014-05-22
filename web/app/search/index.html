@@ -4,7 +4,7 @@
 
 <h2>Search results for: {{search.searchedValue}}</h2>
 <div class="list-group">
-    <a ng-repeat="result in search.results" class="list-group-item" ng-class="{'disabled': result.actie.length == 0, 'active':!!user.gebruiker && result.actie[0].actie_id == user.gebruiker.actie_id}" ui-sref="wijk({'wid':result.actie[0].actie_id})">
+    <a ng-repeat="result in search.results" class="list-group-item" ng-class="{'disabled': result.actie.length == 0, 'search-active':!!user.gebruiker && result.actie[0].actie_id == user.gebruiker.actie_id}" ui-sref="wijk({'wid':result.actie[0].actie_id})">
         <h4 class="list-group-item-heading" >{{result.wijk_naam}}</h4>
         <p class="list-group-item-text">
             <span ng-if="result.actie.length > 0">{{result.actie[0].naam}}</span>
