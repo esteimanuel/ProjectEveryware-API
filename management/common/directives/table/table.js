@@ -211,6 +211,9 @@ angular.module('gl.table', [])
             
             //this.draw();
             _this.$scope.draw = _this.draw;
+            
+            if($scope.onTableReady)
+                $scope.onTableReady();
 //            $scope.tableClass = "table";
 //            $scope.headers = ["header1", "header2", "header3"];
 //            
@@ -490,6 +493,8 @@ angular.module('gl.table', [])
             $scope.pagerData = tableCtrl.pagerData;
             $scope.activeIndex = -1;
             
+            $scope.maxPagesShown = (attributes.maxpages) ? parseInt(attributes.maxpages) : null;
+            
             $scope.init = function() {
                 $scope.pageCount = tableCtrl.$scope.pageCount;
                 //console.log($scope.pageCount);
@@ -543,6 +548,21 @@ angular.module('gl.table', [])
         
             $scope.setToLastPage = function() {
                 $scope.pageButtonClick($scope.pageList.length);
+            }
+            
+            $scope.isButtonShown = function(page) {
+                
+                if($scope.maxPagesShown) {
+                    if(page.number === 1)
+                        return true;
+                    else if(page.number === $scope.pageList.length)
+                        return true;
+                    else {
+                        var activePageNr = $scope.activeIndex + 1;
+                        return (page.number <= (activePageNr + $scope.maxPagesShown) && page.number >= (activePageNr - $scope.maxPagesShown));
+                    }
+                } else 
+                    return true;
             }
             
             $scope.setPageCount = function(count) {

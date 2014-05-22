@@ -23,7 +23,58 @@ class PostcodeController extends BaseController {
         }
         $this->response->setJsonContent($postalCodes);
     }
+    
+    public function editDistrictId() {
+        $data = $this->getRequestData();
+        $postalcode = $data['postalcode'];
+        $wijk_id = $data['wid'];
+        
+        $this->setWijkIdForPostalCode($postalcode, $wijk_id, 'postcode');
+    }
+    
+    public function resetDistrictId() {
+        $data = $this->getRequestData();
+        $postalcode = $data['postalcode'];
+        
+        $this->setWijkIdForPostalCode($postalcode, null, 'postcode');
+    }
+    
+    public function changeDistrictId() {
+        $data = $this->getRequestData();
+        $searchId = $data['search'];
+        $replaceId = $data['replace'];
+        
+        $this->setWijkIdForPostalCode($searchId, $replaceId, 'wijk_id');
+    }
+    
+    private function setWijkIdForPostalCode($searchValue, $wijk_id, $searchKey) {
+        
+        //if(isset($wijk_id) && $wijk_id > 0) {
+        $wijk = Wijk::findFirst($wijk_id);
+        if($wijk) {
 
+            $pCodes = Postcode::find(array(
+                'conditions' => $searchKey.' = :sv:',
+                'bind' => array('sv' => $searchValue),
+            ));
+
+            $messages = array();
+
+            foreach($pCodes as $postalcode) {
+                $postalcode->wijk_id = $wijk_id;
+                if(!$postalcode->save()) {
+                    $messages[] = $this->checkErrors($postalcode);
+                }
+            }
+        } else {
+            $this->response->setStatusCode(404,'Not Found');
+            $messages = "No Wijk found with this id";
+        }
+        $this->response->setJsonContent(array('messages' => $messages));
+//        } else {
+//            $this->response->setStatusCode(400, "Invalid or no id");
+//        }
+    }
 }
 
 ?>
