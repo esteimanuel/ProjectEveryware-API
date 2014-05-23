@@ -131,8 +131,8 @@ class AccountController extends BaseController {
 	
 	private function createSalt()
 	{
-		$length = 20;
-		$salt = mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
+		$size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CFB);
+		$salt = mcrypt_create_iv($size, MCRYPT_DEV_RANDOM);
 		
 		return $salt;
 	}
