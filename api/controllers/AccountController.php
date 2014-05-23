@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /*
  * To change this template, choose Tools | Templates
@@ -34,7 +34,8 @@ class AccountController extends BaseController {
         $account->email = $email;
         $account->wachtwoord = $password;
         $account->accountlevel_id = $accountLevel->accountlevel_id;
-        
+		$account->salt = $this->createSalt();
+		
         if($account->save()) {
             $user = new Gebruiker();
             if($user->save()) {
@@ -127,6 +128,14 @@ class AccountController extends BaseController {
 		
         return $account;
     }
+	
+	private function createSalt()
+	{
+		$length = 20;
+		$salt = genKey($length);
+		
+		return salt;
+	}
     
 //	public function register() {
 //		$messages = '';
