@@ -135,10 +135,12 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
     }
     
     $scope.setProfileValues = function() {
+//        console.log($scope.profile);
         if(!$scope.profile)
             $scope.profile = { gebruiker: {},account:{}};
         angular.copy(User.gebruiker, $scope.profile.gebruiker);
         angular.copy(User.account, $scope.profile.account);
+//        console.log($scope.profile);
     }
     
     User.init();
