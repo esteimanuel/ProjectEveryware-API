@@ -131,10 +131,9 @@ class AccountController extends BaseController {
 	
 	private function createSalt()
 	{
-		$length = 20;
-		$salt = mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
+		var $salt = uniqid(mt_rand(), true);
 		
-		return salt;
+		return $salt;
 	}
     
 //	public function register() {
