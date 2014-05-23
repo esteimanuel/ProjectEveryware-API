@@ -13,7 +13,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
     
     //Set header names for binding
     $scope.headers = [
-        {name: "postcode", type:"number", header:"Postcode"}
+        {name: "postcode", type:"text", header:"Postcode"}
     ];
     
     $scope.rows = [];
@@ -80,4 +80,8 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
         });
         return zipFree;
    }   
+   
+   $scope.onTableReady = function() {
+       $scope.draw();
+   };
 });
