@@ -34,7 +34,6 @@ class AccountController extends BaseController {
         $account->email = $email;
         $account->wachtwoord = $password;
         $account->accountlevel_id = $accountLevel->accountlevel_id;
-		$account->salt = $this->createSalt();
 		
         if($account->save()) {
             $user = new Gebruiker();
@@ -128,14 +127,6 @@ class AccountController extends BaseController {
 		
         return $account;
     }
-	
-	private function createSalt()
-	{
-		$size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CFB);
-		$salt = mcrypt_create_iv($size, MCRYPT_DEV_RANDOM);
-		
-		return $salt;
-	}
     
 //	public function register() {
 //		$messages = '';
