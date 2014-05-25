@@ -68,6 +68,25 @@ class ActieController extends BaseController {
             $this->response->setStatusCode(400, 'Bad value given');
         }
     }
+    
+    public function media() {
+        $actie_id = $this->request->getQuery('id');
+        if(isset($actie_id) && $actie_id > 0) {
+            $actie = Actie::findFirst($actie_id);
+            
+            $media = $actie->Media;
+            
+            $aMedia = array();
+            foreach($media as $mObj) {
+                $aMedia[] = $mObj;
+            }
+            
+            $this->response->setJsonContent($aMedia);
+            
+        } else {
+            $this->response->setStatusCode(400, 'Bad value given');
+        }
+    }
 
 }
 

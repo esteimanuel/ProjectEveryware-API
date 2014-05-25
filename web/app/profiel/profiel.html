@@ -1,5 +1,7 @@
-<form class="form-horizontal">
+<!-- Maak een Profiel controller aan om de gevens voor profiel te wijzigen -->
 
+<form class="form-horizontal">
+    
     <div style="margin: 15px;">
         <img ng-src="{{profile.account.foto_link}}" class="img-circle img-responsive" style="display: block; margin: auto; box-shadow: 2px 2px 10px; max-width: 25%">
     </div>
@@ -54,12 +56,14 @@
         <div class="form-group">
             <label for="postalcode" class="col-sm-2 control-label">Postcode</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" id="postalcode" placeholder="1234" data-ng-model="profile.gebruiker.postcode.postalcode">
+                <input type="text" class="form-control" id="postalcode" placeholder="1234AB" data-ng-model="profile.gebruiker.postcode.postcode">
             </div>
-            <div class="col-sm-2">
+<!--            <div class="col-sm-2">
                 <input type="text" class="form-control" id="postalcode-aa" placeholder="AA" data-ng-model="profile.gebruiker.postcode.postcode">
-            </div>
+            </div>-->
         </div>
+        <button class="btn btn-default pull-right" ng-click="setProfileValues()">Annuleren</button>
+        <button class="btn btn-primary pull-right">Opslaan</button>
     </fieldset>
 
     <fieldset id="account" ng-if="false">
@@ -77,7 +81,7 @@
             </div>
         </div>
         
-        <button type="submit" class="btn btn-primary pull-right">Wijzig  </button>
+        <button type="submit" class="btn btn-primary pull-right">Wijzig</button>
 
     </fieldset>
 
@@ -127,6 +131,8 @@
             </div>
         </div>
 
+        <button class="btn btn-default pull-right" ng-click="setProfileValues()">Annuleren</button>
         <button type="submit" class="btn btn-primary pull-right">Wijzig</button>
+        
     </fieldset>
 </form>

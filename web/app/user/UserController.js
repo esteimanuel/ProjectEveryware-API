@@ -134,10 +134,6 @@ app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $l
         $scope.setValuesFromUser();
     }
     
-    $scope.setProfileValues = function() {
-        $scope.profile = $scope.user;
-    }
-    
     User.init();
     $scope.setValuesFromUser();
     $rootScope.initDistrict();

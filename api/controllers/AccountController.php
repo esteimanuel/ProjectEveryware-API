@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /*
  * To change this template, choose Tools | Templates
@@ -34,7 +34,7 @@ class AccountController extends BaseController {
         $account->email = $email;
         $account->wachtwoord = $password;
         $account->accountlevel_id = $accountLevel->accountlevel_id;
-        
+		
         if($account->save()) {
             $user = new Gebruiker();
             if($user->save()) {
@@ -113,9 +113,14 @@ class AccountController extends BaseController {
                 //$this->response->setJsonContent(array('token' => $token));
                 unset($account->wachtwoord);
                 unset($account->validated);
-                $account->gebruiker = $account->Gebruiker[0];
-                if(isset($account->gebruiker->postcode_id) && $account->gebruiker->postcode_id > 0)
-                    $account->gebruiker->postcode = Postcode::findFirst($account->gebruiker->postcode_id);
+                if(isset($account->Gebruiker[0])) {
+//                    $account->gebruiker = $account->Gebruiker[0];
+                    $gebruiker = $account->Gebruiker[0];
+                    if(isset($gebruiker->postcode_id) && $gebruiker->postcode_id > 0)
+                        $gebruiker->postcode = Postcode::findFirst($gebruiker->postcode_id);
+                    $gebruiker->Buddy;
+                    $account->gebruiker = $gebruiker;
+                }
             } else {
                 $messages = $this->checkErrors($account);
                 $token = null;
