@@ -74,24 +74,25 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
     };
    
    function addWijkIfNotEist(wijk){
-       //If wijk not set add, else update
-       if($scope.wijkId)
+        //If wijk not set add, else update
+        if($scope.currentWijkId === 0){
        
-        alert(" name: " + wijk.name + "\r\n Huishoudens: " + wijk.totalHousholds + "\r\n target: " + wijk.target + "\r\n duration: " + wijk.duration + "\r\n avalible: " + wijk.avalible);
-       
-        var body = {beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
-        var url = config.api.url+'wijk';
+            alert(" name: " + wijk.name + "\r\n Huishoudens: " + wijk.totalHousholds + "\r\n target: " + wijk.target + "\r\n duration: " + wijk.duration + "\r\n avalible: " + wijk.avalible);
 
-        $http({
-            url:url,
-            method:"POST",
-            data: body
-        }).success(function (data, status, headers, config) {
-            $scope.currentWijkId = data.id;
-            })
-            .error(function(data, status, headers, config){
-            alert('Gegevens konden niet opgeslagen worden.');
-            });
+            var body = {beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
+            var url = config.api.url+'wijk';
+
+            $http({
+                url:url,
+                method:"POST",
+                data: body
+            }).success(function (data, status, headers, config) {
+                $scope.currentWijkId = data.id;
+                })
+                .error(function(data, status, headers, config){
+                alert('Gegevens konden niet opgeslagen worden.');
+                });
+       }
    };
    
    function AddRangeZip(start, end){
