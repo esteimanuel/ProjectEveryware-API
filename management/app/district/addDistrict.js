@@ -9,9 +9,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
     //Regular expression to check zip
     var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
     
-    //Set the map RUL default 99999999
-    $toAddWijkNumber = 99999999;
-    $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $toAddWijkNumber);
+    $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
     
     $scope.tableClasses = "table-striped";
     $scope.allowEdit = false;
@@ -72,7 +70,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
         }
         
         //Reload Map
-        $scope.currentWijkId = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $toAddWijkNumber);
+        $scope.currentWijkId = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
     };
    
    function addWijkIfNotEist(wijk){
@@ -89,12 +87,10 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
             method:"POST",
             data: body
         }).success(function (data, status, headers, config) {
-            console.log(data);
-            console.log(headers);
-            alert('succes');    
+            $scope.currentWijkId = data.id;
             })
             .error(function(data, status, headers, config){
-            alert('fail');
+            alert('Gegevens konden niet opgeslagen worden.');
             });
    };
    
@@ -113,7 +109,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
         $scope.addNewRows();
         
         //Update in API
-        var body = {_token: localStorage.token, postalcode: Zip, wid: $toAddWijkNumber};
+        var body = {_token: localStorage.token, postalcode: Zip, wid: $scope.currentWijkId};
         var url = config.api.url+'postcode/editDistrictId';
         
         $http({
