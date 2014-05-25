@@ -125,7 +125,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
             .error(function(data, status, headers, config){
                 alert(data);
                 alert(headers);
-            alert('fail');
+                alert('fail');
             });
    }
    
