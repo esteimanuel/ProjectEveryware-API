@@ -1,17 +1,134 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        
-        <div>TODO write content</div>
-    </body>
-</html>
+<div>
+  <h1 class="page-header">Gebruiker toevoegen</h1>
+</div>
+
+<form class="form-horizontal">
+
+    <div style="margin: 15px;">
+        <img ng-src="{{user.foto_link}}" class="img-circle img-responsive" style="display: block; margin: auto; box-shadow: 2px 2px 10px; max-width: 25%">
+    </div>
+
+    <fieldset id="personal">
+        <legend>Persoonlijke gegevens</legend>
+
+        <div class="form-group">
+            <label for="profile-name" class="col-sm-2 control-label">Naam: </label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" id="profile-name" placeholder="Voornaam" data-ng-model="user.gebruiker.voornaam" />
+            </div>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="profile-prefix" placeholder="Tussenvoegsel" data-ng-model="user.gebruiker.tussenvoegsel" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="profile-surname" class="col-sm-2 control-label">Achternaam: </label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="profile-surname" placeholder="Achternaam" data-ng-model="user.gebruiker.achternaam" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="profile-picture" class="col-sm-2 control-label">Profiel foto:</label>
+            <div class="col-sm-9">
+                <input type="file" class="btn btn-primary" title="Kies een foto" id="profile-pictureurl" data-ng-model="user.foto_link" />
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset id="adress">
+        <legend>Adress gegevens</legend>
+        <div class="form-group">
+            <label for="straat" class="col-sm-2 control-label">Straat: </label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="street" placeholder="Straatnaam" data-ng-model="street">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="huisnummer" class="col-sm-2 control-label">Straat: </label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="housenumber" placeholder="Huisnummer" data-ng-model="user.gebruiker.huisnummer">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="addon" placeholder="toevoeging" data-ng-model="user.gebruiker.huisnummer_toevoeging">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="postalcode" class="col-sm-2 control-label">Postcode: </label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="postalcode" placeholder="1234" data-ng-model="postalcode">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="postalcode-aa" placeholder="AA" data-ng-model="postalcode_AA">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset id="account">
+        <legend>Account gegevens</legend>
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">E-mail: </label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="email" placeholder="Email" data-ng-model="user.email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="wachtwoord" class="col-sm-2 control-label">Wachtwoord: </label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" id="wachtwoord" placeholder="Wachtwoord" data-ng-model="user.wachtwoord">
+            </div>
+        </div>
+
+        <label class="checkbox">
+            <input type="checkbox" data-ng-model="account.buddy">
+            Registreer als buddy.
+        </label>
+    </fieldset>
+
+    <button type="submit" class="btn btn-primary pull-right">Wijzig  </button>
+</form>
+
+
+
+
+<form class="form-horizontal" style="margin-top: 35px">
+    <fieldset id="Fieldset1">
+        <legend>Glasvezel buddy gegevens</legend>
+
+        <div class="form-group">
+            <label for="contactemail" class="col-sm-2 control-label">Contact email: </label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="contact-email" placeholder="E-mail" data-ng-model="contact_email">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="contacttel" class="col-sm-2 control-label">Contact tel-nr: </label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="contact-telnummer" placeholder="Telefoon nummer" data-ng-model="contact_telnummer">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="locatie" class="col-sm-2 control-label">Locatie: </label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="contact-locatie" placeholder="locatie" data-ng-model="contact_locatie">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="locatie" class="col-sm-2 control-label">Aanwezig van: </label>
+            <div class="col-sm-3">
+                <input type="time" class="form-control" data-ng-model="buddy.from">
+            </div>
+            <label for="locatie" class="col-sm-2 control-label">Aanwezig tot: </label>
+            <div class="col-sm-3">
+                <input type="time" class="form-control" data-ng-model="buddy.till">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary pull-right">Wijzig  </button>
+    </fieldset>
+</form>

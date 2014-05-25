@@ -33,6 +33,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }) 
     .state('profiel', {
         url: '/profiel',
+        //callFunction: "setProfileValues",
         views: {
             //"left-nav": { templateUrl: 'app/left-nav/nav.html' },
             "main": {templateUrl: 'app/profiel/profiel.html'}
@@ -85,6 +86,10 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         console.log(toState);
         console.log(toParams);
         console.log(fromState); 
+        
+//        if(toState.callFunction) {
+//            eval(toState.callFunction+"();");
+//        }
         
 //        if(toState.name === 'wijk' && !User.isLogged) {
 //            event.preventDefault();

@@ -9,7 +9,7 @@ angular.module('gl.table', [])
         restrict: 'E',
         replace: true,
         transclude: true,
-        controller: function($scope) {
+        controller: function($scope, $timeout) {
             this.$scope = $scope;
 //            this.$compile = $compile;
             
@@ -102,12 +102,14 @@ angular.module('gl.table', [])
             }
             
             this.draw = function() {
+                console.log("draw");
                 for(var i = 0; i < _this.observers.length; i++) {
                     _this.observers[i].initRowData();
                 }
                 
                 _this.$scope.pageCount = _this.$scope.rows.length / _this.observers.length;
                 for(var x = 0; x < _this.pagerObservers.length; x++) {
+                    console.log("Init pager after draw");
                     _this.pagerObservers[x].init();
                 }
                 
@@ -213,7 +215,9 @@ angular.module('gl.table', [])
             _this.$scope.draw = _this.draw;
             
             if($scope.onTableReady)
-                $scope.onTableReady();
+                $timeout(function() {
+                    $scope.onTableReady();
+                }, 100);
 //            $scope.tableClass = "table";
 //            $scope.headers = ["header1", "header2", "header3"];
 //            
@@ -490,12 +494,14 @@ angular.module('gl.table', [])
         replace: true,
         link: function($scope, element, attributes, tableCtrl) {
             tableCtrl.addPagerObserver($scope);
+            console.log("Pager init");
             $scope.pagerData = tableCtrl.pagerData;
             $scope.activeIndex = -1;
             
             $scope.maxPagesShown = (attributes.maxpages) ? parseInt(attributes.maxpages) : null;
             
             $scope.init = function() {
+                console.log("Init pager");
                 $scope.pageCount = tableCtrl.$scope.pageCount;
                 //console.log($scope.pageCount);
                 $scope.pageList = [];
@@ -567,6 +573,7 @@ angular.module('gl.table', [])
             
             $scope.setPageCount = function(count) {
                 count = Math.ceil(count);
+                console.log($scope.pageList);
                 if($scope.pageList.length > count) {
                     var difference = $scope.pageList.length - count;
                     var wasActiveIndex = -1;

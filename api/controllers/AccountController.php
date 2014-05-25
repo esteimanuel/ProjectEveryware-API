@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /*
  * To change this template, choose Tools | Templates
@@ -34,7 +34,7 @@ class AccountController extends BaseController {
         $account->email = $email;
         $account->wachtwoord = $password;
         $account->accountlevel_id = $accountLevel->accountlevel_id;
-        
+		
         if($account->save()) {
             $user = new Gebruiker();
             if($user->save()) {
