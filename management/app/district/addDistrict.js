@@ -118,10 +118,13 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
             method:"PUT",
             data: body
         }).success(function (data, status, headers, config) {
+            alert(data);
             alert(headers);
             alert('succes');    
             })
             .error(function(data, status, headers, config){
+                alert(data);
+                alert(headers);
             alert('fail');
             });
    }
