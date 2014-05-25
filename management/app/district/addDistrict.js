@@ -79,7 +79,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
        
             alert(" wijk_naam: " + wijk.name + "\r\n Huishoudens: " + wijk.totalHousholds + "\r\n target: " + wijk.target + "\r\n duration: " + wijk.duration + "\r\n avalible: " + wijk.avalible);
 
-            var body = {beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
+            var body = {wijk_naam: wijk.name, beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
             var url = config.api.url+'wijk';
 
             $http({
@@ -87,7 +87,6 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
                 method:"POST",
                 data: body
             }).success(function (data, status, headers, config) {
-                alert(data.id, data);
                 $scope.currentWijkId = data.id;
                 })
                 .error(function(data, status, headers, config){
@@ -109,6 +108,8 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
             postcode: Zip
         });
         $scope.addNewRows();
+        
+        alert($scope.currentWijkId);
         
         //Update in API
         var body = {_token: localStorage.token, postalcode: Zip, wid: $scope.currentWijkId};
