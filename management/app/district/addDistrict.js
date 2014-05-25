@@ -88,6 +88,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
                 data: body
             }).success(function (data, status, headers, config) {
                 $scope.currentWijkId = data.id;
+                alert($scope.currentWijkId);
                 })
                 .error(function(data, status, headers, config){
                 alert('Gegevens konden niet opgeslagen worden.');
