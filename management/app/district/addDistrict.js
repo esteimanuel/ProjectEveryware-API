@@ -4,7 +4,7 @@
  */
 
 app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
-    $scope.currentWijkId = 0;
+    $scope.currentWijkId = 24;
     
     //Regular expression to check zip
     var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
