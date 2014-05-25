@@ -87,6 +87,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
                 method:"POST",
                 data: body
             }).success(function (data, status, headers, config) {
+                alert(data.id);
                 $scope.currentWijkId = data.id;
                 alert($scope.currentWijkId);
                 })
