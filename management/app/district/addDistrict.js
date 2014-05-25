@@ -66,7 +66,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
                 alert("De postcode voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
                 return;
             }
-            AddSingleZip(postcode.single)
+            $timeout(AddSingleZip(postcode.single), 500);
         }
         
         //Reload Map
