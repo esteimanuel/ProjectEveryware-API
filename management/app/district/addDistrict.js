@@ -4,6 +4,9 @@
  */
 
 app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
+    //Regular expression to check zip
+    var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
+    
     //Set the map RUL default 99999999
     $toAddWijkNumber = 99999999;
     $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $toAddWijkNumber);
@@ -18,34 +21,51 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
     
     $scope.rows = [];
     
+    //Create array with alfabet to loop for adding zip range
+    var alfa = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    
+    
     //Function to add ZIP code
     $scope.addPostcode = function(postcode){
-        //Check if zip already in list
-        if(!checkIfZipFree(postcode.single)){
+        //If no data notify
+        if(postcode === undefined){
+            alert("Waarom druk je op de knop? Je hebt niks ingevuld");
+        }
+        
+        //Check the type to add
+        var addSingle = false;
+        var addRange = false;
+        var addRangeTry = false;
+        
+        if(postcode.single){
+            addSingle = true;
+        };
+        if(postcode.rangeStart || postcode.rangeEnd){
+            addRangeTry = true;
+        };
+        
+        if(addRangeTry && addSingle){
+            alert("1 ding tegelijk, moet niet te veel willen");
             return;
         }
-        $scope.rows.push({
-            postcode: postcode.single 
-        });
-        $scope.addNewRows();
         
-        //Update in API
-        var body = {_token: localStorage.token, postalcode: postcode.single, wid: $toAddWijkNumber};
-        var url = config.api.url+'wijk/addWijk';
-
-        //Postdata incorrect TODO FIX
-        return;
+        if(!addRangeTry && !addSingle){
+            alert("Waarom druk je op de knop? Je hebt niet alles ingevuld");
+            return;
+        }
         
-        $http({
-            url:url,
-            method:"POST",
-            data: body
-        }).success(function (data, status, headers, config) {
-            alert('succes');    
-            })
-            .error(function(data, status, headers, config){
-            alert('fail');
-            });
+        if(!addSingle && !addRange){
+            alert("Om een range toe te voegen moet je start en eind definen");
+            return;
+        }
+        
+        if(addSingle){
+            if(!rege.test(postcode.single)){
+                alert("De postcode voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
+                return;
+            }
+            AddSingleZip(postcode.single)
+        }
         
         //Reload Map
         $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $toAddWijkNumber);
@@ -69,6 +89,37 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
             alert('fail');
             });
    };
+   
+   function AddRangeZip(start, end){
+       
+   }
+   
+   function AddSingleZip(Zip){
+        //Check if zip already in list
+        if(!checkIfZipFree(Zip)){
+            return;
+        }
+        $scope.rows.push({
+            postcode: Zip
+        });
+        $scope.addNewRows();
+        
+        //Update in API
+        var body = {_token: localStorage.token, postalcode: Zip, wid: $toAddWijkNumber};
+        var url = config.api.url+'postcode/editDistrictId';
+        
+        $http({
+            url:url,
+            method:"PUT",
+            data: body
+        }).success(function (data, status, headers, config) {
+            alert(headers);
+            alert('succes');    
+            })
+            .error(function(data, status, headers, config){
+            alert('fail');
+            });
+   }
    
    function checkIfZipFree(zipCheck){
        var zipFree = true;
