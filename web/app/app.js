@@ -36,7 +36,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         //callFunction: "setProfileValues",
         views: {
             //"left-nav": { templateUrl: 'app/left-nav/nav.html' },
-            "main": {templateUrl: 'app/profiel/profiel.html'}
+            "main": {templateUrl: 'app/profiel/profiel.html', controller: 'ProfielCtrl'}
         }
     })
     .state('faq', {
