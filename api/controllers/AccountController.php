@@ -32,8 +32,10 @@ class AccountController extends BaseController {
 		
         $account = new Account();
         $account->email = $email;
-        $account->wachtwoord = $password;
+		$account->salt = createSalt();
+        $account->wachtwoord = hashPassword($password, $account->salt);
         $account->accountlevel_id = $accountLevel->accountlevel_id;
+
 		
         if($account->save()) {
             $user = new Gebruiker();
@@ -133,6 +135,17 @@ class AccountController extends BaseController {
         return $account;
     }
     
+	private function createSalt() {
+		$length = 20;
+		$intermediateSalt = md5(uniqid(rand(), true));
+		$salt = substr($intermediateSalt, 0, $length);
+		return $salt;
+	}
+	
+	public function hashPassword($password, $salt) {
+		return hash("sha256", $password . $salt);
+	}
+	
 //	public function register() {
 //		$messages = '';
 //        $id = 0;
