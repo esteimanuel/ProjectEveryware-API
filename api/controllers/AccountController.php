@@ -143,6 +143,7 @@ class AccountController extends BaseController
                     //$this->response->setJsonContent(array('token' => $token));
                     unset($account->wachtwoord);
                     unset($account->validated);
+                    unset($account->salt);
                     if (isset($account->Gebruiker[0]))
                     {
 //                    $account->gebruiker = $account->Gebruiker[0];
