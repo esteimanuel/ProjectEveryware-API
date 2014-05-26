@@ -83,8 +83,8 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
                 data: body
             }).success(function (data, status, headers, config) {
                 alert(data.id);
-                localstorage.currentWijkId = data.id;
-                alert(localstorage.currentWijkId);
+                localStorage.currentWijkId = data.id;
+                alert(localStorage.currentWijkId);
                 })
                 .error(function(data, status, headers, config){
                 alert('Gegevens konden niet opgeslagen worden.');
@@ -109,7 +109,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         alert($scope.currentWijkId);
         
         //Update in API
-        var body = {_token: localStorage.token, postalcode: Zip, wid: localstorage.currentWijkId};
+        var body = {_token: localStorage.token, postalcode: Zip, wid: localStorage.currentWijkId};
         var url = config.api.url+'postcode/editDistrictId';
         
         $http({
