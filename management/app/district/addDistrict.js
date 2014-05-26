@@ -82,7 +82,6 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
                 method:"POST",
                 data: body
             }).success(function (data, status, headers, config) {
-                alert(data.id);
                 localStorage.currentWijkId = data.id;
                 alert(localStorage.currentWijkId);
                 })
@@ -115,13 +114,9 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
             method:"PUT",
             data: body
         }).success(function (data, status, headers, config) {
-            alert(data);
-            alert(headers);
             alert('succes');    
             })
             .error(function(data, status, headers, config){
-                alert(data);
-                alert(headers);
                 alert('fail');
             });
    }
