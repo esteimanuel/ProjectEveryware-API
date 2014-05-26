@@ -36,7 +36,7 @@ class AccountController extends BaseController
 
         $account = new Account();
         $account->email = $email;
-        $account->salt = createSalt();
+        $account->salt = $this->createSalt();
         $account->wachtwoord = $this->hashPassword($password, $account->salt);
         $account->accountlevel_id = $accountLevel->accountlevel_id;
 
@@ -132,7 +132,7 @@ class AccountController extends BaseController
         {
             $hashedPass = $this->hashPassword($password, $account->salt);
 
-            if ($hashedPass == $account->password)
+            if ($hashedPass == $account->wachtwoord)
             {
                 if (!isset($token))
                     $token = hash('md5', time() . uniqid() . $account->account_id);
