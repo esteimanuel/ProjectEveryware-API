@@ -13,9 +13,9 @@
 class MediaController extends BaseController {
     //put your code here
     
-    private $_mediaPath = '../media/';
-    private $_imagePath = '../media/images/';
-    private $_realImagePath = '/api/media/images/';
+    private $_mediaPath = '../_media/';
+    private $_imagePath = '../_media/images/';
+    private $_realImagePath = '/api/_media/images/';
     
     private $_imageExtensions = array(
         'jpg', 'jpeg', 'png'
