@@ -73,10 +73,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
    
    function addWijkIfNotEist(wijk){
         //If wijk not set add, else update
-        if(!localstorage.currentWijkId){
-       
-            alert(" wijk_naam: " + wijk.name + "\r\n Huishoudens: " + wijk.totalHousholds + "\r\n target: " + wijk.target + "\r\n duration: " + wijk.duration + "\r\n avalible: " + wijk.avalible);
-
+        if(!localStorage.currentWijkId){
             var body = {wijk_naam: wijk.name, beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
             var url = config.api.url+'wijk';
 
