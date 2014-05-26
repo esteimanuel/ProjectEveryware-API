@@ -29,7 +29,11 @@ class PostcodeController extends BaseController {
         $postalcode = $data['postalcode'];
         $wijk_id = $data['wid'];
         
-        $this->setWijkIdForPostalCode($postalcode, $wijk_id, 'postcode');
+        if(isset($wijk_id) && $wijk_id > 0) {
+            $this->setWijkIdForPostalCode($postalcode, $wijk_id, 'postcode');
+        } else {
+            $this->response->setStatusCode(400, 'Invalid or no id given');
+        }
     }
     
     public function resetDistrictId() {
@@ -49,8 +53,11 @@ class PostcodeController extends BaseController {
     
     private function setWijkIdForPostalCode($searchValue, $wijk_id, $searchKey) {
         
-        //if(isset($wijk_id) && $wijk_id > 0) {
-        $wijk = Wijk::findFirst($wijk_id);
+        if(isset($wijk_id) && $wijk_id > 0)
+            $wijk = Wijk::findFirst($wijk_id);
+        else 
+            $wijk = true;
+        
         if($wijk) {
 
             $pCodes = Postcode::find(array(
@@ -71,9 +78,7 @@ class PostcodeController extends BaseController {
             $messages = "No Wijk found with this id";
         }
         $this->response->setJsonContent(array('messages' => $messages));
-//        } else {
-//            $this->response->setStatusCode(400, "Invalid or no id");
-//        }
+        
     }
 }
 
