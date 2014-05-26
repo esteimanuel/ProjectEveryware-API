@@ -113,13 +113,14 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         console.log(body);
         var url = config.api.url+'postcode/editDistrictId';
         
+        console.log(body);
+
         $http({
             url:url,
             method:"PUT",
             data: body
         }).success(function (data, status, headers, config) {
             console.log(data);
-            console.log(headers);
             alert('succes');    
             })
             .error(function(data, status, headers, config){

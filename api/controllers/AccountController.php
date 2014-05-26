@@ -32,8 +32,10 @@ class AccountController extends BaseController {
 		
         $account = new Account();
         $account->email = $email;
-        $account->wachtwoord = $password;
+		$account->salt = createSalt();
+        $account->wachtwoord = hashPassword($password, $account->salt);
         $account->accountlevel_id = $accountLevel->accountlevel_id;
+
 		
         if($account->save()) {
             $user = new Gebruiker();
@@ -100,12 +102,16 @@ class AccountController extends BaseController {
         // login logic
         // Klopt niet, je moet findFirst waar email = email AND password = password
         $account = Account::findFirst(array(
-            'conditions' => 'email = :email: AND wachtwoord = :wachtwoord:',
-            'bind' => array('email' => $email, 'wachtwoord' => $password),
+            'conditions' => 'email = :email:',
+            'bind' => array('email' => $email),
         ));
 		
         if ($account) {
-            if(!isset($token))
+			
+			$hashedPass = hashPassword($password, $account->salt); 
+		
+			if(hashedPass === $account->$password) {
+				if(!isset($token))
                 $token = hash('md5', time() . uniqid() . $account->account_id);
             
             $account->token = $token;
@@ -125,6 +131,11 @@ class AccountController extends BaseController {
                 $messages = $this->checkErrors($account);
                 $token = null;
             }
+			}
+			else {
+				$this->reponse->setStatusCode(404, "Account credentials not correct");
+				return null;
+			}	
         } else {
             $this->response->setStatusCode(404, "Account not found");
             return null;
@@ -133,6 +144,17 @@ class AccountController extends BaseController {
         return $account;
     }
     
+	private function createSalt() {
+		$length = 20;
+		$intermediateSalt = md5(uniqid(rand(), true));
+		$salt = substr($intermediateSalt, 0, $length);
+		return $salt;
+	}
+	
+	public function hashPassword($password, $salt) {
+		return hash("sha256", $password . $salt);
+	}
+	
 //	public function register() {
 //		$messages = '';
 //        $id = 0;
