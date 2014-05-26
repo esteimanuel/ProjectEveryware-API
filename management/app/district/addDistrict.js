@@ -68,7 +68,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         }
         
         //Reload Map
-        $scope.currentWijkId = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + localStorage.currentWijkId);
+        $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + localStorage.currentWijkId);
     };
    
    function addWijkIfNotEist(wijk){
@@ -105,8 +105,6 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
             postcode: Zip
         });
         $scope.addNewRows();
-        
-        alert($scope.currentWijkId);
         
         //Update in API
         var body = {_token: localStorage.token, postalcode: Zip, wid: localStorage.currentWijkId};
