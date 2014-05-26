@@ -18,14 +18,6 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             "left-nav":{templateUrl:'app/main/left-nav-dashboard.html'},
             "content":{templateUrl:'app/main/index.html'}
         }
-        
-        // Fag state
-    }).state({
-        url: 'faq',
-        views: {
-            "main":{templateUrl:"app/faq/index.html",controller:"FaqCtrl"}
-        }
-    
        
 //////////////////////////
 /// Dashboard redirs
@@ -96,12 +88,21 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
                 "content":{templateUrl:"app/district/addDistrict.html", controller:'addDistrictCtrl'}
             }
         
+        
+        
+        }).state('main.district.editDistrict', {
+            url:'/WijkBewerken/:wid',
+            views: {
+                "content":{templateUrl:'app/district/editDistrict.html', controller:'editDistrictCtrl'}
+            }
+        /*
         }).state('main.district.editDistrict',{
             url: '/Wijkbewerken',
             views: {
                 "content":{templateUrl:"app/district/addDistrict.html", controller:'addDistrictCtrl'}
             }
-        
+            */
+           
         }).state('main.district.districtOverview',{
             url: '/wijkbeheer',
             views: {

@@ -92,6 +92,9 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
                 alert('Gegevens konden niet opgeslagen worden.');
                 });
        }
+       else{
+        AddSingleZip(postcode.single)
+       }
    };
    
    function AddRangeZip(start, end){

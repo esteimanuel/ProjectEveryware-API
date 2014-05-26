@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-app.controller('districtOverviewCtrl', function($scope, $http) {
+app.controller('districtOverviewCtrl', function($scope, $http, $state) {
     $scope.tableClasses = null;
     $scope.tableClasses = "table-striped";
     
@@ -35,7 +35,7 @@ app.controller('districtOverviewCtrl', function($scope, $http) {
     $scope.getData();     
     
     $scope.onEditClick = function(rowData){
-        console.log(rowData);
         alert(rowData[0].value);
-    }
+        $state.transitionTo("main.district.editDistrict", {'wid':rowData[0].value});
+    };
 });
