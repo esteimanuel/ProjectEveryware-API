@@ -115,7 +115,7 @@ return array(
 //                            'validation' => array('regex' => array('pattern' => '?[a-zA-Z]{2}$'))
 //                        ),
                 'postcode' => array(
-                    'validation' => array('presenceOf', 'regex' => array('pattern' => '^[1-9][0-9]{3}[a-zA-Z]{2}$'))
+                    'validation' => array('presenceOf' /* , 'regex' => array('pattern' => '^[1-9][0-9]{3}[a-zA-Z]{2}$') */)
                 ),
                 'straat',
                 'provincie',
