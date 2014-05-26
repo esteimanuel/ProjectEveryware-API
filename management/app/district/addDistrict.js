@@ -106,7 +106,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         $scope.addNewRows();
         
         //Update in API
-        var body = {_token: localStorage.token, postalcode: Zip, wid: localStorage.currentWijkId};
+        var body = {postalcode: Zip, wid: localStorage.currentWijkId};
         var url = config.api.url+'postcode/editDistrictId';
         
         $http({
