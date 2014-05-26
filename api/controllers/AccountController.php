@@ -110,7 +110,7 @@ class AccountController extends BaseController {
 			
 			$hashedPass = hashPassword($password, $account->salt); 
 		
-			if(hashedPass === $account->$password) {
+			if($hashedPass === $account->$password) {
 				if(!isset($token))
                 $token = hash('md5', time() . uniqid() . $account->account_id);
             
