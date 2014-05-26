@@ -102,12 +102,16 @@ class AccountController extends BaseController {
         // login logic
         // Klopt niet, je moet findFirst waar email = email AND password = password
         $account = Account::findFirst(array(
-            'conditions' => 'email = :email: AND wachtwoord = :wachtwoord:',
-            'bind' => array('email' => $email, 'wachtwoord' => $password),
+            'conditions' => 'email = :email:',
+            'bind' => array('email' => $email),
         ));
 		
         if ($account) {
-            if(!isset($token))
+			
+			$hashedPass = hashPassword($password, $account->salt); 
+		
+			if(hashedPass === $account->$password) {
+				if(!isset($token))
                 $token = hash('md5', time() . uniqid() . $account->account_id);
             
             $account->token = $token;
@@ -127,6 +131,11 @@ class AccountController extends BaseController {
                 $messages = $this->checkErrors($account);
                 $token = null;
             }
+			}
+			else {
+				$this->reponse->setStatusCode(404, "Account credentials not correct");
+				return null;
+			}	
         } else {
             $this->response->setStatusCode(404, "Account not found");
             return null;
