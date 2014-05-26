@@ -4,8 +4,6 @@
  */
 
 app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
-    $scope.currentWijkId = 24;
-    
     //Regular expression to check zip
     var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
     
@@ -75,7 +73,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
    
    function addWijkIfNotEist(wijk){
         //If wijk not set add, else update
-        if($scope.currentWijkId === 0){
+        if(localstorage.currentWijkId === 0){
        
             alert(" wijk_naam: " + wijk.name + "\r\n Huishoudens: " + wijk.totalHousholds + "\r\n target: " + wijk.target + "\r\n duration: " + wijk.duration + "\r\n avalible: " + wijk.avalible);
 
@@ -88,8 +86,8 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
                 data: body
             }).success(function (data, status, headers, config) {
                 alert(data.id);
-                $scope.currentWijkId = data.id;
-                alert($scope.currentWijkId);
+                localstorage.currentWijkId = data.id;
+                alert(localstorage.currentWijkId);
                 })
                 .error(function(data, status, headers, config){
                 alert('Gegevens konden niet opgeslagen worden.');
@@ -114,7 +112,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
         alert($scope.currentWijkId);
         
         //Update in API
-        var body = {_token: localStorage.token, postalcode: Zip, wid: $scope.currentWijkId};
+        var body = {_token: localStorage.token, postalcode: Zip, wid: localstorage.currentWijkId};
         var url = config.api.url+'postcode/editDistrictId';
         
         $http({
