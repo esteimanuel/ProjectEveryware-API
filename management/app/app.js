@@ -89,9 +89,15 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             }
         
         }).state('main.district.editDistrict',{
+            url: '/Wijkbewerken',
+            views: {
+                "content":{templateUrl:"app/district/addDistrict.html", controller:'addDistrictCtrl'}
+            }
+        
+        }).state('main.district.districtOverview',{
             url: '/wijkbeheer',
             views: {
-                "content":{templateUrl:"app/district/editDistrict.html", controller:'editDistrictCtrl'}
+                "content":{templateUrl:"app/district/districtOverview.html", controller:'districtOverviewCtrl'}
             }
        
 //////////////////////////
