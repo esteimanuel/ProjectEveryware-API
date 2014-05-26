@@ -2,6 +2,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
 
     $scope.actie = {};
     $scope.mapsUrl = "";
+    $scope.actionImgUrl = "";
 
     //get wijk info van ingelogd persoon
     $scope.getActieInfo = function () {
@@ -30,6 +31,11 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
             $scope.getActieDeelnemers();
             $scope.getActieStats();
             $scope.mapsUrl = $sce.trustAsResourceUrl($scope.getMapsUrl());
+            angular.forEach($scope.actie.media, function(media) {
+                if(media.type === 'image') {
+                    $scope.actionImgUrl = media.url;
+                }
+            });
         })
         .error(function (data, status, headers, config) {
             console.log("failure");
