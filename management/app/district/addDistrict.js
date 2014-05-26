@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-app.controller('addDistrictCtrl', function($scope, $http, $timeout, $sce) {
+app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce) {
     //Regular expression to check zip
     var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
     
