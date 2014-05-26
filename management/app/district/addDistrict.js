@@ -57,21 +57,21 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
             return;
         }
         
-        addWijkIfNotEist(wijk)
+        addWijkIfNotEist(wijk,postcode)
         
         if(addSingle){
             if(!rege.test(postcode.single)){
                 alert("De postcode voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
                 return;
             }
-            $timeout(AddSingleZip(postcode.single), 2000);
+//            $timeout(AddSingleZip(postcode.single), 2000);
         }
         
         //Reload Map
         $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
     };
    
-   function addWijkIfNotEist(wijk){
+   function addWijkIfNotEist(wijk, postcode){
         //If wijk not set add, else update
         if(!$scope.currentWijkId){
             var body = {wijk_naam: wijk.name, beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
@@ -86,6 +86,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
                 $scope.currentWijkId = data.id;
                 console.log($scope);
                 alert($scope.currentWijkId);
+                AddSingleZip(postcode.single)
                 })
                 .error(function(data, status, headers, config){
                 alert('Gegevens konden niet opgeslagen worden.');
@@ -109,15 +110,17 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         
         //Update in API
         var body = {"postalcode": Zip, "wid": $scope.currentWijkId};
+        console.log(body);
         var url = config.api.url+'postcode/editDistrictId';
         
+        console.log(body);
+
         $http({
             url:url,
             method:"PUT",
             data: body
         }).success(function (data, status, headers, config) {
             console.log(data);
-            console.log(headers);
             alert('succes');    
             })
             .error(function(data, status, headers, config){

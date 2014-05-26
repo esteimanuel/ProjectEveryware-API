@@ -2,8 +2,19 @@
 
 class ActieController extends BaseController {
 
-    public function addUser() {
-
+    public function get() {
+        $qStrData = $this->request->getQuery();
+        $data = $this->baseGet($qStrData);
+        
+        $media = $data->Media;
+            
+        $aMedia = array();
+        foreach($media as $mObj) {
+            $aMedia[] = $mObj;
+        }
+        $data->media = $aMedia;
+        if(isset($data))
+            $this->response->setJsonContent($data);
     }
         
     public function users() {
