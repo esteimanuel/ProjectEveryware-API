@@ -7,7 +7,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
     //Regular expression to check zip
     var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
     
-    $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + localStorage.currentWijkId);
+    $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
     
     $scope.tableClasses = "table-striped";
     $scope.allowEdit = false;
@@ -68,12 +68,12 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         }
         
         //Reload Map
-        $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + localStorage.currentWijkId);
+        $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
     };
    
    function addWijkIfNotEist(wijk){
         //If wijk not set add, else update
-        if(!localStorage.currentWijkId){
+        if(!$scope.currentWijkId){
             var body = {wijk_naam: wijk.name, beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
             var url = config.api.url+'wijk';
 
@@ -82,8 +82,10 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
                 method:"POST",
                 data: body
             }).success(function (data, status, headers, config) {
-                localStorage.currentWijkId = data.id;
-                alert(localStorage.currentWijkId);
+                console.log(data);
+                $scope.currentWijkId = data.id;
+                console.log($scope);
+                alert($scope.currentWijkId);
                 })
                 .error(function(data, status, headers, config){
                 alert('Gegevens konden niet opgeslagen worden.');
@@ -106,7 +108,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         $scope.addNewRows();
         
         //Update in API
-        var body = {postalcode: Zip, wid: localStorage.currentWijkId};
+        var body = {postalcode: Zip, wid: $scope.currentWijkId};
         var url = config.api.url+'postcode/editDistrictId';
         
         $http({
