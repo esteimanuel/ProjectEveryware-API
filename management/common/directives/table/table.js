@@ -373,7 +373,7 @@ angular.module('gl.table', [])
             
             $scope.deleteRow = function() {
                 if(tableCtrl.$scope.removeRow)
-                    tableCtrl.$scope.removeRow();
+                    tableCtrl.$scope.removeRow($scope.cells);
                 
                 tableCtrl.$scope.rows.splice(_rowNr, 1);
                 // element.parent().find(attr[row>_rowNr]).scope.rowNr - 1
