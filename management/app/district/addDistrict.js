@@ -108,7 +108,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         $scope.addNewRows();
         
         //Update in API
-        var body = {postalcode: Zip, wid: $scope.currentWijkId};
+        var body = {"postalcode": Zip, "wid": $scope.currentWijkId};
         var url = config.api.url+'postcode/editDistrictId';
         
         $http({
@@ -119,7 +119,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
             alert('succes');    
             })
             .error(function(data, status, headers, config){
-                alert('fail');
+                alert('fail postcode');
             });
    }
    
