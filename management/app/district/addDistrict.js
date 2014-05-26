@@ -7,7 +7,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
     //Regular expression to check zip
     var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
     
-    $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+    $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + localStorage.currentWijkId);
     
     $scope.tableClasses = "table-striped";
     $scope.allowEdit = false;
@@ -68,7 +68,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         }
         
         //Reload Map
-        $scope.currentWijkId = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+        $scope.currentWijkId = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + localStorage.currentWijkId);
     };
    
    function addWijkIfNotEist(wijk){
