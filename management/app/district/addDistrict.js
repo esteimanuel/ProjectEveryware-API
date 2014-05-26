@@ -3,9 +3,7 @@
  * and open the template in the editor.
  */
 
-app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce) {
-    localSorage.currentWijkId = null;
-    
+app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce) {    
     //Regular expression to check zip
     var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
     
@@ -66,7 +64,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
                 alert("De postcode voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
                 return;
             }
-            $timeout(AddSingleZip(postcode.single), 500);
+            $timeout(AddSingleZip(postcode.single), 2000);
         }
         
         //Reload Map
