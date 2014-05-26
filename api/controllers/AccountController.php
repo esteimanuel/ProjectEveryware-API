@@ -1,4 +1,4 @@
- <?php
+<?php
 
 /*
  * To change this template, choose Tools | Templates
@@ -10,151 +10,183 @@
  *
  * @author Remi
  */
-class AccountController extends BaseController {
+class AccountController extends BaseController
+{
 
-    public function register() {
+    public function register()
+    {
         $data = $this->getRequestData();
         $email = $data['email'];
         $password = $data['wachtwoord'];
-        
-        if (isset($email) && isset($password)) {
+
+        if (isset($email) && isset($password))
+        {
             $messages = '';
             $uAccount = $this->registerAccount($email, $password, $messages);
             $this->response->setJsonContent(array('messages' => $messages, 'account' => $uAccount));
         }
     }
-    
-    private function registerAccount($email, $password, &$messages) {
+
+    private function registerAccount($email, $password, &$messages)
+    {
         $messages = '';
         $uAccount = null;
 
         $accountLevel = AccountLevel::findFirst(array('level' => 'user'));
-		
+
         $account = new Account();
         $account->email = $email;
-		$account->salt = createSalt();
-        $account->wachtwoord = hashPassword($password, $account->salt);
+        $account->salt = $this->createSalt();
+        $account->wachtwoord = $this->hashPassword($password, $account->salt);
         $account->accountlevel_id = $accountLevel->accountlevel_id;
 
-		
-        if($account->save()) {
+        if ($account->save())
+        {
             $user = new Gebruiker();
-            if($user->save()) {
+            if ($user->save())
+            {
                 $userId = $user->gebruiker_id;
                 $accountId = $account->account_id;
-                
+
                 $accountUser = new AccountGebruikerLink();
                 $accountUser->account_id = $accountId;
                 $accountUser->gebruiker_id = $userId;
-                if($accountUser->save()) {
+                if ($accountUser->save())
+                {
                     $uAccount = $this->loginAccount($email, $password, $messages);
-                } else {
+                }
+                else
+                {
                     $messages = $this->checkErrors($accountUser);
                 }
-            }  else {
+            }
+            else
+            {
                 $messages = $this->checkErrors($user);
             }
-        } else {
+        }
+        else
+        {
             $messages = $this->checkErrors($account);
         }
         return $uAccount;
     }
-    
-    public function login() {
+
+    public function login()
+    {
         $email = $this->request->getQuery('email');
         $password = $this->request->getQuery('wachtwoord');
-        
+
         $messages = '';
-        
+
         $account = $this->loginAccount($email, $password, $messages);
-        
+
         $this->response->setJsonContent(array('messages' => $messages, 'account' => $account));
     }
 
-    public function loginFacebook() {
+    public function loginFacebook()
+    {
         $fid = $this->request->getQuery('fid');
         $f_email = $this->request->getQuery('femail');
-        
-        if(isset($fid) && isset($f_email)) {
+
+        if (isset($fid) && isset($f_email))
+        {
             $messages = '';
             $tmpAccount = Account::findFirst(array('facebook_id' => $fid));
-            
-            if($tmpAccount) {
+
+            if ($tmpAccount)
+            {
                 $account = $this->loginAccount($tmpAccount->email, $tmpAccount->password, $messages);
                 $this->response->setJsonContent(array('messages' => $messages, 'account' => $account));
-            } else {
+            }
+            else
+            {
                 $account = $this->registerAccount($f_email, hash('md5', time() . uniqid() . "random"), $messages);
-                if($messages === '') {
+                if ($messages === '')
+                {
                     $account->facebook_id = $fid;
-                    if(!$account->save()) {
+                    if (!$account->save())
+                    {
                         $messages = $this->checkErrors($account);
                     }
                 }
                 $this->response->setJsonContent(array('messages' => $messages, 'account' => $account));
             }
-            
-        } else {
+        }
+        else
+        {
             $this->response->setStatusCode(400, "Bad value given");
         }
     }
-    
-    private function loginAccount($email, $password, &$messages, $token = null) {
+
+    private function loginAccount($email, $password, &$messages, $token = null)
+    {
         // login logic
         // Klopt niet, je moet findFirst waar email = email AND password = password
         $account = Account::findFirst(array(
-            'conditions' => 'email = :email:',
-            'bind' => array('email' => $email),
+                    'conditions' => 'email = :email:',
+                    'bind' => array('email' => $email),
         ));
-		
-        if ($account) {
-			
-			$hashedPass = hashPassword($password, $account->salt); 
-		
-			if($hashedPass === $account->$password) {
-				if(!isset($token))
-                $token = hash('md5', time() . uniqid() . $account->account_id);
-            
-            $account->token = $token;
-            if ($account->save()) {
-                //$this->response->setJsonContent(array('token' => $token));
-                unset($account->wachtwoord);
-                unset($account->validated);
-                if(isset($account->Gebruiker[0])) {
+
+        if ($account)
+        {
+            $hashedPass = $this->hashPassword($password, $account->salt);
+
+            if ($hashedPass == $account->wachtwoord)
+            {
+                if (!isset($token))
+                    $token = hash('md5', time() . uniqid() . $account->account_id);
+
+                $account->token = $token;
+                if ($account->save())
+                {
+                    //$this->response->setJsonContent(array('token' => $token));
+                    unset($account->wachtwoord);
+                    unset($account->validated);
+                    unset($account->salt);
+                    if (isset($account->Gebruiker[0]))
+                    {
 //                    $account->gebruiker = $account->Gebruiker[0];
-                    $gebruiker = $account->Gebruiker[0];
-                    if(isset($gebruiker->postcode_id) && $gebruiker->postcode_id > 0)
-                        $gebruiker->postcode = Postcode::findFirst($gebruiker->postcode_id);
-                    $gebruiker->Buddy;
-                    $account->gebruiker = $gebruiker;
+                        $gebruiker = $account->Gebruiker[0];
+                        if (isset($gebruiker->postcode_id) && $gebruiker->postcode_id > 0)
+                            $gebruiker->postcode = Postcode::findFirst($gebruiker->postcode_id);
+                        $gebruiker->Buddy;
+                        $account->gebruiker = $gebruiker;
+                    }
+                } else
+                {
+                    $messages = $this->checkErrors($account);
+                    $token = null;
                 }
-            } else {
-                $messages = $this->checkErrors($account);
-                $token = null;
             }
-			}
-			else {
-				$this->reponse->setStatusCode(404, "Account credentials not correct");
-				return null;
-			}	
-        } else {
+            else
+            {
+                $this->reponse->setStatusCode(404, "Account credentials not correct");
+                return null;
+            }
+        }
+        else
+        {
             $this->response->setStatusCode(404, "Account not found");
             return null;
         }
-		
+
         return $account;
     }
-    
-	private function createSalt() {
-		$length = 20;
-		$intermediateSalt = md5(uniqid(rand(), true));
-		$salt = substr($intermediateSalt, 0, $length);
-		return $salt;
-	}
-	
-	public function hashPassword($password, $salt) {
-		return hash("sha256", $password . $salt);
-	}
-	
+
+    private function createSalt()
+    {
+        $length = 20;
+        $intermediateSalt = md5(uniqid(rand(), true));
+        $salt = substr($intermediateSalt, 0, $length);
+        return $salt;
+    }
+
+    public function hashPassword($password, $salt)
+    {
+        return hash("sha256", $password . $salt);
+    }
+
 //	public function register() {
 //		$messages = '';
 //        $id = 0;
@@ -205,26 +237,22 @@ class AccountController extends BaseController {
 //                // Dit override de eerste setJsonContent, je geeft dus geen token mee
 //		$this->response->setJsonContent(array('messages' => $messages));
 //	}
-
-	// public function logout() {
-	// 	$messages = '';
-
-	// 	$token = $this->request->getPost("token");
-
-	// 	$account = Account::findFirst("token = '".$token."'");
-	// 	if ($account) {
-	// 		$account->token = '';
-	// 		if ($account->save()) {
-	// 			//$this->response->setJsonContent(array('messages' => 'success'));
-	// 		} else {
-	// 			$messages = $this->checkErrors($account);
-	// 		}
-	// 	} else {
-	// 		$messages = "account with given token not found";
-	// 	}
-
-	// 	$this->response->setJsonContent(array('messages' => $messages));
-	// }
+    // public function logout() {
+    // 	$messages = '';
+    // 	$token = $this->request->getPost("token");
+    // 	$account = Account::findFirst("token = '".$token."'");
+    // 	if ($account) {
+    // 		$account->token = '';
+    // 		if ($account->save()) {
+    // 			//$this->response->setJsonContent(array('messages' => 'success'));
+    // 		} else {
+    // 			$messages = $this->checkErrors($account);
+    // 		}
+    // 	} else {
+    // 		$messages = "account with given token not found";
+    // 	}
+    // 	$this->response->setJsonContent(array('messages' => $messages));
+    // }
 }
 
 ?>
