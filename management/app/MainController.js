@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-app.controller('MainCtrl', function($scope, $http, $state, User) {
+app.controller('MainCtrl', function($rootScope, $scope, $http, $state, User, $timeout) {
     $scope.app = config.app;
     
     $scope.indexList = function(indexes) {
@@ -31,4 +31,17 @@ app.controller('MainCtrl', function($scope, $http, $state, User) {
         User.data.token = null;
         $state.transitionTo('login');
     };
+    
+    $rootScope.global = {};
+    
+    $rootScope.showMessage = function(message, type, time) {
+        $rootScope.global._message = message;
+        $rootScope.global._messageType = type;
+        $rootScope.global._messageVisible = true;
+        
+        $timeout(function() {
+            $rootScope.global._messageVisible = false;
+        }, (time) ? time : 5000);
+    }
+    
 });

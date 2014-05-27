@@ -347,7 +347,7 @@ angular.module('gl.table', [])
                     //console.log(rowData);
                     tableCtrl.$scope.rows[_rowNr] = rowData;
                     if(tableCtrl.$scope.updateRow) {     
-                        if(tableCtrl.$scope.updateRow())
+                        if(tableCtrl.$scope.updateRow($scope.cells))
                             $scope.toggleEditMode();
                     } else 
                         $scope.toggleEditMode();

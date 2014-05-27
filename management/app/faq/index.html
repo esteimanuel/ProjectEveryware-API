@@ -1,0 +1,47 @@
+<div class="loader pull-right" style="margin-top:20px;" ng-show="isLoading">
+    <img src="../global/assets/loader.gif" />
+</div>
+
+<h1>Faq Beheren</h1>
+<hr/>
+
+<div class="add-container">
+    <button class="btn btn-default pull-right" type="button" ng-click="toggleAdd()">Toevoegen</button>
+</div>
+
+<div class="dialogbackground" ng-show="showAdd">
+    <div class="basedialog" ng-show="showAdd" style="padding: 10px;">
+        <button class="close-btn" ng-click="toggleAdd()">X</button>
+        <form ng-submit="add(faq)">
+            <fieldset>
+                <legend>Faq toevoegen</legend>
+                
+                <div class="form-group">
+                    <label for="question">Vraag</label>
+                    <input type="text" class="form-control" id="question" placeholder="Vraag" ng-model="faq.question" required autofocus/>
+                </div>
+                <div class="form-group">
+                    <label for="answer">Antwoord</label>
+                    <input type="text" class="form-control" id="answer" placeholder="Antwoord" ng-model="faq.answer" required>
+                </div>
+                
+                <div class="btn-row pull-right">
+                    <button class="btn btn-primary" type="submit">Toevoegen</button>
+                    <button class="btn btn-default" type="button" ng-click="toggleAdd()">Annuleren</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<gl-table>
+
+        <gl-table-head></gl-table-head>
+
+        <gl-table-body>
+            <gl-table-row ng-repeat="n in indexList(7) track by $index" row="{{$index}}"></gl-table-row>
+        </gl-table-body>
+
+<gl-table-pager max-pages="4"></gl-table-pager>
+
+</gl-table>

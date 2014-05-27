@@ -32,6 +32,7 @@
         <script src="app/dashboard/DashBoardDistrictsCtrl.js"></script>
         <script src="app/dashboard/DashBoardUsersCtrl.js"></script>
         <script src="app/dashboard/DashBoardMediaCtrl.js"></script>
+        <script src="app/faq/FaqController.js"></script>
         
         <!--Load Models-->
         <script src="models/user.js"></script>
@@ -46,6 +47,11 @@
         <link type="text/css" rel="stylesheet" href="styles/custom.css"/>
     </head>
     <body data-ng-controller="UserCtrl">
+        <div ng-show="global._messageVisible" class="global-message alert alert-{{global._messageType}}">
+            <button type="button" class="close" ng-click="global._messageVisible = false;">&times;</button>
+            {{global._message}}
+        </div>
+        
         <div ui-view="top-nav"></div>
         <div ui-view="left-nav"></div>
         <div ui-view="content"></div>
