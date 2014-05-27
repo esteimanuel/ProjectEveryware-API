@@ -35,7 +35,6 @@ app.controller('districtOverviewCtrl', function($scope, $http, $state) {
     $scope.getData();     
     
     $scope.onEditClick = function(rowData){
-        alert(rowData[0].value);
         $state.transitionTo("main.district.editDistrict", {'wid':rowData[0].value});
     };
 });
