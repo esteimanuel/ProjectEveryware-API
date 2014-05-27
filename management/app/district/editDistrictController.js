@@ -87,9 +87,6 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
             }
             AddSingleZip(postcode.single);
         }
-        
-        //Reload Map
-        $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
     };
    
    //AddWijk
@@ -151,7 +148,11 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
             data: body
         }).success(function (data, status, headers, config) {
             console.log(data);
-            alert('succes');    
+            alert('succes');  
+        
+            //Reload Map
+            var mapFrame = document.getElementById('mapFrame');
+            $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
             })
             .error(function(data, status, headers, config){
                 alert('fail postcode');
