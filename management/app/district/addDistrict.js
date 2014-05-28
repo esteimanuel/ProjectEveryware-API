@@ -6,8 +6,7 @@
 app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce) {    
     //Regular expression to check zip
     var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
-    
-    $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+    refreshMap();
     
     $scope.tableClasses = "table-striped";
     $scope.allowEdit = false;
@@ -66,9 +65,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
             }
 //            $timeout(AddSingleZip(postcode.single), 2000);
         }
-        
-        //Reload Map
-        $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+        refreshMap();
     };
    
    function addWijkIfNotEist(wijk, postcode){
@@ -95,6 +92,26 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
        else{
         AddSingleZip(postcode.single)
        }
+   };
+   
+   
+   $scope.removeRow = function(row){     
+        //Reset in API
+        var body = {"postalcode": row[0].value};
+        console.log(body);
+        var url = config.api.url+'postcode/resetDistrictId';
+        
+        $http({
+            url:url,
+            method:"PUT",
+            data: body
+        }).success(function (data, status, headers, config) {
+            console.log(data);
+            refreshMap();
+            })
+            .error(function(data, status, headers, config){
+                alert('Postcode verwijderen mislukt.');
+            });
    };
    
    function AddRangeZip(start, end){
@@ -145,4 +162,9 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
    $scope.onTableReady = function() {
        $scope.draw();
    };
+   
+   function refreshMap(){       
+        var mapFrame = document.getElementById('mapFrame');
+        $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+   }
 });
