@@ -49,7 +49,7 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
     //Function to add ZIP code
     $scope.addPostcode = function(postcode, wijk){
         
-        AddRangeZip(postcode.rangeStart, postcode.rangeEnd);
+       // AddRangeZip(postcode.rangeStart, postcode.rangeEnd);
         //If no data notify
         if(postcode === undefined){
             alert("Waarom druk je op de knop? Je hebt niks ingevuld");
