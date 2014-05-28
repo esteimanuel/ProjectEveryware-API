@@ -22,7 +22,6 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
     //Create array with alfabet to loop for adding zip range
     var alfa = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
     
-    
     //Function to add ZIP code
     $scope.addPostcode = function(postcode, wijk){
         //If no data notify
