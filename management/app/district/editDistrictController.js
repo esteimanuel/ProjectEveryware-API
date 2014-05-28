@@ -158,7 +158,7 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
         //Update in API
         var body = {"postalcode": Zip, "wid": $scope.currentWijkId};
         console.log(body);
-        var url = config.api.url+'postcode/resetDistrictId';
+        var url = config.api.url+'postcode/ChangeDistrictId';
         
         console.log(body);
 
