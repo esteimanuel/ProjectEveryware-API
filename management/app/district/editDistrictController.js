@@ -12,7 +12,7 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
     //Regular expression to check zip
     var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
     
-    $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+    refreshMap();
     
     $scope.tableClasses = "table-striped";
     $scope.allowEdit = false;
@@ -121,9 +121,24 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
        
    }
    
-   $scope.deleteRow = function(row){
-       console.log(row);
-   }
+   $scope.removeRow = function(row){     
+        //Reset in API
+        var body = {"postalcode": row[0].value};
+        console.log(body);
+        var url = config.api.url+'postcode/resetDistrictId';
+        
+        $http({
+            url:url,
+            method:"PUT",
+            data: body
+        }).success(function (data, status, headers, config) {
+            console.log(data);
+            refreshMap();
+            })
+            .error(function(data, status, headers, config){
+                alert('Postcode verwijderen mislukt.');
+            });
+   };
    
    function AddSingleZip(Zip){
         //Check if zip already in list
@@ -138,7 +153,7 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
         //Update in API
         var body = {"postalcode": Zip, "wid": $scope.currentWijkId};
         console.log(body);
-        var url = config.api.url+'postcode/editDistrictId';
+        var url = config.api.url+'postcode/resetDistrictId';
         
         console.log(body);
 
@@ -151,8 +166,7 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
             alert('succes');  
         
             //Reload Map
-            var mapFrame = document.getElementById('mapFrame');
-            $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+            refreshMap();
             })
             .error(function(data, status, headers, config){
                 alert('fail postcode');
@@ -170,4 +184,8 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
         return zipFree;
    }   
    
+   function refreshMap(){       
+        var mapFrame = document.getElementById('mapFrame');
+        $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+   }
 });

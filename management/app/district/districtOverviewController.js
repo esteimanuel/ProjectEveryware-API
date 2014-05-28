@@ -32,6 +32,25 @@ app.controller('districtOverviewCtrl', function($scope, $http, $state) {
             console.log("Wijkdata load failed /r/n/r/n Reson: /r/n" + headers);
         });
     };    
+   
+   $scope.removeRow = function(row){     
+        //Reset in API
+        var body = {"postalcode": row[0].value};
+        console.log(body);
+        var url = config.api.url+'postcode/resetDistrictId';
+        
+        $http({
+            url:url,
+            method:"PUT",
+            data: body
+        }).success(function (data, status, headers, config) {
+            })
+            .error(function(data, status, headers, config){
+                alert('Postcode verwijderen mislukt.');
+            });
+   };
+    
+    
     $scope.getData();     
     
     $scope.onEditClick = function(rowData){
