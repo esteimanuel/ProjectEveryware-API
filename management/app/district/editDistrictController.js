@@ -12,7 +12,7 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
     //Regular expression to check zip
     var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
     
-    $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+    refreshMap();
     
     $scope.tableClasses = "table-striped";
     $scope.allowEdit = false;
@@ -48,6 +48,8 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
     
     //Function to add ZIP code
     $scope.addPostcode = function(postcode, wijk){
+        
+       // AddRangeZip(postcode.rangeStart, postcode.rangeEnd);
         //If no data notify
         if(postcode === undefined){
             alert("Waarom druk je op de knop? Je hebt niks ingevuld");
@@ -118,26 +120,43 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
    };
    */
    function AddRangeZip(start, end){
+       //Split start to loop       
+       var startNumbers = parseInt(start.slice(0, 4));
+       var startAlfa1= alfa.indexOf(start.charAt(4));
+       var startAlfa2= alfa.indexOf(start.charAt(5));
+       //Split end to loop
+       var endNumbers = parseInt(end.slice(0, 4));
+       var endAlfa1 = alfa.indexOf(end.charAt(4));
+       var endAlfa2 = alfa.indexOf(end.charAt(5));
        
-   }
-   
-   $scope.deleteRow = function(row){
-       console.log(row);
+       for (startNumbers; startNumbers < endNumbers; startNumbers++){
+           console.log(startNumbers);
+           for(startAlfa1; startAlfa1 < alfa.length(); startAlfa1++){
+               console.log(alfa[startAlfa1]);
+               for(startAlfa2; startAlfa2 < alfa.length(); startAlfa2++){
+                   alert("Postcode: " + startNumbers + alfa[startAlfa1] + alfa[startAlfa2]);
+               }
+               //Reset alfa 2 after finish
+               startAlfa2 = 0;
+           }
+           //Reset alfa1 after finish
+           startAlfa1 = 0;
+       }
+       
+       if(startNumbers === endNumbers){
+           for(startAlfa1; startAlfa1 <= endAlfa1; startAlfa1++){
+               
+           }
+       }
    }
    
    function AddSingleZip(Zip){
         //Check if zip already in list
         if(!checkIfZipFree(Zip)){
             return;
-        }
-        $scope.rows.push({
-            postcode: Zip
-        });
-        $scope.addNewRows();
-        
+        }        
         //Update in API
         var body = {"postalcode": Zip, "wid": $scope.currentWijkId};
-        console.log(body);
         var url = config.api.url+'postcode/editDistrictId';
         
         console.log(body);
@@ -147,17 +166,37 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
             method:"PUT",
             data: body
         }).success(function (data, status, headers, config) {
-            console.log(data);
-            alert('succes');  
-        
+            //Only add row on succes
+            $scope.rows.push({
+                postcode: Zip
+            });
+            $scope.addNewRows();
             //Reload Map
-            var mapFrame = document.getElementById('mapFrame');
-            $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+            refreshMap();
+            })
+        .error(function(data, status, headers, config){
+        });
+   }
+   
+   //Reset zip in DB by clicking delete in table
+   $scope.removeRow = function(row){     
+        //Reset in API
+        var body = {"postalcode": row[0].value};
+        console.log(body);
+        var url = config.api.url+'postcode/resetDistrictId';
+        
+        $http({
+            url:url,
+            method:"PUT",
+            data: body
+        }).success(function (data, status, headers, config) {
+            console.log(data);
+            refreshMap();
             })
             .error(function(data, status, headers, config){
-                alert('fail postcode');
+                alert('Postcode verwijderen mislukt.');
             });
-   }
+   };
    
    function checkIfZipFree(zipCheck){
        var zipFree = true;
@@ -170,4 +209,8 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
         return zipFree;
    }   
    
+   function refreshMap(){       
+        var mapFrame = document.getElementById('mapFrame');
+        $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+   }
 });

@@ -375,9 +375,9 @@ angular.module('gl.table', [])
                 if(tableCtrl.$scope.removeRow)
                     tableCtrl.$scope.removeRow($scope.cells);
                 
-                tableCtrl.$scope.rows.splice(_rowNr, 1);
                 // element.parent().find(attr[row>_rowNr]).scope.rowNr - 1
                 tableCtrl.notifyRowRemoved();
+                tableCtrl.$scope.rows.splice(_rowNr, 1);
                 //element.addClass("remove");
                 tableCtrl.notifyChange();
                 //element.remove();
