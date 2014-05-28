@@ -35,18 +35,18 @@ app.controller('districtOverviewCtrl', function($scope, $http, $state) {
    
    $scope.removeRow = function(row){     
         //Reset in API
-        var body = {"postalcode": row[0].value};
+        var body = {"id": row[0].value};
         console.log(body);
-        var url = config.api.url+'postcode/resetDistrictId';
+        var url = config.api.url+'wijk/';
         
         $http({
             url:url,
-            method:"PUT",
+            method:"DELETE",
             data: body
         }).success(function (data, status, headers, config) {
             })
             .error(function(data, status, headers, config){
-                alert('Postcode verwijderen mislukt.');
+                alert('Wijk verwijderen mislukt.');
             });
    };
     
