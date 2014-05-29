@@ -25,6 +25,12 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             'main': {templateUrl: 'app/faq/index.html', controller: 'FaqCtrl'}
         }
     })
+    .state('main.media' , {
+        url: '/media',
+        views: {
+            'main': {templateUrl:'app/media/index.html', controller: 'MediaCtrl'}
+        }
+    })
 //////////////////////////
 /// Dashboard redirs
 //////////////////////////

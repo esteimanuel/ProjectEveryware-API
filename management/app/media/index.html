@@ -1,0 +1,60 @@
+<div class="loader pull-right" style="margin-top:20px;" ng-show="isLoading">
+    <img src="../global/assets/loader.gif" />
+</div>
+
+<h1>Media Beheren</h1>
+<hr/>
+
+<div class="add-container">
+    <button class="btn btn-default pull-right" type="button" ng-click="toggleAdd()">Toevoegen</button>
+</div>
+
+<div class="dialogbackground" ng-show="showAdd">
+    <div class="basedialog" ng-show="showAdd" style="padding: 10px;">
+        <button class="close-btn" ng-click="toggleAdd()">X</button>
+        <form ng-submit="add(faq)">
+            <fieldset>
+                <legend>Media toevoegen</legend>
+                
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select id="type" class="form-control" ng-model="media.type">
+                        <option value="image">Afbeelding</option>
+                        <option value="video">Video</option>
+                    </select>
+                    <!--<input type="text" class="form-control" id="question" placeholder="Type" ng-model="media.type" required autofocus/>-->
+                </div>
+                <div class="form-group">
+                    <label for="url">Url</label>
+                    <input type="url" class="form-control" id="url" placeholder="Url" ng-model="media.url" required>
+                </div>
+                <hr/>
+                <div class="form-group">
+                    <label for="actie">Actie</label>
+                    <input type="number" class="form-control" id="actie" placeholder="Actie nr" ng-model="media.actie_id">
+                </div>
+                <div class="form-group">
+                    <label for="gebruiker">Gebruiker</label>
+                    <input type="number" class="form-control" id="gebruiker" placeholder="Gebruikers nr" ng-model="media.url">
+                </div>
+                
+                <div class="btn-row pull-right">
+                    <button class="btn btn-primary" type="submit">Toevoegen</button>
+                    <button class="btn btn-default" type="button" ng-click="toggleAdd()">Annuleren</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<gl-table>
+
+        <gl-table-head></gl-table-head>
+
+        <gl-table-body>
+            <gl-table-row ng-repeat="n in indexList(7) track by $index" row="{{$index}}"></gl-table-row>
+        </gl-table-body>
+
+<gl-table-pager max-pages="4"></gl-table-pager>
+
+</gl-table>

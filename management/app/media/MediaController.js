@@ -3,18 +3,22 @@
  * and open the template in the editor.
  */
 
-app.controller('FaqCtrl', function($rootScope, $scope, $http) {
+app.controller('MediaCtrl', function($rootScope, $scope, $http) {
     
-    var apiCtrlName = 'faq';
-    var idName = 'faq_id';
+    var apiCtrlName = 'media';
+    var idName = 'media_id';
+    
+    $scope.media = {type:"image"};
     
     $scope.tableClasses = "table-striped";
     $scope.headers = [
-        {name: "faq_id", type:"number", header:"#"},
-        {name:"question", header: "Vraag"},
-        {name:"answer", header: "Antwoord"},
+        {name: "media_id", type:"number", header:"#"},
+        {name:"type", header: "Type"},
+        {name:"url", type:"url", header: "Url"},
+        {name:"actie_id", type: "number", header:"Actie"},
+        {name:"gebruiker_id", type: "number", header:"Gebruiker"}
     ];
-    $scope.cellOrder = ["faq_id", "question", "answer"];
+    $scope.cellOrder = ["media_id", "type", "url", "actie_id", "gebruiker_id"];
 
     $scope.rows = [];
     
@@ -138,3 +142,4 @@ app.controller('FaqCtrl', function($rootScope, $scope, $http) {
 //    $scope.getData(); 
     
 });
+
