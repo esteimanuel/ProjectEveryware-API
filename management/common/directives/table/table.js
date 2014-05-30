@@ -9,9 +9,9 @@ angular.module('gl.table', [])
         restrict: 'E',
         replace: true,
         transclude: true,
-        controller: function($scope, $timeout) {
+        controller: function($scope, $timeout, $sce) {
             this.$scope = $scope;
-//            this.$compile = $compile;
+            this.$sce = $sce;
             
             var _this = this;
             var _sortField = null;
@@ -312,14 +312,26 @@ angular.module('gl.table', [])
                     newOrder[i] = {
                         value: (key in $scope.cells) ? $scope.processKeyToValue(key, $scope.cells) /* $scope.cells[key] */ : null,
                         key: key,
-                        type: (header.type) ? header.type : "text"
+                        type: (header.type) ? header.type : "text",
+                        typeData: (header.typeData) ? header.typeData : null,
+                        getValue: function(cell) {
+                            if(cell.contentPattern)
+                                return $scope.parseContentPattern(cell.contentPattern, cell.value);
+                            else
+                                return (cell.value) ? tableCtrl.$sce.trustAsHtml(""+cell.value) : "";
+                        }
                     };
                     newOrder[i].tmpValue = newOrder[i].value;
+                    newOrder[i].contentPattern = ("contentPattern" in header) ? header.contentPattern : null;
                     //console.log(newOrder[i]);
                 }
                 $scope.cells = newOrder;
                 //tableCtrl.$scope.rows[_rowNr] = $scope.cells;
             };
+            
+            $scope.parseContentPattern = function(contentPattern, value) {
+                return tableCtrl.$sce.trustAsHtml(contentPattern.replace(/\[value\]/g, value));
+            }
             
             $scope.initRowData = function() {
                 if(parseInt(_rowNr) >= 0 && tableCtrl.$scope.rows) {

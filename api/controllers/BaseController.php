@@ -302,8 +302,9 @@ class BaseController extends \Phalcon\Mvc\Controller {
             $messages = '';
             if(!$model->delete()) {
                 $messages = $this->checkErrors($model);
+            } else {
+                $this->response->setStatusCode(204, "No content");
             }
-            $this->response->setStatusCode(204, "No content");
 //            $this->response->setJsonContent(array('messages' => $messages));
         } else {
             $this->response->setStatusCode(404, "Not found");

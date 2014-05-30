@@ -12,15 +12,14 @@
 <div class="dialogbackground" ng-show="showAdd">
     <div class="basedialog" ng-show="showAdd" style="padding: 10px;">
         <button class="close-btn" ng-click="toggleAdd()">X</button>
-        <form ng-submit="add(faq)">
+        <form ng-submit="add(media)">
             <fieldset>
                 <legend>Media toevoegen</legend>
                 
                 <div class="form-group">
                     <label for="type">Type</label>
                     <select id="type" class="form-control" ng-model="media.type">
-                        <option value="image">Afbeelding</option>
-                        <option value="video">Video</option>
+                        <option ng-repeat="typeData in dropdownData" value="{{typeData.key}}">{{typeData.value}}</option>
                     </select>
                     <!--<input type="text" class="form-control" id="question" placeholder="Type" ng-model="media.type" required autofocus/>-->
                 </div>

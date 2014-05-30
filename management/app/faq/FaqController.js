@@ -108,7 +108,7 @@ app.controller('FaqCtrl', function($rootScope, $scope, $http) {
                 $rootScope.showMessage("Rij is toegevoegd", "success", 2000);
                 $scope.toggleAdd();
                 
-                faq.faq_id = data.id;
+                faq[idName] = data.id;
                 $scope.rows.push(faq);
                 $scope.addNewRows();
                 

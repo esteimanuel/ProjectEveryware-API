@@ -9,12 +9,13 @@ app.controller('MediaCtrl', function($rootScope, $scope, $http) {
     var idName = 'media_id';
     
     $scope.media = {type:"image"};
+    $scope.dropdownData = [{'key':'image', 'value': 'Afbeelding'}, {'key':'video', 'value':'Video'}];
     
     $scope.tableClasses = "table-striped";
     $scope.headers = [
         {name: "media_id", type:"number", header:"#"},
-        {name:"type", header: "Type"},
-        {name:"url", type:"url", header: "Url"},
+        {name:"type", header: "Type", type:"dropdown", typeData: $scope.dropdownData},
+        {name:"url", type:"url", header: "Url", contentPattern: "<a class='hover-url' href='[value]' target='_blank'>[value]</a><img class='sample-img basedialog' src='[value]' />"},
         {name:"actie_id", type: "number", header:"Actie"},
         {name:"gebruiker_id", type: "number", header:"Gebruiker"}
     ];
@@ -102,18 +103,18 @@ app.controller('MediaCtrl', function($rootScope, $scope, $http) {
         return true;
     }
     
-    $scope.add = function(faq) {
+    $scope.add = function(media) {
         $scope.toggleLoading();
             $http({
                 url: config.api.url+apiCtrlName,
                 method: 'POST',
-                data: faq
+                data: media
             }).success(function(data, status) {
                 $rootScope.showMessage("Rij is toegevoegd", "success", 2000);
                 $scope.toggleAdd();
                 
-                faq.faq_id = data.id;
-                $scope.rows.push(faq);
+                media[idName] = data.id;
+                $scope.rows.push(media);
                 $scope.addNewRows();
                 
                 $scope.toggleLoading();
