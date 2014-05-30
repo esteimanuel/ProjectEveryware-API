@@ -315,9 +315,12 @@ angular.module('gl.table', [])
                         type: (header.type) ? header.type : "text",
                         typeData: (header.typeData) ? header.typeData : null,
                         getValue: function(cell) {
-                            if(cell.contentPattern)
-                                return $scope.parseContentPattern(cell.contentPattern, cell.value);
-                            else
+                            if(cell.contentPattern) {
+                                if($scope.isFunction(cell.contentPattern))
+                                    return $scope.parseContentPattern(cell.contentPattern(cell, $scope.cells), cell.value);
+                                else
+                                    return $scope.parseContentPattern(cell.contentPattern, cell.value);
+                            } else 
                                 return (cell.value) ? tableCtrl.$sce.trustAsHtml(""+cell.value) : "";
                         }
                     };
@@ -328,6 +331,10 @@ angular.module('gl.table', [])
                 $scope.cells = newOrder;
                 //tableCtrl.$scope.rows[_rowNr] = $scope.cells;
             };
+            
+            $scope.isFunction = function(obj) {
+                return !!(obj && obj.constructor && obj.call && obj.apply);
+            }
             
             $scope.parseContentPattern = function(contentPattern, value) {
                 return tableCtrl.$sce.trustAsHtml(contentPattern.replace(/\[value\]/g, value));

@@ -15,7 +15,18 @@ app.controller('MediaCtrl', function($rootScope, $scope, $http) {
     $scope.headers = [
         {name: "media_id", type:"number", header:"#"},
         {name:"type", header: "Type", type:"dropdown", typeData: $scope.dropdownData},
-        {name:"url", type:"url", header: "Url", contentPattern: "<a class='hover-url' href='[value]' target='_blank'>[value]</a><img class='sample-img basedialog' src='[value]' />"},
+        {name:"url", type:"url", header: "Url", contentPattern: function(cell, cells) {
+             var type = '';
+             angular.forEach(cells, function(cell) {
+                 if(cell.key == 'type') {
+                     type = cell.value;
+                 }
+             });
+             if(type == 'image')
+                return "<a class='hover-url' href='[value]' target='_blank'>[value]</a><img class='sample sample-img basedialog' src='[value]' />";
+            else if(type == 'video')
+                return "<a class='hover-url' href='[value]' target='_blank'>[value]</a><iframe class='sample sample-video basedialog' src='"+$scope.getVideoUrl(cell.value)+"' />";
+        }},
         {name:"actie_id", type: "number", header:"Actie"},
         {name:"gebruiker_id", type: "number", header:"Gebruiker"}
     ];
@@ -123,6 +134,21 @@ app.controller('MediaCtrl', function($rootScope, $scope, $http) {
                 
                 $scope.toggleLoading();
             });
+    }
+    
+    $scope.getVideoUrl = function(url) {
+        return "//www.youtube.com/embed/" + $scope.getVideoId(url);
+    }
+    
+    $scope.getVideoId = function(url) {
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        if (match&&match[2].length==11){
+            return match[2];
+        }else{
+            //error
+            return "";
+        }
     }
     
     $scope.clear = function() {

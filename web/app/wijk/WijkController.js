@@ -2,6 +2,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
 
     $scope.actie = {};
     $scope.mapsUrl = "";
+    $scope.videoUrl = "";
     $scope.actionImgUrl = "";
 
     //get wijk info van ingelogd persoon
@@ -31,6 +32,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
             $scope.getActieDeelnemers();
             $scope.getActieStats();
             $scope.mapsUrl = $sce.trustAsResourceUrl($scope.getMapsUrl());
+            $scope.videoUrl = $sce.trustAsResourceUrl($scope.getVideoUrl());
             angular.forEach($scope.actie.media, function(media) {
                 if(media.type === 'image') {
                     $scope.actionImgUrl = media.url;
@@ -77,6 +79,27 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
     
     $scope.getMapsUrl = function() {
         return "http://glassy-web.avans-project.nl/?wijk=" + $scope.actie.wijk_id;
+    }
+    
+    $scope.getVideoUrl = function() {
+        var vidCode = "";
+        angular.forEach($scope.actie.media, function(media) {
+            if(media.type == 'video') {
+                vidCode = $scope.getVideoId(media.url);
+            }
+        });
+        return "//www.youtube.com/embed/" + vidCode;
+    }
+    
+    $scope.getVideoId = function(url) {
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        if (match&&match[2].length==11){
+            return match[2];
+        }else{
+            //error
+            return "";
+        }
     }
 
     $scope.handleStateButton = function() {
