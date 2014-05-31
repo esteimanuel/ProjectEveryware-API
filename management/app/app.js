@@ -65,10 +65,10 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
                 "content":{templateUrl:"app/user/addUser.html", controller:'AddUserCtrl'}
             }
         
-        }).state('main.users.editUser',{
-            url: '/Gebruiker_bewerken',
+        }).state('main.users.userOverview',{
+            url: '/Gebruiker_overzicht',
             views: {
-                "content":{templateUrl:"app/user/editUser.html", controller:'EditUserCtrl'}
+                "content":{templateUrl:"app/user/userOverview.html", controller:'userOverviewCtrl'}
             }
        
 //////////////////////////
@@ -87,26 +87,23 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             views: {
                 "content":{templateUrl:"app/district/addDistrict.html", controller:'addDistrictCtrl'}
             }
-        
-        
-        
+            
         }).state('main.district.editDistrict', {
             url:'/WijkBewerken/:wid',
             views: {
                 "content":{templateUrl:'app/district/editDistrict.html', controller:'editDistrictCtrl'}
             }
-        /*
-        }).state('main.district.editDistrict',{
-            url: '/Wijkbewerken',
-            views: {
-                "content":{templateUrl:"app/district/addDistrict.html", controller:'addDistrictCtrl'}
-            }
-            */
            
         }).state('main.district.districtOverview',{
             url: '/wijkbeheer',
             views: {
                 "content":{templateUrl:"app/district/districtOverview.html", controller:'districtOverviewCtrl'}
+            }
+            
+        }).state('main.district.editProvider', {
+            url:'/Providers',
+            views: {
+                "content":{templateUrl:'app/district/provider.html', controller:'providerCtrl'}
             }
        
 //////////////////////////
