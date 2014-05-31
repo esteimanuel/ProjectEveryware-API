@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-app.controller('EditUserCtrl', function($scope, $http) {
+app.controller('userOverviewCtrl', function($scope, $http) {
     $scope.tableClasses = "table-striped";
     $scope.headers = [
         {name: "account_id", type:"number", header:"Custom"},
