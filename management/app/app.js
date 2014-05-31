@@ -18,12 +18,24 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             "left-nav":{templateUrl:'app/main/left-nav-dashboard.html'},
             "content":{templateUrl:'app/main/index.html'}
         }
-       
+    })
+    .state('main.faq', {
+        url: '/faq',
+        views: {
+            'main': {templateUrl: 'app/faq/index.html', controller: 'FaqCtrl'}
+        }
+    })
+    .state('main.media' , {
+        url: '/media',
+        views: {
+            'main': {templateUrl:'app/media/index.html', controller: 'MediaCtrl'}
+        }
+    })
 //////////////////////////
 /// Dashboard redirs
 //////////////////////////
         
-    }).state('main.dashboard',{
+    .state('main.dashboard',{
         url: '/dashboard',
         views: {
             "left-nav":{templateUrl:'app/main/left-nav-dashboard.html'},

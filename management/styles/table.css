@@ -22,3 +22,9 @@
     margin-bottom: 50px;
 }
 
+.gl-table-column{
+    max-width: 150px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+

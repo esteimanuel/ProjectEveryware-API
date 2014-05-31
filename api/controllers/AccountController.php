@@ -27,7 +27,7 @@ class AccountController extends BaseController
         }
     }
 
-    private function registerAccount($email, $password, &$messages)
+    private function registerAccount($email, $password, &$messages, $fid = null)
     {
         $messages = '';
         $uAccount = null;
@@ -39,6 +39,9 @@ class AccountController extends BaseController
         $account->salt = $this->createSalt();
         $account->wachtwoord = $this->hashPassword($password, $account->salt);
         $account->accountlevel_id = $accountLevel->accountlevel_id;
+        $account->validated = false;
+        if(isset($fid))
+            $account->facebook_id = $fid;
 
         if ($account->save())
         {
@@ -53,7 +56,7 @@ class AccountController extends BaseController
                 $accountUser->gebruiker_id = $userId;
                 if ($accountUser->save())
                 {
-                    $uAccount = $this->loginAccount($email, $password, $messages);
+                    $uAccount = $this->loginAccount($email, $password, $messages, $fid);
                 }
                 else
                 {
@@ -92,24 +95,25 @@ class AccountController extends BaseController
         if (isset($fid) && isset($f_email))
         {
             $messages = '';
-            $tmpAccount = Account::findFirst(array('facebook_id' => $fid));
+            $tmpAccount = Account::findFirst(array(
+                    'conditions' => 'facebook_id = :fid:',
+                    'bind' => array('fid' => $fid),
+            ));
 
             if ($tmpAccount)
             {
-                $account = $this->loginAccount($tmpAccount->email, $tmpAccount->password, $messages);
+                $account = $this->loginAccount($tmpAccount->email, $tmpAccount->wachtwoord, $messages, $fid);
                 $this->response->setJsonContent(array('messages' => $messages, 'account' => $account));
             }
             else
             {
-                $account = $this->registerAccount($f_email, hash('md5', time() . uniqid() . "random"), $messages);
-                if ($messages === '')
-                {
-                    $account->facebook_id = $fid;
-                    if (!$account->save())
-                    {
-                        $messages = $this->checkErrors($account);
-                    }
-                }
+                $account = $this->registerAccount($f_email, hash('md5', time() . uniqid() . "random"), $messages, $fid);
+//                if ($messages === '' && $account) {
+//                    $account->facebook_id = $fid;
+//                    if (!$account->save()) {
+//                        $messages = $this->checkErrors($account);
+//                    }
+//                }
                 $this->response->setJsonContent(array('messages' => $messages, 'account' => $account));
             }
         }
@@ -119,7 +123,7 @@ class AccountController extends BaseController
         }
     }
 
-    private function loginAccount($email, $password, &$messages, $token = null)
+    private function loginAccount($email, $password, &$messages, $fid = null)
     {
         // login logic
         // Klopt niet, je moet findFirst waar email = email AND password = password
@@ -128,14 +132,18 @@ class AccountController extends BaseController
                     'bind' => array('email' => $email),
         ));
 
-        if ($account)
-        {
-            $hashedPass = $this->hashPassword($password, $account->salt);
+        if ($account) {
+            $valid = false;
+            if(isset($fid)) {
+                $valid = ($account->facebook_id == $fid);
+            } else {
+                $hashedPass = $this->hashPassword($password, $account->salt);
+                $valid = ($hashedPass == $account->wachtwoord);
+            }
 
-            if ($hashedPass == $account->wachtwoord)
+            if ($valid)
             {
-                if (!isset($token))
-                    $token = hash('md5', time() . uniqid() . $account->account_id);
+                $token = hash('md5', time() . uniqid() . $account->account_id);
 
                 $account->token = $token;
                 if ($account->save())
@@ -153,15 +161,14 @@ class AccountController extends BaseController
                         $gebruiker->Buddy;
                         $account->gebruiker = $gebruiker;
                     }
-                } else
-                {
+                } else {
                     $messages = $this->checkErrors($account);
                     $token = null;
                 }
             }
             else
             {
-                $this->reponse->setStatusCode(404, "Account credentials not correct");
+                $this->response->setStatusCode(404, "Account credentials not correct");
                 return null;
             }
         }

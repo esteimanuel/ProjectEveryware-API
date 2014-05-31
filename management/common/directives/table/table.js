@@ -9,9 +9,9 @@ angular.module('gl.table', [])
         restrict: 'E',
         replace: true,
         transclude: true,
-        controller: function($scope, $timeout) {
+        controller: function($scope, $timeout, $sce) {
             this.$scope = $scope;
-//            this.$compile = $compile;
+            this.$sce = $sce;
             
             var _this = this;
             var _sortField = null;
@@ -312,14 +312,33 @@ angular.module('gl.table', [])
                     newOrder[i] = {
                         value: (key in $scope.cells) ? $scope.processKeyToValue(key, $scope.cells) /* $scope.cells[key] */ : null,
                         key: key,
-                        type: (header.type) ? header.type : "text"
+                        type: (header.type) ? header.type : "text",
+                        typeData: (header.typeData) ? header.typeData : null,
+                        getValue: function(cell) {
+                            if(cell.contentPattern) {
+                                if($scope.isFunction(cell.contentPattern))
+                                    return $scope.parseContentPattern(cell.contentPattern(cell, $scope.cells), cell.value);
+                                else
+                                    return $scope.parseContentPattern(cell.contentPattern, cell.value);
+                            } else 
+                                return (cell.value) ? tableCtrl.$sce.trustAsHtml(""+cell.value) : "";
+                        }
                     };
                     newOrder[i].tmpValue = newOrder[i].value;
+                    newOrder[i].contentPattern = ("contentPattern" in header) ? header.contentPattern : null;
                     //console.log(newOrder[i]);
                 }
                 $scope.cells = newOrder;
                 //tableCtrl.$scope.rows[_rowNr] = $scope.cells;
             };
+            
+            $scope.isFunction = function(obj) {
+                return !!(obj && obj.constructor && obj.call && obj.apply);
+            }
+            
+            $scope.parseContentPattern = function(contentPattern, value) {
+                return tableCtrl.$sce.trustAsHtml(contentPattern.replace(/\[value\]/g, value));
+            }
             
             $scope.initRowData = function() {
                 if(parseInt(_rowNr) >= 0 && tableCtrl.$scope.rows) {
@@ -347,7 +366,7 @@ angular.module('gl.table', [])
                     //console.log(rowData);
                     tableCtrl.$scope.rows[_rowNr] = rowData;
                     if(tableCtrl.$scope.updateRow) {     
-                        if(tableCtrl.$scope.updateRow())
+                        if(tableCtrl.$scope.updateRow($scope.cells))
                             $scope.toggleEditMode();
                     } else 
                         $scope.toggleEditMode();
@@ -375,9 +394,9 @@ angular.module('gl.table', [])
                 if(tableCtrl.$scope.removeRow)
                     tableCtrl.$scope.removeRow($scope.cells);
                 
-                tableCtrl.$scope.rows.splice(_rowNr, 1);
                 // element.parent().find(attr[row>_rowNr]).scope.rowNr - 1
                 tableCtrl.notifyRowRemoved();
+                tableCtrl.$scope.rows.splice(_rowNr, 1);
                 //element.addClass("remove");
                 tableCtrl.notifyChange();
                 //element.remove();

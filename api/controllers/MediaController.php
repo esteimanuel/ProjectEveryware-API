@@ -14,11 +14,18 @@ class MediaController extends BaseController {
     //put your code here
     
     private $_mediaPath = '../_media/';
+    
     private $_imagePath = '../_media/images/';
     private $_realImagePath = '/api/_media/images/';
     
+    private $_videoPath = '../_media/videos/';
+    private $_realVideoPath = '/api/_media/images/';
+    
     private $_imageExtensions = array(
         'jpg', 'jpeg', 'png'
+    );
+    private $_videoExtenstions = array(
+        'mp4'
     );
     
 //    public function get() {
@@ -26,7 +33,14 @@ class MediaController extends BaseController {
 //    }
 //    
     public function postImages() {
-        
+        $this->uploadFile('image');
+    }
+    
+    public function postVideos() {
+        $this->uploadFile('video');
+    }
+    
+    private function uploadFile($type) {
         //Check if the user has uploaded files
         if ($this->request->hasFiles() == true) {
             $messages = array();
@@ -34,14 +48,14 @@ class MediaController extends BaseController {
             //Print the real file names and their sizes
             foreach ($this->request->getUploadedFiles() as $file){
 //                echo $file->getName(), " ", $file->getSize(), "\n";
-                if(in_array(strtolower($file->getExtension()), $this->_imageExtensions)) {
-                    if(!$file->moveTo($this->_imagePath)) {
+                if(in_array(strtolower($file->getExtension()), (($type == 'image') ? $this->_imageExtensions : $this->_videoExtenstions))) {
+                    if(!$file->moveTo((($type == 'image') ? $this->_imagePath : $this->_videoPath))) {
                         $messages[] = 'Failed to save file "'.$file->getName().'"';
                     } else {
                         // In correct location
                         $med = new Media();
-                        $med->type = 'image';
-                        $med->url = 'http://' . $_SERVER['SERVER_NAME'] . $this->_realImagePath. $file->getName();
+                        $med->type = $type;
+                        $med->url = 'http://' . $_SERVER['SERVER_NAME'] . (($type == 'image') ? $this->_realImagePath : $this->_realVideoPath). $file->getName();
                         if(!$med->create()) {
                             // Failed to save media to database
                             $messages[] = $this->checkErrors($med);

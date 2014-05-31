@@ -29,3 +29,28 @@
     border:none !important;
 }
 
+.add-container {
+    min-height: 40px;
+}
+
+.hover-url:hover + .sample, .sample:hover {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sample {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out 0.3s, visibility 0.3s ease-in-out 0.3s;
+}
+
+.sample-img {
+    max-width: 300px;
+    max-height:400px;
+}
+
+.sample-video {
+    width: 520px;
+    height:360px;
+}
+
