@@ -76,7 +76,7 @@ app.controller('providerCtrl', function($scope, $http, $state) {
     $scope.add = function(provider) {
         $scope.toggleLoading();
             $http({
-                url: config.api.url+provider,
+                url: config.api.url+"provider",
                 method: 'POST',
                 data: provider
             }).success(function(data, status) {
