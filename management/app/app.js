@@ -117,6 +117,23 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             views: {
                 "content":{templateUrl:'app/district/provider.html', controller:'providerCtrl'}
             }
+            
+//////////////////////////
+/// actie redirs
+//////////////////////////
+        
+    }).state('main.actie', {
+        url: '/acties',
+        views: {
+            "left-nav":{templateUrl:'app/main/left-nav-acties.html'},
+            "main": {templateUrl:'app/actie/index.html'}
+        }
+           
+        }).state('main.actie.actieOverview',{
+            url: '/actieBeheer',
+            views: {
+                "content":{templateUrl:"app/actie/actieOverview.html", controller:'actieOverviewCtrl'}
+            }
        
 //////////////////////////
 /// Login redirs
