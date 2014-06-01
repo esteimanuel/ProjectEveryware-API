@@ -51,9 +51,10 @@
     <div class="media-body">
         <h4 class="media-heading">{{thread.title}}</h4>
         {{thread.description}}
+        <hr />
         <div class="media" ng-repeat="message in thread.post">
             <a class="pull-left">
-                <img class="media-object" ng-src="{{message.foto_link}}">
+                <img class="media-object" ng-src="{{message.foto_link}}" style="max-height: 64px; max-width:64px;" >
             </a>
             <div class="media-body">
                 {{message.message}}
