@@ -34,7 +34,7 @@ app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, 
     
     ///Gets all data for given wijk
     function GetDataForWijk(wijkId){
-        var url = config.api.url + "wijk/id?=" + $scope.wijkId;
+        var url = config.api.url + "wijk?id=" + $scope.wijkId;
         $http({
             url: url,
             method: 'GET'
