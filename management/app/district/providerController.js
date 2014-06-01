@@ -44,13 +44,9 @@ app.controller('providerCtrl', function($scope, $http, $state) {
                 url: config.api.url + 'provider',
                 method: 'PUT',
                 data: objData
-            }).success(function(data, status) {
-                $rootScope.showMessage("Provider is opgeslagen", "success", 2000);
-                
+            }).success(function(data, status) {                
                 $scope.toggleLoading();
-            }).error(function(data, status) {
-                $rootScope.showMessage("Er is een fout opgetreden bij het opslaan", "danger");
-                
+            }).error(function(data, status) {                
                 $scope.toggleLoading();
             });
         }
@@ -67,12 +63,9 @@ app.controller('providerCtrl', function($scope, $http, $state) {
                 method: 'DELETE',
                 data: {id:id}
             }).success(function(data, status) {
-                $rootScope.showMessage("Rij is verwijderd", "success", 2000);
                 
                 $scope.toggleLoading();
-            }).error(function(data, status) {
-                $rootScope.showMessage("Er is een fout opgetreden bij het verwijderen", "danger");
-                
+            }).error(function(data, status) {                
                 $scope.toggleLoading();
             });
         }
@@ -87,7 +80,6 @@ app.controller('providerCtrl', function($scope, $http, $state) {
                 method: 'POST',
                 data: provider
             }).success(function(data, status) {
-                $rootScope.showMessage("provider is toegevoegd");
                 $scope.toggleAdd();
                 
                 provider[provider_id] = data.id;
@@ -96,7 +88,6 @@ app.controller('providerCtrl', function($scope, $http, $state) {
                 
                 $scope.toggleLoading();
             }).error(function(data, status) {
-                $rootScope.showMessage("Er is een fout opgetreden bij het toevoegen", "danger");
                 $scope.toggleLoading();
             });
     };
