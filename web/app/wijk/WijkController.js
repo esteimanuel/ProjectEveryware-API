@@ -3,6 +3,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
     $scope.actie = {};
     $scope.mapsUrl = "";
     $scope.videoUrl = "";
+    $scope.showVideo = false;
     $scope.actionImgUrl = "";
 
     //get wijk info van ingelogd persoon
@@ -53,7 +54,12 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
             method: 'GET',
             params: params
         })
-       .success(function (data, status, headers, config) {
+       .success(function (data, status, headers) {
+            
+            angular.forEach(data, function(deelnemer) {
+                if(!deelnemer.account.foto_link)
+                    deelnemer.account.foto_link = config.api.url + "_media/images/user.png";
+            });
             $scope.actie.deelnemers = data;
 //            $scope.actie.deelnemersCount = $scope.actie.deelnemers.length;
          })
@@ -88,6 +94,7 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
                 vidCode = $scope.getVideoId(media.url);
             }
         });
+        $scope.showVideo = !!(vidCode);
         return "//www.youtube.com/embed/" + vidCode;
     }
     
