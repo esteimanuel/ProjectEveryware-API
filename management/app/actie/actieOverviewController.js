@@ -12,7 +12,8 @@ app.controller('actieOverviewCtrl', function($scope, $http, $state) {
         {name: "actie_id", type:"number", header:"Actie nummer"},
         {name:"naam", type:"text", header:"Actie naam"},
         {name:"borg", type:"text", header:"Borg"},
-        {name:"start_datum", type:"text", header:"Actie start"}
+        {name:"start_datum", type:"text", header:"Actie start"},
+        {name: "eind_datum", type:"number", header:"Actie eind"}
     ];
     
     $scope.rows = [];
