@@ -134,6 +134,12 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             views: {
                 "content":{templateUrl:"app/actie/actieOverview.html", controller:'actieOverviewCtrl'}
             }
+            
+        }).state('main.actie.editActie', {
+            url:'/ActieBewerken/:aid',
+            views: {
+                "content":{templateUrl:'app/actie/editActie.html', controller:'editActieCtrl'}
+            }
        
 //////////////////////////
 /// Login redirs

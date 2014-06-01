@@ -52,6 +52,6 @@ app.controller('actieOverviewCtrl', function($scope, $http, $state) {
     $scope.getData();     
     
     $scope.onEditClick = function(rowData){
-        $state.transitionTo("main.district.editDistrict", {'wid':rowData[0].value});
+        $state.transitionTo("main.actie.editActie", {'aid':rowData[0].value});
     };
 });
