@@ -88,6 +88,7 @@ app.controller('providerCtrl', function($scope, $http, $state) {
                 
                 $scope.toggleLoading();
             }).error(function(data, status) {
+                console.log(provider);
                 $scope.toggleLoading();
             });
     };
