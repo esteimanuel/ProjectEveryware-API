@@ -34,7 +34,7 @@ app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, 
     
     ///Gets all data for given wijk
     function GetDataForWijk(wijkId){
-        var url = config.api.url + "id?=" + $scope.currentWijkId;
+        var url = config.api.url + "id?=" + $scope.wijkId;
         $http({
             url: url,
             method: 'GET'
@@ -47,7 +47,7 @@ app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, 
         ///////////////////
         //postcodes
         ///////////////////
-        var url = config.api.url+'postcode/ForDistrict?id=' + $scope.currentWijkId;
+        var url = config.api.url+'postcode/ForDistrict?id=' + $scope.wijkId;
         $http({
             url: url,
             method: 'GET'
