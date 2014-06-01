@@ -7,8 +7,6 @@ app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, 
     //Get the district to edit
     $scope.currentActieId = $stateParams.aid;
     GetDataForActie();    
-    GetDataForWijk();
-    loadMap();
     
     ///Gets all data for selected action
     function GetDataForActie(){
@@ -26,6 +24,8 @@ app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, 
             $scope.actieNaam = data.naam;
             $scope.actieStatus = data.statuslist_id;
             $scope.wijkId = data.wijk_id;            
+            loadMap();
+            GetDataForWijk();
             console.log("Actiedata load succesfull");
         }).error(function(data, status, headers, config) {
             console.log("Actiedata load failed");
@@ -39,6 +39,10 @@ app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, 
             url: url,
             method: 'GET'
         }).success(function(data, status, headers, config) {
+            $scope.wijkName = data.Zwanenveld;        
+            $scope.wijkTotal = data.aantal_huishoudens;        
+            $scope.wijkTarget = data.target;        
+            $scope.wijkDuration = data.actie_duur_dagen;        
             console.log("WijkData load succesfull");
         }).error(function(data, status, headers, config) {
             console.log("WijkData load failed");
