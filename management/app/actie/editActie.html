@@ -65,9 +65,17 @@
             </div>
         </div>
     </fieldset>
-
+    
     <fieldset>
-        <legend>Opslaan</legend>
+        <legend>Deelnemers</legend>
+                <gl-table>
+                <gl-table-head></gl-table-head>
+
+                <gl-table-body>
+                    <gl-table-row ng-repeat="n in indexList(20) track by $index" row="{{$index}}"></gl-table-row>
+                </gl-table-body>
+        <gl-table-pager></gl-table-pager>
+
+        </gl-table>    
     </fieldset>
-    <button type="submit" class="btn btn-primary pull-right" ng-click="addWijk(wijk)">Opslaan</button>    
 </form>
