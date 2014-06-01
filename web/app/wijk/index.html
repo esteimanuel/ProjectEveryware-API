@@ -43,9 +43,25 @@
 
 <h4 id="forum">Buurt forum</h4>
 <hr />
-    <div class="chat-frame">
-        <h1>Hallo chat</h1>
+
+<div class="media" ng-repeat="thread in actie.threads">
+    <a class="pull-left">
+        <img class="media-object" src="http://www.iconsdb.com/icons/preview/dark-gray/question-mark-2-xl.png">
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading">{{thread.title}}</h4>
+        {{thread.description}}
+        <div class="media" ng-repeat="message in thread.post">
+            <a class="pull-left">
+                <img class="media-object" ng-src="{{message.foto_link}}">
+            </a>
+            <div class="media-body">
+                {{message.message}}
+            </div>
+        </div>
     </div>
+</div>
+
 
     <aside ui-view="right-nav" class="right-district-content">
         <div class="page-header" style="margin-top:5px;">

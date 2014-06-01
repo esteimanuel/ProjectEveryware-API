@@ -21,7 +21,16 @@ class ThreadController extends BaseController {
 				$aPosts = array();
 				
 				foreach($thread->Post as $tsop => $post) {
-				
+
+					$gebruiker = Gebruiker::findFirst($post->gebruiker_id);
+					$gebruiker->Account;
+
+
+
+
+					$post->foto_link = $gebruiker->account[0]->foto_link;;
+					unset($post->gebruiker_id);
+
 					$aPosts[] = $post;
 				}
 				
@@ -35,6 +44,5 @@ class ThreadController extends BaseController {
             $this->response->setStatusCode(400, 'Bad value given');
         }
 	}
-
 }
 ?>
