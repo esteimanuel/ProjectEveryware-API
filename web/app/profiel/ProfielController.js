@@ -15,9 +15,11 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
 
         console.log($scope.profile);
         var body = $scope.profile;
+        var param = localStorage.token;
 
         $http({
             url: config.api.url + 'gebruiker',
+            param: param,
             method: 'PUT',
             data: body
         })
@@ -32,6 +34,7 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
     $scope.saveBuddyInfo = function () {
         console.log($scope.profile.gebruiker.buddy);
         var body = $scope.profile.gebruiker.buddy;
+        var param = localStorage.token;
 
         $http({
             url: config.api.url + 'gebruiker',
