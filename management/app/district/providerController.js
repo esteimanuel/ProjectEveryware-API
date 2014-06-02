@@ -82,7 +82,7 @@ app.controller('providerCtrl', function($scope, $http, $state) {
             }).success(function(data, status) {
                 $scope.toggleAdd();
                 
-                provider[provider_id] = data.id;
+                provider.provider_id = data.id;
                 $scope.rows.push(provider);
                 $scope.addNewRows();
                 
