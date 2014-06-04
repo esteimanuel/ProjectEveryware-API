@@ -4,6 +4,10 @@
  */
 
 app.controller('MediaCtrl', function($rootScope, $scope, $http) {
+//    var navs = [
+//        [{name:'beheer', state:'main.dashboard'}, {name:'test'}]
+//    ];
+    $rootScope.setNavs(null);
     
     var apiCtrlName = 'media';
     var idName = 'media_id';

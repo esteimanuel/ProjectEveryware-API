@@ -1,6 +1,15 @@
-<div ui-view="left-nav">
-    
-</div>
+<div ng-controller="NavCtrl">
+    <div class="container-fluid" ng-show="navs">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul ng-repeat="nav in navs" class="nav nav-sidebar">
+                    <li ng-repeat="navObj in nav" ng-class="{'active':navObj.active}" ng-click="onSelect(navObj)"><a ui-sref="{{navObj.state}}">{{navObj.name}}</a></li>
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+<!--</div>-->
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ui-view="main">
     
