@@ -32,23 +32,40 @@
     Er is nog geen buurt video toegevoegd
 </p>
 
-<h4 id="goededoel">Goede doel</h4>
+<h4 id="goededoel">uw goede doel  {{actie.goedeDoel.title}}</h4>
 <hr/>
     <div class="goedeDoel-frame">
-        {{actie.goedeDoel.informatie}}
+       {{actie.goedeDoel.message}}
 
         Target 
         <div id="goedeDoelTarget" class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{actie.stats.goedeDoelPartPerc}}%;">
             </div>
         </div>
     </div>
 
 <h4 id="forum">Buurt forum</h4>
 <hr />
-    <div class="chat-frame">
-        <h1>Hallo chat</h1>
+
+<div class="media" ng-repeat="thread in actie.threads">
+    <a class="pull-left">
+        <img class="media-object" src="http://www.iconsdb.com/icons/preview/dark-gray/question-mark-2-xl.png">
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading">{{thread.title}}</h4>
+        {{thread.description}}
+        <hr />
+        <div class="media" ng-repeat="message in thread.post">
+            <a class="pull-left">
+                <img class="media-object" ng-src="{{message.foto_link}}" style="max-height: 64px; max-width:64px;" >
+            </a>
+            <div class="media-body">
+                {{message.message}}
+            </div>
+        </div>
     </div>
+</div>
+
 
     <aside ui-view="right-nav" class="right-district-content">
         <div class="page-header" style="margin-top:5px;">

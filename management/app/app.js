@@ -77,10 +77,10 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
                 "content":{templateUrl:"app/user/addUser.html", controller:'AddUserCtrl'}
             }
         
-        }).state('main.users.editUser',{
-            url: '/Gebruiker_bewerken',
+        }).state('main.users.userOverview',{
+            url: '/Gebruiker_overzicht',
             views: {
-                "content":{templateUrl:"app/user/editUser.html", controller:'EditUserCtrl'}
+                "content":{templateUrl:"app/user/userOverview.html", controller:'userOverviewCtrl'}
             }
        
 //////////////////////////
@@ -99,26 +99,57 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             views: {
                 "content":{templateUrl:"app/district/addDistrict.html", controller:'addDistrictCtrl'}
             }
-        
-        
-        
+            
         }).state('main.district.editDistrict', {
             url:'/WijkBewerken/:wid',
             views: {
                 "content":{templateUrl:'app/district/editDistrict.html', controller:'editDistrictCtrl'}
             }
-        /*
-        }).state('main.district.editDistrict',{
-            url: '/Wijkbewerken',
-            views: {
-                "content":{templateUrl:"app/district/addDistrict.html", controller:'addDistrictCtrl'}
-            }
-            */
            
         }).state('main.district.districtOverview',{
             url: '/wijkbeheer',
             views: {
                 "content":{templateUrl:"app/district/districtOverview.html", controller:'districtOverviewCtrl'}
+            }
+       
+//////////////////////////
+/// Provider redirs
+//////////////////////////
+        
+    }).state('main.provider', {
+        url: '/provider',
+        views: {
+            "left-nav":{templateUrl:'app/main/left-nav-provider.html'},
+            "main": {templateUrl:'app/provider/index.html'}
+        }
+            
+        }).state('main.provider.editProvider', {
+            url:'/Providers',
+            views: {
+                "content":{templateUrl:'app/provider/provider.html', controller:'providerCtrl'}
+            }
+            
+//////////////////////////
+/// actie redirs
+//////////////////////////
+        
+    }).state('main.actie', {
+        url: '/acties',
+        views: {
+            "left-nav":{templateUrl:'app/main/left-nav-acties.html'},
+            "main": {templateUrl:'app/actie/index.html'}
+        }
+           
+        }).state('main.actie.actieOverview',{
+            url: '/actieBeheer',
+            views: {
+                "content":{templateUrl:"app/actie/actieOverview.html", controller:'actieOverviewCtrl'}
+            }
+            
+        }).state('main.actie.editActie', {
+            url:'/ActieBewerken/:aid',
+            views: {
+                "content":{templateUrl:'app/actie/editActie.html', controller:'editActieCtrl'}
             }
        
 //////////////////////////

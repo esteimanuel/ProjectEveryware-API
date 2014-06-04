@@ -49,6 +49,7 @@ class ActieController extends BaseController {
             $actie = Actie::findFirst($actie_id);
             
             $wijk = Wijk::findFirst($actie->wijk_id);
+            $goedDoel = Goededoel::FindFirst($actie->actie_id);
             $participants = count($actie->Gebruiker);
             $paidParticipants = 0;
             $providerSelections = 0;
@@ -71,6 +72,7 @@ class ActieController extends BaseController {
             $states['targetPartPerc'] = round(($participants / $targetNr) * 100);
             $states['paidTargetPerc'] = round(($paidParticipants / $targetNr) * 100);
             $states['providerSelecPerc'] = round(($providerSelections / $targetNr) * 100);
+            $states['goedeDoelPartPerc'] = round(($participants / $goedDoel->target) * 100);
             // Glasvezel aanleg gaat via beheer, hier nog opvragen
             // Werkelijk overgestapt percentage, moet nog een waarde voor in de db
             

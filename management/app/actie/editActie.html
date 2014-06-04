@@ -1,0 +1,81 @@
+
+<div>
+  <h1 class="page-header">Actie bewerken</h1>
+</div>
+
+<form class="form-horizontal">
+    
+    <fieldset id="personal">
+        <legend>Actie gegevens</legend>
+        
+        <div class="form-group">
+            <label for="profile-name" class="col-sm-2 control-label">Naam:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="actieNaam" placeholder="Voorbeeldnaam" data-ng-model="actieNaam" />
+            </div>
+            <label for="profile-name" class="col-sm-2 control-label">Status: </label>
+            <div class="col-sm-3">
+                <select class="form-control" id="actieStatus" placeholder="Looptijd in dagen" value="actie.status" data-ng-model="actieStatus">
+                    <option>Default</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="profile-name" class="col-sm-2 control-label">Start actie:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="actieStartDatum" placeholder="Aantal huishouden in wijk" data-ng-model="actieStartDatum" />
+            </div>
+            <label for="profile-name" class="col-sm-2 control-label">Eind actie: </label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="actieEindDatum" placeholder="Looptijd in dagen" data-ng-model="actieEindDatum" />
+            </div>
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Wijk gegevens</legend>
+        
+        <div class="form-group">
+            <label for="profile-name" class="col-sm-2 control-label">Naam:</label>
+            <div class="col-sm-3">
+                <input disabled="true" type="text" class="form-control" id="wijkName" placeholder="Voorbeeldnaam" data-ng-model="wijkName" />
+            </div>
+            <label for="profile-name" class="col-sm-2 control-label">Totaal Huishoudens: </label>
+            <div class="col-sm-3">
+                <input disabled="true" type="text" class="form-control" id="wijkTotal" placeholder="6000" data-ng-model="wijkTotal" />
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="profile-name" class="col-sm-2 control-label">Doel: </label>
+            <div class="col-sm-3">
+                <input disabled="true" type="text" class="form-control" id="wijkTarget" placeholder="2000" data-ng-model="wijkTarget" />
+            </div>
+            <label for="profile-name" class="col-sm-2 control-label">Duur: </label>
+            <div class="col-sm-3">
+                <input disabled="true" type="text" class="form-control" id="wijkDuration" placeholder="100" data-ng-model="wijkDuration" />
+            </div>
+        </div>
+        
+        <!-- Wijk map display -->
+        <div class="form-group">
+            <div class="map-frame" id="map" style='height: 400px;'>
+                <iframe ng-src="{{mapsUrl}}" id="mapFrame" frameborder="0" style="margin-left: 10%; width:80%; height:100%;"></iframe>
+            </div>
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Deelnemers</legend>
+                <gl-table>
+                <gl-table-head></gl-table-head>
+
+                <gl-table-body>
+                    <gl-table-row ng-repeat="n in indexList(20) track by $index" row="{{$index}}"></gl-table-row>
+                </gl-table-body>
+        <gl-table-pager></gl-table-pager>
+
+        </gl-table>    
+    </fieldset>
+</form>

@@ -32,6 +32,8 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
             document.title = $scope.actie.naam + " - " + config.app.name;
             $scope.getActieDeelnemers();
             $scope.getActieStats();
+            $scope.getGoedeDoel();
+            $scope.getBuurtForum();
             $scope.mapsUrl = $sce.trustAsResourceUrl($scope.getMapsUrl());
             $scope.videoUrl = $sce.trustAsResourceUrl($scope.getVideoUrl());
             angular.forEach($scope.actie.media, function(media) {
@@ -40,6 +42,39 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
                 }
             });
         })
+        .error(function (data, status, headers, config) {
+            console.log("failure");
+        })
+    }
+
+    $scope.getBuurtForum = function () {
+        var params = { id: $scope.actie.actie_id };
+
+        $http({
+            url: config.api.url + 'thread/getThreadForActie',
+            method: 'GET',
+            params: params
+        })
+         .success(function (data, status, headers, config) {
+             $scope.actie.threads = data;
+             console.log($scope.actie);
+         })
+        .error(function (data, status, headers, config) {
+            console.log("failure");
+        })
+    }
+
+    $scope.getGoedeDoel = function () {
+        var params = { id: $scope.actie.actie_id };
+
+        $http({
+            url: config.api.url + 'goededoel',
+            method: 'GET',
+            params: params
+        })
+         .success(function (data, status, headers, config) {
+             $scope.actie.goedeDoel = data;         
+         })
         .error(function (data, status, headers, config) {
             console.log("failure");
         })
@@ -77,7 +112,6 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
             params: params
         }).success(function(data, status) {
             $scope.actie.stats = data;
-            console.log($scope.actie.stats);
         }).error(function(data, status) {
             $rootScope.showMessage('Failed to get action stats', 'danger');
         });
