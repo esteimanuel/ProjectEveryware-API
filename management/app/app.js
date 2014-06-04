@@ -6,7 +6,7 @@
 /* 
  * Main application init
  */
-console.log("app boot script for management");
+//console.log("app boot script for management");
 var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootstrap', 'gl.table'])
 .config(function ($controllerProvider, $stateProvider, $urlRouterProvider) {
     app.registerCtrl = $controllerProvider.register;
