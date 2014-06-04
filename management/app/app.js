@@ -111,11 +111,22 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             views: {
                 "content":{templateUrl:"app/district/districtOverview.html", controller:'districtOverviewCtrl'}
             }
+       
+//////////////////////////
+/// Provider redirs
+//////////////////////////
+        
+    }).state('main.provider', {
+        url: '/provider',
+        views: {
+            "left-nav":{templateUrl:'app/main/left-nav-provider.html'},
+            "main": {templateUrl:'app/provider/index.html'}
+        }
             
-        }).state('main.district.editProvider', {
+        }).state('main.provider.editProvider', {
             url:'/Providers',
             views: {
-                "content":{templateUrl:'app/district/provider.html', controller:'providerCtrl'}
+                "content":{templateUrl:'app/provider/provider.html', controller:'providerCtrl'}
             }
             
 //////////////////////////
