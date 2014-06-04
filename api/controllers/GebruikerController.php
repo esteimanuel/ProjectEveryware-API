@@ -13,7 +13,7 @@ class GebruikerController extends BaseController
                 unset($putData['_gebruiker']);
                 unset($putData['gebruiker_id']);
             }
-            $putData['id'] = $this->_account->account_id;
+            $putData['id'] = $this->_account->Gebruiker[0]->gebruiker_id;
             
             $messages = '';
             $model = $this->basePut($putData, $messages);
