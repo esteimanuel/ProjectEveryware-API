@@ -99,6 +99,8 @@ app.controller('FaqCtrl', function($rootScope, $scope, $http) {
     }
     
     $scope.add = function(faq) {
+        if("id" in faq)
+            delete faq.id;
         $scope.toggleLoading();
             $http({
                 url: config.api.url+apiCtrlName,

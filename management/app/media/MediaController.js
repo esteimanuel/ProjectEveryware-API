@@ -119,6 +119,8 @@ app.controller('MediaCtrl', function($rootScope, $scope, $http) {
     }
     
     $scope.add = function(media) {
+        if("id" in media)
+            delete media.id;
         $scope.toggleLoading();
             $http({
                 url: config.api.url+apiCtrlName,
