@@ -12,8 +12,9 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
         
         <!--Load Modules-->
+        <script src="http://angular.github.io/angular-phonecat/step-7/app/bower_components/angular-route/angular-route.js"></script>
 <!--        <script src="http://code.angularjs.org/1.1.5//angular-resource.min.js"></script>-->
-        <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
+<!--        <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>-->
         <script src="global/common/modules/ui-bootstrap.js"></script>
         <!--<script src="https://raw.githubusercontent.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-tpls-0.10.0.min.js"></script>-->
 			
@@ -64,18 +65,18 @@ and open the template in the editor.
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" data-ui-sref="home">{{app.name}}</a>
+                <a class="navbar-brand" href="#/">{{app.name}}</a>
                 
               </div>
               
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-collapse" id="navbar">
                   <ul class="nav navbar-nav navbar-left">
-                      <li><a data-ui-sref="home">Top 10</a></li>
-                      <li><a data-ui-sref="faq">FAQ</a></li>
+                      <li ng-if="false"><a href="#/">Top 10</a></li>
+                      <li><a href="#/faq">FAQ</a></li>
                   </ul>
                   <ul class="nav navbar navbar-nav" style="margin-left:5%;">
-                      <li data-ng-show="user.gebruiker.actie_id"><a data-ui-sref="wijk({wid: user.gebruiker.actie_id})">Mijn wijk</a></li>
+                      <li data-ng-show="user.gebruiker.actie_id"><a href="#/wijk/{{user.gebruiker.actie_id}}">Mijn wijk</a></li>
                       <li class="dropdown" ng-show="district.closeby.length">
                           <a class="dropdown-toggle" data-toggle="closeby-dropdown">Wijken in de buurt <b class="caret"></b></a>
                           <ul class="dropdown-menu">
@@ -83,7 +84,7 @@ and open the template in the editor.
                                     <span class="dropdown-header">{{district.wijk_naam}}</span>
                                     <ul class="action-dropdown-section">
                                         <li ng-repeat="actie in district.actie" ng-class="{'bg-success': actie.actie_id != user.gebruiker.actie_id, 'bg-info':actie.actie_id == user.gebruiker.actie_id}">
-                                            <a ui-sref="wijk({wid:actie.actie_id})">{{actie.naam}}</a>
+                                            <a href="#/wijk/{{actie.actie_id}}">{{actie.naam}}</a>
                                         </li>
                                         <li ng-hide="district.actie.length" class="action-not-found"><a><small class="text-muted">Geen acties gevonden</small></a></li>
                                     </ul>
@@ -95,12 +96,12 @@ and open the template in the editor.
                   
                   <ul class="nav navbar-nav navbar-right">
                       <li data-ng-show="!user.isLogged"><a data-ng-click="toggleLogin()">Login</a></li>
-                      <li data-ng-show="!user.isLogged"><a data-ui-sref="register">Register</a></li>
+                      <li data-ng-show="!user.isLogged"><a href="#/register">Register</a></li>
                       <!--<li data-ng-show="user.isAdmin && user.isLogged"><a href="/beheer/">Beheer</a></li>-->
                       <li class="dropdown" data-ng-show="user.isLogged">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> {{user.gebruiker.naam}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                          <li><a data-ui-sref="profiel">Profiel</a></li>
+                          <li><a href="#/profiel">Profiel</a></li>
                           <li class="divider"></li>
                           <li><a data-ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
                         </ul>
@@ -111,7 +112,7 @@ and open the template in the editor.
                       <div class="form-group input-group">
                           <input type="text" class="form-control" placeholder="Zoek een wijk" style="width:auto;" ng-model="search.value">
                           <span class="input-group-btn" style="display:inline-block;">
-                              <button class="btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                              <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                           </span>
                       </div>
                   </form>
@@ -149,7 +150,7 @@ and open the template in the editor.
                  Hier kunnen bijv. de buddies en statussen van de actie komen te staan 
             </aside>-->
             
-            <div ui-view="main" class="container main-container">
+            <div ng-view class="container main-container">
 <!--                <ul class="nav nav-tabs nav-justified">
                     <li class="active"><a href="#">Item1</a></li>
                     <li><a href="#">Item2</a></li>

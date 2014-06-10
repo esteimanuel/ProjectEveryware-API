@@ -3,15 +3,15 @@
  * and open the template in the editor.
  */
 
-app.controller('SearchCtrl', function($scope, $rootScope, $stateParams, $http) {
-    $scope.search.value = $stateParams.sq;
-    $scope.search.searchedValue = $stateParams.sq;
+app.controller('SearchCtrl', function($scope, $rootScope, $routeParams, $http) {
+    $scope.search.value = $routeParams.sq;
+    $scope.search.searchedValue = $routeParams.sq;
     //$scope.search.results = [];
     
     $scope.searchPostalcode = function() {
-        var value = $scope.search.value;
+        var value = $scope.capFirstLetter($scope.search.value);
 //        console.log($scope.search.value);
-        if(parseInt(value) != 'NaN') {
+        //if(parseInt(value) != 'NaN') {
 //            console.log($scope.search.value);
             $scope.search.isLoading = true;
             $scope.search.searchedValue = value;
@@ -33,7 +33,11 @@ app.controller('SearchCtrl', function($scope, $rootScope, $stateParams, $http) {
                 $scope.search.isLoading = false;
                 $rootScope.showMessage('Failed to get search results', 'danger');
             });
-        }
+        //}
+    }
+    
+    $scope.capFirstLetter = function(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
     
     $scope.searchPostalcode();
