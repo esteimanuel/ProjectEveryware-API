@@ -218,6 +218,10 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
         $scope.actie.openPayBorg = true;
     }
     
+    $scope.payBorgClose = function() {
+        $scope.actie.openPayBorg = false;
+    }
+    
     $scope.payBorg= function() {
         $http({
             url: config.api.url + "gebruiker",
@@ -249,6 +253,10 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
             });
         }
         $scope.actie.openChoseProvider = true;
+    }
+    
+    $scope.choseProviderClose = function() {
+        $scope.actie.openChoseProvider = false;
     }
     
     $scope.choseProvider = function() {

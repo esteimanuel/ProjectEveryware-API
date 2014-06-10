@@ -70,7 +70,7 @@
 <!-- Borg dialog -->
 <div class="dialogbackground" ng-if="actie.openPayBorg">
     <div class="basedialog wijk-big-dialog">
-        <button class="close-btn" ng-click="actie.openPayBorg = false">X</button>
+        <button class="close-btn" ng-click="payBorgClose()">X</button>
         <div class="dialog-content">
             <h2>Borg betalen</h2>
             <hr/>
@@ -83,7 +83,7 @@
 <!-- Provider dialog -->
 <div class="dialogbackground" ng-if="actie.openChoseProvider">
     <div class="basedialog wijk-big-dialog">
-        <button class="close-btn" ng-click="actie.openPayBorg = false">X</button>
+        <button class="close-btn" ng-click="choseProviderClose()">X</button>
         <div class="dialog-content">
             <h2>Provider kiezen</h2>
             <hr/>
