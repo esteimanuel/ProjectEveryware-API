@@ -3,7 +3,12 @@
  * and open the template in the editor.
  */
 
-app.controller('actieOverviewCtrl', function($scope, $http, $state) {
+app.controller('actieOverviewCtrl', function($scope, $http, $state, $rootScope) {
+    var navs = [
+        [{name:'Actie', state:'main.actie.actieOverview'}]];
+    $rootScope.setNavs(navs);
+    
+    
     $scope.tableClasses = null;
     $scope.tableClasses = "table-striped";
     

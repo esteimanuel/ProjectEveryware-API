@@ -3,7 +3,12 @@
  * and open the template in the editor.
  */
 
-app.controller('districtOverviewCtrl', function($scope, $http, $state) {
+app.controller('districtOverviewCtrl', function($scope, $http, $state, $rootScope) {
+    var navs = [
+        [{name:'Wijk toevoegen', state:'main.district.addDistrict'}, 
+        {name:'Wijk beheren', active:true, state:'main.district.districtOverview'}]];
+    $rootScope.setNavs(navs);
+    
     $scope.tableClasses = null;
     $scope.tableClasses = "table-striped";
     
