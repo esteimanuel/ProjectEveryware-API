@@ -1,4 +1,4 @@
-app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, User, $rootScope) {
+app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sce, User, $rootScope) {
 
     $scope.actie = {};
     $scope.mapsUrl = "";
@@ -8,12 +8,13 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
 
     //get wijk info van ingelogd persoon
     $scope.getActieInfo = function () {
-        if(!$stateParams.wid) {
-            $state.transitionTo('home');
+        if(!$routeParams.wid) {
+//            $state.transitionTo('home');
+            $location.path('/');
             return;
         }
         
-        var params = {id: $stateParams.wid};
+        var params = {id: $routeParams.wid};
 
         $http({
             url: config.api.url + 'actie',
@@ -22,7 +23,8 @@ app.controller('WijkCtrl', function ($scope, $stateParams, $state, $http, $sce, 
         })
         .success(function (data, status, headers) {
             if(!data) {
-                $state.transitionTo('home');
+//                $state.transitionTo('home');
+                $location.path('/');
             }
             
             $scope.actie = data;

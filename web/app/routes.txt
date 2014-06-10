@@ -1,0 +1,6 @@
+Home 		/		app/home/intro.html
+Wijk 		/wijk/:wid	app/wijk/index.html		WijkCtrl
+register 	/register	app/user/register.html		
+profiel		/profiel	app/profiel/profiel.html	ProfielCtrl
+faq		/faq		app/faq/faq.html		FaqCtrl
+search		/search/:sq	app/search/index.html		SearchCtrl

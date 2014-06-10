@@ -1,5 +1,5 @@
 console.log("loaded user controller");
-app.controller('UserCtrl', function($scope, $rootScope, $stateParams, $state, $location, $http, srvAuth, User) {
+app.controller('UserCtrl', function($scope, $rootScope, $location, $http, srvAuth, User) {
 
     $scope.user = {};
 

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-app.controller('MainCtrl', function($rootScope, $scope, $location, $anchorScroll, District, $timeout, $state) {
+app.controller('MainCtrl', function($rootScope, $scope, $location, $anchorScroll, District, $timeout) {
     $scope.app = config.app;
     $scope.district = {
         closeby: []
@@ -15,7 +15,8 @@ app.controller('MainCtrl', function($rootScope, $scope, $location, $anchorScroll
     }
     
     $scope.search = function(searchVal) {
-        $state.transitionTo('search', {sq:searchVal});
+//        $state.transitionTo('search', {sq:searchVal});
+        $location.path('/search/'+searchVal);
     }
     
     $rootScope.global = {};
