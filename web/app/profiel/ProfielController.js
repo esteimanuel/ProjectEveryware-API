@@ -12,20 +12,19 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
     $scope.saveProfielInfo = function () {
 
         console.log($scope.profile);
-        var body = $scope.profile;
-        var param = { "_token": $scope.profile.account.token };
-
+        $scope.profile.gebruiker._token = $scope.profile.account.token;
+        var body = $scope.profile.gebruiker;
+        
         $http({
             url: config.api.url + 'gebruiker',
-            params: param,
             method: 'PUT',
             data: body
         })
         .success(function (data, status, headers, config) {
-            localStorage.gebruiker = JSON.stringify($scope.profile.gebruiker);
-            console.log(data);
-            localStorage.account = JSON.stringify($scope.profile.account);
+            User.setGebruiker(data, true);
             $scope.setProfileValues();
+
+            $rootScope.$broadcast('onUserDataChanged');
         })
         .error(function (data, status, headers, config) {
             console.log('fail');
@@ -44,8 +43,11 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
             params: param
         })
         .success(function (data, status, headers, config) {
-            localStorage.profile.gebruiker.buddy;
+            User.gebruiker.buddy = data;
+            User.setGebruiker(User.gebruiker, true);
+
             $scope.setProfileValues();
+            $rootScope.$broadcast('onUserDataChanged');
         })
         .error(function (data, status, headers, config) {
             console.log('fail');
