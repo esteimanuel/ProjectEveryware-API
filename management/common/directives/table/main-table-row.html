@@ -1,13 +1,14 @@
 <tr class="gl-table-row" ng-class="{'hidden':!visible}">
     <td ng-repeat="cell in cells track by $index"  class="gl-table-column">
         <span class="cell-text" ng-show="!editMode" ng-bind-html="cell.getValue(cell)"></span>
-        <span ng-if="allowEdit" ng-if="cell.disabled" class="edit-mode" ng-show="editMode" ng-switch="cell.type">
+        <span ng-if="allowEdit && !cell.disabled" class="edit-mode" ng-show="editMode" ng-switch="cell.type">
             <input ng-switch-when="checkbox" type="{{cell.type}}" ng-model="cell.tmpValue" />
             <select ng-switch-when="dropdown" ng-model="cell.tmpValue" class="form-control">
                 <option ng-repeat="typeData in cell.typeData" value="{{typeData.key}}">{{typeData.value}}</option>
             </select>
             <input ng-switch-default type="{{cell.type}}" class="form-control" ng-model="cell.tmpValue"/>
         </span>
+        <span ng-if="allowEdit && cell.disabled" class="edit-mode" ng-show="editMode" ng-bind-html="cell.getValue(cell)"></span>
     </td>
     <td ng-if="allowEdit || allowDelete" class="gl-button-column">
         <span ng-if="allowEdit">
