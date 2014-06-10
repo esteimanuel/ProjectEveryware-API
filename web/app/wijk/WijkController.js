@@ -147,6 +147,7 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
     
     $scope.initUserStateMessage = function() {
 //        console.log(User);
+        $scope.actie.stateDisabled = false;
         if(User.isLogged) {
             $scope.actie.stateVisible = true;
             if(User.gebruiker.actie_id == $scope.actie.actie_id) {
@@ -259,14 +260,14 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
         $scope.actie.openChoseProvider = false;
     }
     
-    $scope.choseProvider = function() {
-        if($scope.provider.id && $scope.provider.id > 0) {
+    $scope.choseProvider = function(provider) {
+        if(provider.id && provider.id > 0) {
             $http({
                 url: config.api.url + "gebruiker",
                 method: "PUT",
-                data: {_token: User.account.token, provider_id: $scope.provider.id}
+                data: {_token: User.account.token, provider_id: provider.id}
             }).success(function(data) {
-                User.gebruiker.provider_id = $scope.provider.id;
+                User.gebruiker.provider_id = provider.id;
                 User.setGebruiker(User.gebruiker, true);
                 $rootScope.$broadcast("onUserDataChanged");
                 
