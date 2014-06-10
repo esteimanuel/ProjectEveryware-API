@@ -36,6 +36,7 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
             $scope.getActieStats();
             $scope.getGoedeDoel();
             $scope.getBuurtForum();
+            $scope.getWijkNaam();
             $scope.mapsUrl = $sce.trustAsResourceUrl($scope.getMapsUrl());
             $scope.videoUrl = $sce.trustAsResourceUrl($scope.getVideoUrl());
             angular.forEach($scope.actie.media, function(media) {
@@ -46,6 +47,18 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
         })
         .error(function (data, status, headers, config) {
             console.log("failure");
+        });
+    }
+    
+    $scope.getWijkNaam = function() {
+        $http({
+            url: config.api.url + "wijk",
+            method: "GET",
+            params: {id:$scope.actie.wijk_id}
+        }).success(function(data) {
+            $scope.wijk = data;
+        }).error(function(data) {
+            console.log("Failed to get wijk data");
         });
     }
 
@@ -277,6 +290,12 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
             }).error(function(data) {
                 $rootScope.showMessage("Er ging iets fout met het opslaan van de gegevens", "danger");
             });
+        }
+    }
+    
+    $scope.participantClick = function(part) {
+        if(part.buddy) {
+            part.show = !part.show;
         }
     }
     
