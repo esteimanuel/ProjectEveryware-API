@@ -35,7 +35,6 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
 
         $scope.profile.gebruiker.buddy._token = $scope.profile.account.token;
         var body = $scope.profile.gebruiker.buddy;
-        delete body.gebruiker_id;
 
         $http({
             url: config.api.url + 'buddy',
