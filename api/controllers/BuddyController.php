@@ -4,7 +4,7 @@ class BuddyController extends BaseController {
 
 public function put() {
         $putData = $this->getRequestData();
-        if(isset($this->gebruiker_id)) {
+        if(isset($putData->gebruiker_id)) {
             unset($putData['_token']);
             $messages = '';
             $model = $this->basePut($putData, $messages);
