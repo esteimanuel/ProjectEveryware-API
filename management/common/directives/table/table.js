@@ -13,6 +13,9 @@ angular.module('gl.table', [])
             this.$scope = $scope;
             this.$sce = $sce;
             
+            if(!this.$scope.deleteMessage)
+                this.$scope.deleteMessage = "Weet u zeker dat u deze rij wilt verwijderen?";
+            
             var _this = this;
             var _sortField = null;
             var _sortFieldType = null;
@@ -314,6 +317,7 @@ angular.module('gl.table', [])
                         key: key,
                         type: (header.type) ? header.type : "text",
                         typeData: (header.typeData) ? header.typeData : null,
+                        disabled: (!!header.disabled),
                         getValue: function(cell) {
                             if(cell.contentPattern) {
                                 if($scope.isFunction(cell.contentPattern))
@@ -391,14 +395,18 @@ angular.module('gl.table', [])
             }
             
             $scope.deleteRow = function() {
-                if(tableCtrl.$scope.removeRow)
-                    tableCtrl.$scope.removeRow($scope.cells);
+                var isConfirm = confirm("");
                 
-                // element.parent().find(attr[row>_rowNr]).scope.rowNr - 1
-                tableCtrl.notifyRowRemoved();
-                tableCtrl.$scope.rows.splice(_rowNr, 1);
-                //element.addClass("remove");
-                tableCtrl.notifyChange();
+                if(isConfirm == true) {
+                    if(tableCtrl.$scope.removeRow)
+                        tableCtrl.$scope.removeRow($scope.cells);
+
+                    // element.parent().find(attr[row>_rowNr]).scope.rowNr - 1
+                    tableCtrl.notifyRowRemoved();
+                    tableCtrl.$scope.rows.splice(_rowNr, 1);
+                    //element.addClass("remove");
+                    tableCtrl.notifyChange();
+                }
                 //element.remove();
 //                console.log($scope.cells);
 //                console.log(tableCtrl.$scope.rows);
