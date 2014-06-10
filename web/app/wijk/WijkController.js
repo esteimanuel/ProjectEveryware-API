@@ -46,11 +46,11 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
         })
         .error(function (data, status, headers, config) {
             console.log("failure");
-        })
+        });
     }
 
     $scope.getBuurtForum = function () {
-        var params = { id: $scope.actie.actie_id };
+        var params = {id: $scope.actie.actie_id};
 
         $http({
             url: config.api.url + 'thread/getThreadForActie',
@@ -67,7 +67,7 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
     }
 
     $scope.getGoedeDoel = function () {
-        var params = { id: $scope.actie.actie_id };
+        var params = {id: $scope.actie.actie_id};
 
         $http({
             url: config.api.url + 'goededoel',
@@ -144,12 +144,44 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
             return "";
         }
     }
+    
+    $scope.initUserStateMessage = function() {
+//        console.log(User);
+        if(User.isLogged) {
+            $scope.actie.stateVisible = true;
+            if(User.gebruiker.actie_id == $scope.actie.actie_id) {
+                if(!User.gebruiker.borg_betaald)
+                    $scope.actie.userStateMessage = "Borg betalen";
+                else if(!User.gebruiker.provider_id)
+                    $scope.actie.userStateMessage = "Provider kiezen";
+                else {
+                    $scope.actie.userStateMessage = "Klaar!";
+                    $scope.actie.stateDisabled = true;
+                }
+//                // Set state text for current user
+//                $scope.actie.userStateMessage = "De wijk van de gebruiker";
+            } else if(User.gebruiker.actie_id > 0)
+                $scope.actie.stateVisible = false;
+            else
+                $scope.actie.userStateMessage = "Ik doe mee!";
+        } else {
+            $scope.actie.stateVisible = false;
+        }
+    }
 
     $scope.handleStateButton = function() {
         //console.log(User.gebruiker.actie_id);
         if(User.gebruiker.actie_id === $scope.actie.actie_id) {
             // Handle state for current user's action
-            
+            if(!User.gebruiker.borg_betaald) {
+//                $scope.actie.userStateMessage = "Borg betalen";
+                $scope.payBorgOpen();
+            } else if(!User.gebruiker.provider_id) {
+//                $scope.actie.userStateMessage = "Provider kiezen";
+                $scope.choseProviderOpen();
+            } else {
+//                $scope.actie.userStateMessage = "Klaar!";
+            }
         } else if(!User.gebruiker.actie_id)
             // Handle add user to action
             $scope.addUserToAction();
@@ -182,19 +214,68 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
         });
     }
     
-    $scope.initUserStateMessage = function() {
-//        console.log(User);
-        if(User.isLogged) {
-            $scope.actie.stateVisible = true;
-            if(User.gebruiker.actie_id == $scope.actie.actie_id) {
-                // Set state text for current user
-                $scope.actie.userStateMessage = "De wijk van de gebruiker";
-            } else if(User.gebruiker.actie_id > 0)
-                $scope.actie.stateVisible = false;
-            else
-                $scope.actie.userStateMessage = "Ik doe mee!";
-        } else {
-            $scope.actie.stateVisible = false;
+    $scope.payBorgOpen = function() {
+        $scope.actie.openPayBorg = true;
+    }
+    
+    $scope.payBorgClose = function() {
+        $scope.actie.openPayBorg = false;
+    }
+    
+    $scope.payBorg= function() {
+        $http({
+            url: config.api.url + "gebruiker",
+            method: "PUT",
+            data: {_token: User.account.token, borg_betaald: true}
+        }).success(function(data) {
+            User.gebruiker.borg_betaald = true;
+
+            User.setGebruiker(User.gebruiker, true);
+            $rootScope.$broadcast('onUserDataChanged');
+            
+            $scope.initUserStateMessage();
+            $rootScope.showMessage("Gegevens opgeslagen", "success");
+            $scope.actie.openPayBorg = false;
+        }).error(function(data) {
+            $rootScope.showMessage("Er ging iets fout met het opslaan van de gegevens", "danger");
+        });
+    }
+    
+    $scope.choseProviderOpen = function() {
+        if(!$scope.providers){
+            $http({
+                url: config.api.url + "provider",
+                method: "GET"
+            }).success(function(data) {
+                $scope.providers = data;
+            }).error(function(data) {
+                console.log("Failed get providers");
+            });
+        }
+        $scope.actie.openChoseProvider = true;
+    }
+    
+    $scope.choseProviderClose = function() {
+        $scope.actie.openChoseProvider = false;
+    }
+    
+    $scope.choseProvider = function() {
+        if($scope.provider.id && $scope.provider.id > 0) {
+            $http({
+                url: config.api.url + "gebruiker",
+                method: "PUT",
+                data: {_token: User.account.token, provider_id: $scope.provider.id}
+            }).success(function(data) {
+                User.gebruiker.provider_id = $scope.provider.id;
+                User.setGebruiker(User.gebruiker, true);
+                $rootScope.$broadcast("onUserDataChanged");
+                
+                $scope.initUserStateMessage();
+                $rootScope.showMessage("Gegevens opgeslagen", "success");
+                $scope.actie.openChoseProvider = false;
+            }).error(function(data) {
+                $rootScope.showMessage("Er ging iets fout met het opslaan van de gegevens", "danger");
+            });
         }
     }
     

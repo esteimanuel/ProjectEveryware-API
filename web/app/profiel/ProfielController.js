@@ -3,28 +3,28 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
     $scope.uploadUrl = config.api.url + 'media/postImages';
     
     $scope.setProfileValues = function() {
-//        console.log($scope.profile);
         if(!$scope.profile)
             $scope.profile = { gebruiker: {},account:{}};
         angular.copy(User.gebruiker, $scope.profile.gebruiker);
         angular.copy(User.account, $scope.profile.account);
-//        console.log($scope.profile);
     }
     
     $scope.saveProfielInfo = function () {
 
         console.log($scope.profile);
-        var body = $scope.profile;
-        var param = { "_token": $scope.profile.account.token };
-
+        $scope.profile.gebruiker._token = $scope.profile.account.token;
+        var body = $scope.profile.gebruiker;
+        
         $http({
             url: config.api.url + 'gebruiker',
-            param: param,
             method: 'PUT',
             data: body
         })
         .success(function (data, status, headers, config) {
-            console.log("worked");
+            User.setGebruiker(data, true);
+            console.log(data);
+
+            $rootScope.$broadcast('onUserDataChanged');
         })
         .error(function (data, status, headers, config) {
             console.log('fail');
@@ -32,18 +32,21 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
     }
 
     $scope.saveBuddyInfo = function () {
-        console.log($scope.profile.gebruiker.buddy);
+
+        $scope.profile.gebruiker.buddy._token = $scope.profile.account.token;
         var body = $scope.profile.gebruiker.buddy;
-        var param = { "_token": $scope.profile.account.token };
 
         $http({
-            url: config.api.url + 'gebruiker',
+            url: config.api.url + 'buddy',
             method: 'PUT',
             data: body,
-            param: param
         })
         .success(function (data, status, headers, config) {
-            console.log("worked");
+            User.gebruiker.buddy = data;
+            User.setGebruiker(User.gebruiker, true);
+
+           // $scope.setProfileValues();
+            $rootScope.$broadcast('onUserDataChanged');
         })
         .error(function (data, status, headers, config) {
             console.log('fail');

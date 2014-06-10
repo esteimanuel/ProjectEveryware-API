@@ -13,7 +13,7 @@
 <div class="page-header">
     <h1>
         {{actie.naam}}
-        <button class="pull-right btn btn-primary" style="width:200px;" ng-show="actie.stateVisible" ng-click="handleStateButton()">{{actie.userStateMessage}}</button>
+        <button class="pull-right btn btn-primary" style="width:200px;" ng-show="actie.stateVisible" ng-disabled="actie.stateDisabled" ng-click="handleStateButton()">{{actie.userStateMessage}}</button>
     </h1>
 </div>
 
@@ -66,6 +66,39 @@
     </div>
 </div>
 
+
+<!-- Borg dialog -->
+<div class="dialogbackground" ng-if="actie.openPayBorg">
+    <div class="basedialog wijk-big-dialog">
+        <button class="close-btn" ng-click="payBorgClose()">X</button>
+        <div class="dialog-content">
+            <h2>Borg betalen</h2>
+            <hr/>
+            <p>De borg bedraagd: &euro;{{actie.borg}}</p>
+            <button type="button" ng-click="payBorg()" class="btn btn-default">Betalen</button>
+        </div>
+    </div>
+</div>
+
+<!-- Provider dialog -->
+<div class="dialogbackground" ng-if="actie.openChoseProvider">
+    <div class="basedialog wijk-big-dialog">
+        <button class="close-btn" ng-click="choseProviderClose()">X</button>
+        <div class="dialog-content">
+            <h2>Provider kiezen</h2>
+            <hr/>
+            <form ng-submit="choseProvider">
+                <div class="form-group">
+                    <select class="form-control" ng-model="provider.id">
+                        <option ng-repeat="provider in providers" value="{{provider.provider_id}}">{{provider.naam}}</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-default">Kies</button>
+            </form>
+            
+        </div>
+    </div>
+</div>
 
     <aside ui-view="right-nav" class="right-district-content">
         <div class="page-header" style="margin-top:5px;">
