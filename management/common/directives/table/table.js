@@ -289,6 +289,7 @@ angular.module('gl.table', [])
         },
         link: function($scope, element, attributes, tableCtrl) {
             $scope.allowEdit = (tableCtrl.$scope.allowEdit !== undefined) ? tableCtrl.$scope.allowEdit : true;
+            //$scope.allowEditCalc = function(cell) { return  ($scope.allowEdit && !cell.disabled); }; 
             $scope.allowDelete = (tableCtrl.$scope.allowDelete !== undefined) ? tableCtrl.$scope.allowDelete : true;;
             $scope.editMode = false;
             $scope.visible = false;
@@ -395,7 +396,7 @@ angular.module('gl.table', [])
             }
             
             $scope.deleteRow = function() {
-                var isConfirm = confirm("");
+                var isConfirm = confirm(tableCtrl.$scope.deleteMessage);
                 
                 if(isConfirm == true) {
                     if(tableCtrl.$scope.removeRow)

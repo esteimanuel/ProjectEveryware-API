@@ -13,7 +13,7 @@ app.controller('providerCtrl', function($scope, $http, $state, $rootScope) {
     
     //Set header names for binding
     $scope.headers = [
-        {name: "provider_id", type:"number", header:"#"},
+        {name: "provider_id", type:"number", header:"#", disabled:true},
         {name:"naam", type:"text", header:"Naam"},
         {name:"website_url", type:"text", header:"Website"}
     ];

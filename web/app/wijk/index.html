@@ -87,7 +87,7 @@
         <div class="dialog-content">
             <h2>Provider kiezen</h2>
             <hr/>
-            <form ng-submit="choseProvider">
+            <form ng-submit="choseProvider()">
                 <div class="form-group">
                     <select class="form-control" ng-model="provider.id">
                         <option ng-repeat="provider in providers" value="{{provider.provider_id}}">{{provider.naam}}</option>
