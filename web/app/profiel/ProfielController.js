@@ -13,16 +13,19 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
 
         console.log($scope.profile);
         var body = $scope.profile;
-        console.log($scope.profile.account.token);
+        var param = { "_token": $scope.profile.account.token };
 
         $http({
             url: config.api.url + 'gebruiker',
-            params: { _token: $scope.profile.account.token },
+            params: param,
             method: 'PUT',
             data: body
         })
         .success(function (data, status, headers, config) {
-            console.log("worked");
+            //console.log(body);
+            //$scope.profile = body;
+            //console.log($scope.profile);
+            $scope.setProfileValues();
         })
         .error(function (data, status, headers, config) {
             console.log('fail');
@@ -41,7 +44,10 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
             params: param
         })
         .success(function (data, status, headers, config) {
-            console.log("worked");
+            //console.log(body);
+            //$scope.profile = body;
+            //console.log($scope.profile);
+            $scope.setProfileValues();
         })
         .error(function (data, status, headers, config) {
             console.log('fail');
