@@ -22,8 +22,9 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
             data: body
         })
         .success(function (data, status, headers, config) {
-            localStorage.gebruiker = $scope.profile.gebruiker;
-            localStorage.account = $scope.profile.account;
+            localStorage.gebruiker = JSON.stringify($scope.profile.gebruiker);
+            console.log(data);
+            localStorage.account = JSON.stringify($scope.profile.account);
             $scope.setProfileValues();
         })
         .error(function (data, status, headers, config) {
