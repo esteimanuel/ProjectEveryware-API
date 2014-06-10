@@ -22,9 +22,8 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
             data: body
         })
         .success(function (data, status, headers, config) {
-            //console.log(body);
-            //$scope.profile = body;
-            //console.log($scope.profile);
+            localStorage.gebruiker = $scope.profile.gebruiker;
+            localStorage.account = $scope.profile.account;
             $scope.setProfileValues();
         })
         .error(function (data, status, headers, config) {
@@ -44,9 +43,7 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
             params: param
         })
         .success(function (data, status, headers, config) {
-            //console.log(body);
-            //$scope.profile = body;
-            //console.log($scope.profile);
+            localStorage.profile.gebruiker.buddy;
             $scope.setProfileValues();
         })
         .error(function (data, status, headers, config) {
