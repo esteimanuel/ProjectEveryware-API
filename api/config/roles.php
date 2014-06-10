@@ -17,6 +17,7 @@ return array(
         'rights' => array(
             'Account' => array('login', 'logout', 'register'),
             'Gebruiker' => array('put', 'get'),
+            'Buddy' => array('post', 'put'),
         ),
         'isAdmin' => false
     ),
@@ -28,7 +29,7 @@ return array(
     ),
     'buddy' => array(
         'rights' => array(
-            
+            'Buddy' => array('put'),
         ),
         'inheritRights' => 'user',
         'isAdmin' => false
