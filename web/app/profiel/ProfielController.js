@@ -22,7 +22,7 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
         })
         .success(function (data, status, headers, config) {
             User.setGebruiker(data, true);
-            //$scope.setProfileValues();
+            console.log(data);
 
             $rootScope.$broadcast('onUserDataChanged');
         })
@@ -32,15 +32,14 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
     }
 
     $scope.saveBuddyInfo = function () {
-        console.log($scope.profile.gebruiker.buddy);
+
+        $scope.profile.gebruiker.buddy._token = $scope.profile.account.token;
         var body = $scope.profile.gebruiker.buddy;
-        var param = { "_token": $scope.profile.account.token };
 
         $http({
-            url: config.api.url + 'gebruiker',
+            url: config.api.url + 'buddy',
             method: 'PUT',
             data: body,
-            params: param
         })
         .success(function (data, status, headers, config) {
             User.gebruiker.buddy = data;
