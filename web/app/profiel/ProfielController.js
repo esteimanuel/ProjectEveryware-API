@@ -22,7 +22,7 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
         })
         .success(function (data, status, headers, config) {
             User.setGebruiker(data, true);
-            $scope.setProfileValues();
+            //$scope.setProfileValues();
 
             $rootScope.$broadcast('onUserDataChanged');
         })
@@ -46,7 +46,7 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
             User.gebruiker.buddy = data;
             User.setGebruiker(User.gebruiker, true);
 
-            $scope.setProfileValues();
+           // $scope.setProfileValues();
             $rootScope.$broadcast('onUserDataChanged');
         })
         .error(function (data, status, headers, config) {
