@@ -5,12 +5,12 @@ class BuddyController extends BaseController {
 public function put() {
         $putData = $this->getRequestData();
         if(isset($putData->gebruiker_id)) {
-            $model = Buddy::findFirst($putData->gebruiker_id);
+            unset($putData['_token']);
+            unset($putData['gebruiker_id']);
+            
+            $model = $putData;
             
             if($model) {
-              unset($putData['_token']);
-              unset($putData['gebruiker_id']);
-              
               $model->save();
             }
 
