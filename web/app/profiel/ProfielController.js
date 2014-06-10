@@ -1,8 +1,3 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
     
     $scope.uploadUrl = config.api.url + 'media/postImages';
@@ -16,6 +11,45 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
 //        console.log($scope.profile);
     }
     
+    $scope.saveProfielInfo = function () {
+
+        console.log($scope.profile);
+        var body = $scope.profile;
+        var param = { "_token": $scope.profile.account.token };
+
+        $http({
+            url: config.api.url + 'gebruiker',
+            param: param,
+            method: 'PUT',
+            data: body
+        })
+        .success(function (data, status, headers, config) {
+            console.log("worked");
+        })
+        .error(function (data, status, headers, config) {
+            console.log('fail');
+        })
+    }
+
+    $scope.saveBuddyInfo = function () {
+        console.log($scope.profile.gebruiker.buddy);
+        var body = $scope.profile.gebruiker.buddy;
+        var param = { "_token": $scope.profile.account.token };
+
+        $http({
+            url: config.api.url + 'gebruiker',
+            method: 'PUT',
+            data: body,
+            param: param
+        })
+        .success(function (data, status, headers, config) {
+            console.log("worked");
+        })
+        .error(function (data, status, headers, config) {
+            console.log('fail');
+        })
+    }
+
     $scope.uploadProfileImage = function() {
         //-------------
         // File upload via IFrame

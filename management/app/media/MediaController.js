@@ -4,6 +4,10 @@
  */
 
 app.controller('MediaCtrl', function($rootScope, $scope, $http) {
+//    var navs = [
+//        [{name:'beheer', state:'main.dashboard'}, {name:'test'}]
+//    ];
+    $rootScope.setNavs(null);
     
     var apiCtrlName = 'media';
     var idName = 'media_id';
@@ -115,6 +119,8 @@ app.controller('MediaCtrl', function($rootScope, $scope, $http) {
     }
     
     $scope.add = function(media) {
+        if("media_id" in media)
+            delete media.media_id;
         $scope.toggleLoading();
             $http({
                 url: config.api.url+apiCtrlName,

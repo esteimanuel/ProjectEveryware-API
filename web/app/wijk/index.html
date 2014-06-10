@@ -25,9 +25,12 @@
 
 <h4 id="video">Buurt video</h4>
 <hr />
-    <div class="video-frame">
+    <div class="video-frame" ng-show="showVideo">
         <iframe style="width:100%; height:100%;" ng-src="{{videoUrl}}" frameborder="0" allowfullscreen></iframe>
     </div>
+<p ng-show="!showVideo">
+    Er is nog geen buurt video toegevoegd
+</p>
 
 <h4 id="goededoel">uw goede doel  {{actie.goedeDoel.title}}</h4>
 <hr/>
@@ -115,7 +118,7 @@
             <ul class="participants-list">
                 <li ng-repeat="deelnemer in actie.deelnemers" title="{{deelnemer.voornaam}}">
                     <img ng-if="deelnemer.account.foto_link" ng-src="{{deelnemer.account.foto_link}}" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" />
-                    <img ng-if="!deelnemer.account.foto_link" src="assets/user.png" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" />
+                    <!--<img ng-if="!deelnemer.account.foto_link" src="assets/user.png" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" />-->
                 </li>
             </ul>
         </div>

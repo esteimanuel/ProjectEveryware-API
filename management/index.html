@@ -22,13 +22,14 @@
         
         <!--Load Controllers-->
         <script src="app/MainController.js"></script>
+        <script src="app/main/NavController.js"></script>
         <script src="app/user/UserController.js"></script>
         <script src="app/actie/actieOverviewController.js"></script>
         <script src="app/actie/editActieController.js"></script>
         <script src="app/district/addDistrict.js"></script>
         <script src="app/district/editDistrictController.js"></script>
         <script src="app/district/districtOverviewController.js"></script>
-        <script src="app/district/providerController.js"></script>
+        <script src="app/provider/providerController.js"></script>
         <script src="app/user/UserTableController.js"></script>
         <script src="app/user/userOverviewController.js"></script>
         <script src="app/user/AddUserCtrl.js"></script>
@@ -57,7 +58,7 @@
         </div>
         
         <div ui-view="top-nav"></div>
-        <div ui-view="left-nav"></div>
+        <!--<div ui-view="left-nav"></div>-->
         <div ui-view="content"></div>
     </body>
 </html>
