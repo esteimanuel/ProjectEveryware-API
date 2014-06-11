@@ -3,7 +3,11 @@
  * and open the template in the editor.
  */
 
-app.controller('providerCtrl', function($scope, $http, $state) {
+app.controller('providerCtrl', function($scope, $http, $state, $rootScope) {
+    var navs = [[
+        {name:'Overzicht', active:true, state:'main.provider.editProvider'}]];
+    $rootScope.setNavs(navs);
+    
     $scope.tableClasses = null;
     $scope.tableClasses = "table-striped";
     

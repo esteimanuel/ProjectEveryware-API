@@ -20,7 +20,7 @@
             <div class="col-sm-3">
                 <input type="text" class="form-control" id="wijk.totalHousholds" placeholder="Aantal huishouden in wijk" data-ng-model="wijk.totalHousholds" />
             </div>
-            <label for="profile-name" class="col-sm-2 control-label">Beschikbaar: </label>
+            <label for="profile-name" class="col-sm-2 control-label">Looptijd: </label>
             <div class="col-sm-3">
                 <input type="text" class="form-control" id="wijk.duration" placeholder="Looptijd in dagen" data-ng-model="wijk.duration" />
             </div>
@@ -62,7 +62,7 @@
             </div>
         </div>  
         <div class='col-sm-12'>
-            <button type="submit" class="btn btn-primary pull-right" ng-click="addPostcode(postcode, wijk)">Toevoegen</button>    
+            <button type="submit" class="btn btn-primary pull-right" ng-click="addPostcode(postcode, wijk)">Opslaan</button>    
         </div>
     
         <div>
@@ -86,9 +86,4 @@
             </div>
         </div>
     </fieldset>
-
-    <fieldset>
-        <legend>Opslaan</legend>
-    </fieldset>
-    <button type="submit" class="btn btn-primary pull-right" ng-click="addWijk(wijk)">Opslaan</button>    
 </form>

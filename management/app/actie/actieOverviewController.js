@@ -3,13 +3,18 @@
  * and open the template in the editor.
  */
 
-app.controller('actieOverviewCtrl', function($scope, $http, $state) {
+app.controller('actieOverviewCtrl', function($scope, $http, $state, $rootScope) {
+    var navs = [
+        [{name:'Overzicht', active:true, state:'main.actie.actieOverview'}]];
+    $rootScope.setNavs(navs); 
+    
+    
     $scope.tableClasses = null;
     $scope.tableClasses = "table-striped";
     
     //Set header names for binding
     $scope.headers = [
-        {name: "actie_id", type:"number", header:"Actie nummer"},
+        {name: "actie_id", type:"number", header:"#"},
         {name:"naam", type:"text", header:"Actie naam"},
         {name:"borg", type:"text", header:"Borg"},
         {name:"start_datum", type:"text", header:"Actie start"},

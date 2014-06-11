@@ -3,7 +3,12 @@
  * and open the template in the editor.
  */
 
-app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce) {    
+app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce, $rootScope) {    
+    var navs = [[
+        {name:'Wijk toevoegen', active:true, state:'main.district.addDistrict'}, 
+        {name:'Overzicht', state:'main.district.districtOverview'}]];
+    $rootScope.setNavs(navs); 
+    
     //Regular expression to check zip
     var rege = /^[1-9][0-9]{3}[a-z]{2}$/i;
     refreshMap();
@@ -82,7 +87,6 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
                 console.log(data);
                 $scope.currentWijkId = data.id;
                 console.log($scope);
-                alert($scope.currentWijkId);
                 AddSingleZip(postcode.single)
                 })
                 .error(function(data, status, headers, config){
@@ -141,10 +145,8 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
             data: body
         }).success(function (data, status, headers, config) {
             console.log(data);
-            alert('succes');    
             })
             .error(function(data, status, headers, config){
-                alert('fail postcode');
             });
    }
    

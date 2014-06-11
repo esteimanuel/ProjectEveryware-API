@@ -15,20 +15,19 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         url:'',
         views: {
             "top-nav":{templateUrl:'app/main/nav.html'},
-            "left-nav":{templateUrl:'app/main/left-nav-dashboard.html'},
             "content":{templateUrl:'app/main/index.html'}
         }
     })
     .state('main.faq', {
         url: '/faq',
         views: {
-            'main': {templateUrl: 'app/faq/index.html', controller: 'FaqCtrl'}
+            'main': {templateUrl: 'app/faq/faq.html', controller: 'FaqCtrl'}
         }
     })
     .state('main.media' , {
         url: '/media',
         views: {
-            'main': {templateUrl:'app/media/index.html', controller: 'MediaCtrl'}
+            'main': {templateUrl:'app/media/media.html', controller: 'MediaCtrl'}
         }
     })
 //////////////////////////
@@ -38,8 +37,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     .state('main.dashboard',{
         url: '/dashboard',
         views: {
-            "left-nav":{templateUrl:'app/main/left-nav-dashboard.html'},
-            "main":{templateUrl:"app/dashboard/index.html"}
+            "main":{templateUrl:"app/main/subIndex.html"}
         }
         
         }).state('main.dashboard.districts',{
@@ -67,8 +65,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }).state('main.users',{
         url: '/gebruikers',
         views: {
-            "left-nav":{templateUrl:'app/main/left-nav-users.html'},
-            "main": {templateUrl:'app/user/index.html', controller:'UserTableCtrl'}
+            "main":{templateUrl:"app/main/subIndex.html"}
         }
         
         }).state('main.users.addUser',{
@@ -90,8 +87,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }).state('main.district', {
         url: '/wijken',
         views: {
-            "left-nav":{templateUrl:'app/main/left-nav-district.html'},
-            "main": {templateUrl:'app/district/index.html'}
+            "main":{templateUrl:"app/main/subIndex.html"}
         }
         
         }).state('main.district.addDistrict',{
@@ -119,8 +115,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }).state('main.provider', {
         url: '/provider',
         views: {
-            "left-nav":{templateUrl:'app/main/left-nav-provider.html'},
-            "main": {templateUrl:'app/provider/index.html'}
+            "main":{templateUrl:"app/main/subIndex.html"}
         }
             
         }).state('main.provider.editProvider', {
@@ -136,8 +131,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }).state('main.actie', {
         url: '/acties',
         views: {
-            "left-nav":{templateUrl:'app/main/left-nav-acties.html'},
-            "main": {templateUrl:'app/actie/index.html'}
+            "main":{templateUrl:"app/main/subIndex.html"}
         }
            
         }).state('main.actie.actieOverview',{
@@ -161,11 +155,6 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         url: '/login',
         views: {
             'content':{templateUrl:'app/user/login.html'}
-        }
-    }).state('user', {
-        url: '/user',
-        views: {
-            'main':{templateUrl: 'app/user/index.html', controller:'UserTableCtrl'}
         }
     });
 
