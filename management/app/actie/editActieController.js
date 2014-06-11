@@ -5,7 +5,7 @@
 
 app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, $stateParams, $rootScope) {   
     var navs = [
-        [{name:'Actie', state:'main.actie.actieOverview'}]];
+        [{name:'Overzicht', state:'main.actie.actieOverview'}]];
     $rootScope.setNavs(navs);  
     //Get the district to edit
     $scope.actieId = $stateParams.aid;
