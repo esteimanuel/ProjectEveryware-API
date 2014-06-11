@@ -6,7 +6,7 @@
 app.controller('actieOverviewCtrl', function($scope, $http, $state, $rootScope) {
     var navs = [
         [{name:'Actie', state:'main.actie.actieOverview'}]];
-    $rootScope.setNavs(navs);
+    $rootScope.setNavs(navs); 
     
     
     $scope.tableClasses = null;

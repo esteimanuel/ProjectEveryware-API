@@ -7,7 +7,7 @@ app.controller('districtOverviewCtrl', function($scope, $http, $state, $rootScop
     var navs = [
         [{name:'Wijk toevoegen', state:'main.district.addDistrict'}, 
         {name:'Wijk beheren', active:true, state:'main.district.districtOverview'}]];
-    $rootScope.setNavs(navs);
+    $rootScope.setNavs(navs); 
     
     $scope.tableClasses = null;
     $scope.tableClasses = "table-striped";

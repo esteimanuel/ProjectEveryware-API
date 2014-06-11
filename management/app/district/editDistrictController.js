@@ -4,6 +4,10 @@
  */
 
 app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sce, $stateParams) {    
+    var navs = [[
+        {name:'Wijk toevoegen', active:true, state:'main.district.addDistrict'}, 
+        {name:'Wijk beheren', state:'main.district.districtOverview'}]];
+    $rootScope.setNavs(navs);
     
     //Get the district to edit
     $scope.currentWijkId = $stateParams.wid;
@@ -77,11 +81,6 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
             return;
         }
         
-        if(!addSingle && !addRange){
-            alert("Om een range toe te voegen moet je start en eind definen");
-            return;
-        }
-        
         if(addSingle){
             if(!rege.test(postcode.single)){
                 alert("De postcode voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
@@ -89,6 +88,18 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
             }
             AddSingleZip(postcode.single);
         }
+        
+        if(addRangeTry)
+            if(!rege.test(postcode.rangeStart)){
+                alert("De postcode range start voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
+                return;
+            }
+            if(!rege.test(postcode.rangeEnd)){
+                alert("De postcode range eind voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
+                return;
+            }
+            
+            AddRangeZip(postcode.rangeStart, postcode.rangeEnd);
     };
    
    //AddWijk
@@ -130,11 +141,9 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
        var endAlfa2 = alfa.indexOf(end.charAt(5));
        
        for (startNumbers; startNumbers < endNumbers; startNumbers++){
-           console.log(startNumbers);
-           for(startAlfa1; startAlfa1 < alfa.length(); startAlfa1++){
-               console.log(alfa[startAlfa1]);
-               for(startAlfa2; startAlfa2 < alfa.length(); startAlfa2++){
-                   alert("Postcode: " + startNumbers + alfa[startAlfa1] + alfa[startAlfa2]);
+           for(startAlfa1; startAlfa1 < alfa.length; startAlfa1++){
+               for(startAlfa2; startAlfa2 < alfa.length; startAlfa2++){
+                   console.log("Postcode: " + startNumbers + alfa[startAlfa1] + alfa[startAlfa2]);
                }
                //Reset alfa 2 after finish
                startAlfa2 = 0;
