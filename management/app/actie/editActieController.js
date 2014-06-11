@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, $stateParams) {   
+app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, $stateParams, $rootScope) {   
     var navs = [
         [{name:'Actie', state:'main.actie.actieOverview'}]];
     $rootScope.setNavs(navs);  
