@@ -37,7 +37,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     .state('main.dashboard',{
         url: '/dashboard',
         views: {
-            "main":{templateUrl:"app/dashboard/index.html"}
+            "main":{templateUrl:"app/main/subIndex.html"}
         }
         
         }).state('main.dashboard.districts',{
@@ -65,7 +65,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }).state('main.users',{
         url: '/gebruikers',
         views: {
-            "main": {templateUrl:'app/user/index.html', controller:'UserTableCtrl'}
+            "main":{templateUrl:"app/main/subIndex.html"}
         }
         
         }).state('main.users.addUser',{
@@ -87,7 +87,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }).state('main.district', {
         url: '/wijken',
         views: {
-            "main": {templateUrl:'app/district/index.html'}
+            "main":{templateUrl:"app/main/subIndex.html"}
         }
         
         }).state('main.district.addDistrict',{
@@ -115,7 +115,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }).state('main.provider', {
         url: '/provider',
         views: {
-            "main": {templateUrl:'app/provider/index.html'}
+            "main":{templateUrl:"app/main/subIndex.html"}
         }
             
         }).state('main.provider.editProvider', {
@@ -131,7 +131,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
     }).state('main.actie', {
         url: '/acties',
         views: {
-            "main": {templateUrl:'app/actie/index.html'}
+            "main":{templateUrl:"app/main/subIndex.html"}
         }
            
         }).state('main.actie.actieOverview',{
@@ -155,11 +155,6 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         url: '/login',
         views: {
             'content':{templateUrl:'app/user/login.html'}
-        }
-    }).state('user', {
-        url: '/user',
-        views: {
-            'main':{templateUrl: 'app/user/index.html', controller:'UserTableCtrl'}
         }
     });
 
