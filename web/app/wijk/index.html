@@ -12,7 +12,7 @@
 
 <div class="page-header">
     <h1>
-        {{actie.naam}}
+        {{wijk.wijk_naam}}
         <button class="pull-right btn btn-primary" style="width:200px;" ng-show="actie.stateVisible" ng-disabled="actie.stateDisabled" ng-click="handleStateButton()">{{actie.userStateMessage}}</button>
     </h1>
 </div>
@@ -74,7 +74,7 @@
         <div class="dialog-content">
             <h2>Borg betalen</h2>
             <hr/>
-            <p>De borg bedraagd: &euro;{{actie.borg}}</p>
+            <p>De borg bedraagd: &euro; {{actie.borg}}</p>
             <button type="button" ng-click="payBorg()" class="btn btn-default">Betalen</button>
         </div>
     </div>
@@ -87,10 +87,10 @@
         <div class="dialog-content">
             <h2>Provider kiezen</h2>
             <hr/>
-            <form ng-submit="choseProvider()">
+            <form ng-submit="choseProvider(provider)">
                 <div class="form-group">
                     <select class="form-control" ng-model="provider.id">
-                        <option ng-repeat="provider in providers" value="{{provider.provider_id}}">{{provider.naam}}</option>
+                        <option ng-repeat="p in providers" value="{{p.provider_id}}">{{p.naam}}</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-default">Kies</button>
@@ -149,9 +149,21 @@
             </div>
 
             <ul class="participants-list">
-                <li ng-repeat="deelnemer in actie.deelnemers" title="{{deelnemer.voornaam}}">
+                <li ng-repeat="deelnemer in actie.deelnemers" title="{{deelnemer.voornaam}}" ng-click="participantClick(deelnemer)" style="position:relative;">
                     <img ng-if="deelnemer.account.foto_link" ng-src="{{deelnemer.account.foto_link}}" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" />
                     <!--<img ng-if="!deelnemer.account.foto_link" src="assets/user.png" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" />-->
+                    <div ng-if="deelnemer.buddy">
+                        <div ng-show="deelnemer.show"class="basedialog" style="padding:10px;position:absolute;top:20px;right:20px;width:200px;">
+                            <div class="buddy-img" style="margin-left:auto; margin-right:auto;">
+                                <img ng-src="{{deelnemer.account.foto_link}}" />
+                            </div>
+                            <div>{{deelnemer.voornaam}} {{deelnemer.tussenvoegsel}} {{deelnemer.achternaam}}</div>
+                            <div>Email: {{deelnemer.buddy.contact_email}}</div>
+                            <div>Tel nr: {{deelnemer.buddy.contact_tel}}</div>
+                            <div>Beschikbaar</div>
+                            <div>Van: {{deelnemer.buddy.tijd_vanaf}} Tot: {{deelnemer.buddy.tijd_tot}}</div>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>

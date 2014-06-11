@@ -12,7 +12,7 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
     $scope.saveProfielInfo = function () {
 
         console.log($scope.profile);
-        $scope.profile.gebruiker._token = $scope.profile.account.token;
+        $scope.profile.gebruiker._token = User.account.token;
         var body = $scope.profile.gebruiker;
         
         $http({
@@ -21,7 +21,7 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
             data: body
         })
         .success(function (data, status, headers, config) {
-            User.setGebruiker(data, true);
+            User.setGebruiker(data.model, true);
             console.log(data);
 
             $rootScope.$broadcast('onUserDataChanged');
@@ -33,16 +33,16 @@ app.controller('ProfielCtrl', function($scope, User, $http, $rootScope) {
 
     $scope.saveBuddyInfo = function () {
 
-        $scope.profile.gebruiker.buddy._token = $scope.profile.account.token;
+        $scope.profile.gebruiker.buddy._token = User.account.token;
         var body = $scope.profile.gebruiker.buddy;
 
         $http({
             url: config.api.url + 'buddy',
             method: 'PUT',
-            data: body,
+            data: body
         })
         .success(function (data, status, headers, config) {
-            User.gebruiker.buddy = data;
+            User.gebruiker.buddy = data.model;
             User.setGebruiker(User.gebruiker, true);
 
            // $scope.setProfileValues();

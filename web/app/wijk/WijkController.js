@@ -36,6 +36,7 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
             $scope.getActieStats();
             $scope.getGoedeDoel();
             $scope.getBuurtForum();
+            $scope.getWijkNaam();
             $scope.mapsUrl = $sce.trustAsResourceUrl($scope.getMapsUrl());
             $scope.videoUrl = $sce.trustAsResourceUrl($scope.getVideoUrl());
             angular.forEach($scope.actie.media, function(media) {
@@ -46,6 +47,18 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
         })
         .error(function (data, status, headers, config) {
             console.log("failure");
+        });
+    }
+    
+    $scope.getWijkNaam = function() {
+        $http({
+            url: config.api.url + "wijk",
+            method: "GET",
+            params: {id:$scope.actie.wijk_id}
+        }).success(function(data) {
+            $scope.wijk = data;
+        }).error(function(data) {
+            console.log("Failed to get wijk data");
         });
     }
 
@@ -147,6 +160,7 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
     
     $scope.initUserStateMessage = function() {
 //        console.log(User);
+        $scope.actie.stateDisabled = false;
         if(User.isLogged) {
             $scope.actie.stateVisible = true;
             if(User.gebruiker.actie_id == $scope.actie.actie_id) {
@@ -259,14 +273,14 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
         $scope.actie.openChoseProvider = false;
     }
     
-    $scope.choseProvider = function() {
-        if($scope.provider.id && $scope.provider.id > 0) {
+    $scope.choseProvider = function(provider) {
+        if(provider.id && provider.id > 0) {
             $http({
                 url: config.api.url + "gebruiker",
                 method: "PUT",
-                data: {_token: User.account.token, provider_id: $scope.provider.id}
+                data: {_token: User.account.token, provider_id: provider.id}
             }).success(function(data) {
-                User.gebruiker.provider_id = $scope.provider.id;
+                User.gebruiker.provider_id = provider.id;
                 User.setGebruiker(User.gebruiker, true);
                 $rootScope.$broadcast("onUserDataChanged");
                 
@@ -276,6 +290,12 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
             }).error(function(data) {
                 $rootScope.showMessage("Er ging iets fout met het opslaan van de gegevens", "danger");
             });
+        }
+    }
+    
+    $scope.participantClick = function(part) {
+        if(part.buddy) {
+            part.show = !part.show;
         }
     }
     

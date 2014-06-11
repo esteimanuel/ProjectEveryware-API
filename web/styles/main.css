@@ -79,6 +79,7 @@
 
 .buddy-thumb {
     border-color: green;
+    cursor: pointer;
 }
 
 /*  //  #profile-form #profile-voornaam, #profile-achternaam, #profile-postcode, #profile-nummer, #profile-email, #profile-wachtwoord  {
