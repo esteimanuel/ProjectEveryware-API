@@ -6,7 +6,7 @@
 app.controller('districtOverviewCtrl', function($scope, $http, $state, $rootScope) {
     var navs = [
         [{name:'Wijk toevoegen', state:'main.district.addDistrict'}, 
-        {name:'Wijk beheren', active:true, state:'main.district.districtOverview'}]];
+        {name:'Overzicht', active:true, state:'main.district.districtOverview'}]];
     $rootScope.setNavs(navs); 
     
     $scope.tableClasses = null;
@@ -14,7 +14,7 @@ app.controller('districtOverviewCtrl', function($scope, $http, $state, $rootScop
     
     //Set header names for binding
     $scope.headers = [
-        {name: "wijk_id", type:"number", header:"Wijk nummer"},
+        {name: "wijk_id", type:"number", header:"#"},
         {name:"wijk_naam", type:"text", header:"Wijk naam"},
         {name:"beschikbaar", type:"checkbox", header:"Beschikbaar"},
         {name:"target", type:"text", header:"Target"},

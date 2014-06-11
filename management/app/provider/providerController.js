@@ -5,7 +5,7 @@
 
 app.controller('providerCtrl', function($scope, $http, $state, $rootScope) {
     var navs = [[
-        {name:'Provider beheren', active:true, state:'main.provider.editProvider'}]];
+        {name:'Overzicht', active:true, state:'main.provider.editProvider'}]];
     $rootScope.setNavs(navs);
     
     $scope.tableClasses = null;

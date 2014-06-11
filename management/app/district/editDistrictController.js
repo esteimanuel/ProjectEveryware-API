@@ -6,7 +6,7 @@
 app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sce, $rootScope, $stateParams) {    
     var navs = [[
         {name:'Wijk toevoegen', state:'main.district.addDistrict'}, 
-        {name:'Wijk beheren', state:'main.district.districtOverview'}]];
+        {name:'Overzicht', state:'main.district.districtOverview'}]];
     $rootScope.setNavs(navs);
     
     //Get the district to edit

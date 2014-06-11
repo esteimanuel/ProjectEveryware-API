@@ -14,7 +14,7 @@ app.controller('actieOverviewCtrl', function($scope, $http, $state, $rootScope) 
     
     //Set header names for binding
     $scope.headers = [
-        {name: "actie_id", type:"number", header:"Actie nummer"},
+        {name: "actie_id", type:"number", header:"#"},
         {name:"naam", type:"text", header:"Actie naam"},
         {name:"borg", type:"text", header:"Borg"},
         {name:"start_datum", type:"text", header:"Actie start"},

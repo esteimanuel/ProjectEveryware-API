@@ -6,7 +6,7 @@
 app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce, $rootScope) {    
     var navs = [[
         {name:'Wijk toevoegen', active:true, state:'main.district.addDistrict'}, 
-        {name:'Wijk beheren', state:'main.district.districtOverview'}]];
+        {name:'Overzicht', state:'main.district.districtOverview'}]];
     $rootScope.setNavs(navs); 
     
     //Regular expression to check zip
