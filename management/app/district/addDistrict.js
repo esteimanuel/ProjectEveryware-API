@@ -76,7 +76,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
    function addWijkIfNotEist(wijk, postcode){
         //If wijk not set add, else update
         if(!$scope.currentWijkId){
-            var body = {wijk_naam: wijk.name, beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
+            var body = {status_list_id: 1, wijk_naam: wijk.name, beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
             var url = config.api.url+'wijk';
 
             $http({

@@ -134,6 +134,12 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             "main":{templateUrl:"app/main/subIndex.html"}
         }
            
+        }).state('main.actie.actieToevoegen',{
+            url: '/actieToevoegen',
+            views: {
+                "content":{templateUrl:"app/actie/actieToevoegen.html", controller:'actieToevoegenCtrl'}
+            }
+           
         }).state('main.actie.actieOverview',{
             url: '/actieBeheer',
             views: {

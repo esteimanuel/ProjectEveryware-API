@@ -4,8 +4,9 @@
  */
 
 app.controller('actieOverviewCtrl', function($scope, $http, $state, $rootScope) {
-    var navs = [
-        [{name:'Overzicht', active:true, state:'main.actie.actieOverview'}]];
+    var navs = [[
+        {name:'Toevoegen', state:'main.actie.actieToevoegen'},
+        {name:'Overzicht', active:true, state:'main.actie.actieOverview'}]];
     $rootScope.setNavs(navs); 
     
     
