@@ -8,6 +8,7 @@ app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, 
         [{name:'Overzicht', state:'main.actie.actieOverview'}]];
     $rootScope.setNavs(navs);  
     //Get the district to edit
+    GetStatusValues();
     $scope.actieId = $stateParams.aid;
     GetDataForActie();    
     GetActieDeelnemers();
@@ -26,6 +27,18 @@ app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, 
     //Disable modifiers for table
     $scope.allowEdit = false;
     $scope.allowDelete = false;
+    
+    ///Gets the different status values
+    function GetStatusValues(){
+        var url = config.api.url + 'status'
+        $http({
+            url: url,
+            method: 'GET'
+        }).success(function(data, status, headers, config) {
+            $scope.statuses = data;
+            console.log("Statusdata load succesfull");
+        });
+    }
     
     ///Gets all data for selected action
     function GetDataForActie(){

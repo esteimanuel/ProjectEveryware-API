@@ -15,9 +15,7 @@
             </div>
             <label for="profile-name" class="col-sm-2 control-label">Status: </label>
             <div class="col-sm-3">
-                <select class="form-control" id="actieStatus" placeholder="Looptijd in dagen" value="actie.status" data-ng-model="actieStatus">
-                    <option>Default</option>
-                </select>
+                <select ng-model="actieStatus" ng-options="status.status_id as status.description for status in statuses"></select>
             </div>
         </div>
         

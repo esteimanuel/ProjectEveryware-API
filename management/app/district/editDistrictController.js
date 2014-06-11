@@ -3,9 +3,9 @@
  * and open the template in the editor.
  */
 
-app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sce, $stateParams) {    
+app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sce, $rootScope, $stateParams) {    
     var navs = [[
-        {name:'Wijk toevoegen', active:true, state:'main.district.addDistrict'}, 
+        {name:'Wijk toevoegen', state:'main.district.addDistrict'}, 
         {name:'Wijk beheren', state:'main.district.districtOverview'}]];
     $rootScope.setNavs(navs);
     
@@ -31,13 +31,27 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
     
     //Create array with alfabet to loop for adding zip range
     var alfa = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-    
-    
+        
     function GetDataForWijk(){
         ///////////////////
-        //postcodes
+        //Wijk
+        ///////////////////  
+        var url = config.api.url + 'wijk?id=' + $scope.currentWijkId;
+        $http({
+            url: url,
+            method: 'GET'
+        }).success(function(data, status, headers, config) {
+            console.log("Wijkdata load succesfull");
+        console.log(data);    
+        $scope.wijk = {name: data.wijk_naam, avalible: data.beschikbaar, target: data.target, duration: data.actie_duur_dagen, totalHousholds: data.aantal_huishoudens};
+        console.log($scope.wijk);
+        }).error(function(data, status, headers, config) {
+            console.log("Wijkdata load failed");
+        });
         ///////////////////
-        var url = config.api.url+'postcode/ForDistrict?id=' + $scope.currentWijkId;
+        //Postcodes
+        ///////////////////
+        var url = config.api.url + 'postcode/ForDistrict?id=' + $scope.currentWijkId;
         $http({
             url: url,
             method: 'GET'
@@ -56,12 +70,12 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
        // AddRangeZip(postcode.rangeStart, postcode.rangeEnd);
         //If no data notify
         if(postcode === undefined){
-            alert("Waarom druk je op de knop? Je hebt niks ingevuld");
+            updateWijkIfNotEist(wijk, postcode);
+            return;
         }
         
         //Check the type to add
         var addSingle = false;
-        var addRange = false;
         var addRangeTry = false;
         
         if(postcode.single){
@@ -72,21 +86,8 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
         };
         
         if(addRangeTry && addSingle){
-            alert("1 ding tegelijk, moet niet te veel willen");
+            alert("Voeg of een range of een enkele postcode in");
             return;
-        }
-        
-        if(!addRangeTry && !addSingle){
-            alert("Waarom druk je op de knop? Je hebt niet alles ingevuld");
-            return;
-        }
-        
-        if(addSingle){
-            if(!rege.test(postcode.single)){
-                alert("De postcode voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
-                return;
-            }
-            AddSingleZip(postcode.single);
         }
         
         if(addRangeTry)
@@ -102,34 +103,25 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
             AddRangeZip(postcode.rangeStart, postcode.rangeEnd);
     };
    
-   //AddWijk
-   /*
-   function addWijkIfNotEist(wijk, postcode){
+   //Updates the wijk data "TOP BLOCK OF FORM"
+   function updateWijkIfNotEist(wijk, postcode){
         //If wijk not set add, else update
-        if(!$scope.currentWijkId){
-            var body = {wijk_naam: wijk.name, beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
+        if($scope.currentWijkId){
+            var body = {id: $scope.currentWijkId ,wijk_naam: wijk.name, beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
             var url = config.api.url+'wijk';
 
             $http({
                 url:url,
-                method:"POST",
+                method:"put",
                 data: body
             }).success(function (data, status, headers, config) {
-                console.log(data);
-                $scope.currentWijkId = data.id;
-                console.log($scope);
-                alert($scope.currentWijkId);
-                AddSingleZip(postcode.single)
+                alert('Wijkdata is bijgewerkt');
                 })
                 .error(function(data, status, headers, config){
                 alert('Gegevens konden niet opgeslagen worden.');
                 });
        }
-       else{
-        AddSingleZip(postcode.single)
-       }
    };
-   */
    function AddRangeZip(start, end){
        //Split start to loop       
        var startNumbers = parseInt(start.slice(0, 4));
