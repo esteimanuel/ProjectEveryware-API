@@ -4,6 +4,9 @@
  */
 
 app.controller('FaqCtrl', function($rootScope, $scope, $http) {
+    var navs = [
+        [{name:'Overzict', active:true, state:'main.faq'}]];
+    $rootScope.setNavs(navs); 
     
     var apiCtrlName = 'faq';
     var idName = 'faq_id';

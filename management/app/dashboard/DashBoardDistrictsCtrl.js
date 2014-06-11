@@ -3,7 +3,8 @@
  * and open the template in the editor.
  */
 
-app.controller('DashBoardDistrictsCtrl', function($scope, $timeout, $http) {
+app.controller('DashBoardDistrictsCtrl', function($rootScope, $scope, $timeout, $http) {
+    $rootScope.setNavs(null); 
     $scope.tableClass = 'table-striped';
     $scope.headers = [
         {name: "wijk_id", type:"number", header:"Wijk nummer"},

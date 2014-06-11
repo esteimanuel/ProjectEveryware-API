@@ -5,7 +5,7 @@
 
 app.controller('actieOverviewCtrl', function($scope, $http, $state, $rootScope) {
     var navs = [
-        [{name:'Actie', state:'main.actie.actieOverview'}]];
+        [{name:'Actie', active:true, state:'main.actie.actieOverview'}]];
     $rootScope.setNavs(navs); 
     
     
