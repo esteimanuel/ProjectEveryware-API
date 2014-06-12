@@ -30,11 +30,11 @@ public function put() {
     }
 }
 
-  public function get() {
+  public function getByGebruikerId() {
 
     $sGebruikerId = $this->request->getQuery('gebruiker_id');
 
-    $model = Buddy::findFirst($putData['gebruiker_id']);
+    $model = Buddy::findFirst($sGebruikerId);
 
     if($model) {
 
