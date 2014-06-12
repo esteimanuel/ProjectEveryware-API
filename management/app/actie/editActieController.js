@@ -19,9 +19,7 @@ app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, 
         {name:"voornaam", type:"text", header:"Voornaam"},
         {name:"tussenvoegsel", type:"text", header:"Tussenvoegsels"},
         {name:"achternaam", type:"text", header:"Achternaam"},
-        {name:"borg_betaald", type:"checkbox", header:"Borg betaald"},
-        {name:"postcode_id", type:"text", header:"Postcode"},
-        {name:"huisnummer", type:"text", header:"Huisnummer"}
+        {name:"borg_betaald", type:"checkbox", header:"Borg betaald"}
     ];
     
     //Disable modifiers for table
