@@ -29,14 +29,15 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
     
     //Function to add ZIP code
     $scope.addPostcode = function(postcode, wijk){
+       // AddRangeZip(postcode.rangeStart, postcode.rangeEnd);
         //If no data notify
+        addWijkIfNotEist(wijk);
         if(postcode === undefined){
-            alert("Waarom druk je op de knop? Je hebt niks ingevuld");
+            return;
         }
         
         //Check the type to add
         var addSingle = false;
-        var addRange = false;
         var addRangeTry = false;
         
         if(postcode.single){
@@ -47,33 +48,27 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         };
         
         if(addRangeTry && addSingle){
-            alert("1 ding tegelijk, moet niet te veel willen");
+            alert("Voeg of een range of een enkele postcode in");
             return;
         }
-        
-        if(!addRangeTry && !addSingle){
-            alert("Waarom druk je op de knop? Je hebt niet alles ingevuld");
-            return;
-        }
-        
-        if(!addSingle && !addRange){
-            alert("Om een range toe te voegen moet je start en eind definen");
-            return;
-        }
-        
-        addWijkIfNotEist(wijk,postcode)
         
         if(addSingle){
-            if(!rege.test(postcode.single)){
-                alert("De postcode voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
+            $timeout(AddSingleZip(postcode.single), [1500]);
+        }
+        
+        if(addRangeTry)
+            if(!rege.test(postcode.rangeStart)){
+                alert("De postcode range start voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
                 return;
             }
-//            $timeout(AddSingleZip(postcode.single), 2000);
-        }
-        refreshMap();
+            if(!rege.test(postcode.rangeEnd)){
+                alert("De postcode range eind voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
+                return;
+            }
+            $timeout(AddRangeZip(postcode.rangeStart, postcode.rangeEnd), [1500]);
     };
    
-   function addWijkIfNotEist(wijk, postcode){
+   function addWijkIfNotEist(wijk){
         //If wijk not set add, else update
         if(!$scope.currentWijkId){
             var body = {status_list_id: 1, wijk_naam: wijk.name, beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
@@ -84,17 +79,27 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
                 method:"POST",
                 data: body
             }).success(function (data, status, headers, config) {
-                console.log(data);
                 $scope.currentWijkId = data.id;
-                console.log($scope);
-                AddSingleZip(postcode.single)
+                alert('Wijkdata is toegevoegd');
                 })
                 .error(function(data, status, headers, config){
                 alert('Gegevens konden niet opgeslagen worden.');
                 });
        }
        else{
-        AddSingleZip(postcode.single)
+            var body = {id: $scope.currentWijkId ,wijk_naam: $scope.wijk.name, beschikbaar: $scope.wijk.avalible, target: $scope.wijk.target, actie_duur_dagen: $scope.wijk.duration, aantal_huishoudens: $scope.wijk.totalHousholds};
+            var url = config.api.url+'wijk';
+
+            $http({
+                url:url,
+                method:"put",
+                data: body
+            }).success(function (data, status, headers, config) {
+                alert('Wijkdata is bijgewerkt');
+                })
+                .error(function(data, status, headers, config){
+                alert('Gegevens konden niet opgeslagen worden.');
+                });
        }
    };
    
@@ -119,7 +124,45 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
    };
    
    function AddRangeZip(start, end){
+       //Split start to loop       
+       var startNumbers = parseInt(start.slice(0, 4));
+       var startAlfa1= alfa.indexOf(start.charAt(4));
+       var startAlfa2= alfa.indexOf(start.charAt(5));
+       //Split end to loop
+       var endNumbers = parseInt(end.slice(0, 4));
+       var endAlfa1 = alfa.indexOf(end.charAt(4));
+       var endAlfa2 = alfa.indexOf(end.charAt(5));
        
+       //Loop for digits
+       for (startNumbers; startNumbers < endNumbers; startNumbers++){
+           for(startAlfa1; startAlfa1 < alfa.length; startAlfa1++){
+               for(startAlfa2; startAlfa2 < alfa.length; startAlfa2++){
+                    AddSingleZip(startNumbers + alfa[startAlfa1] + alfa[startAlfa2]);
+               }
+               //Reset alfa 2 after finish
+               startAlfa2 = 0;
+           }
+           //Reset alfa1 after finish
+           startAlfa1 = 0;
+       }
+       
+       //Loop for first letter
+       if(startNumbers === endNumbers){
+           for(startAlfa1; startAlfa1 < endAlfa1; startAlfa1++){
+               for(startAlfa2; startAlfa2 < alfa.length; startAlfa2++){
+                    AddSingleZip(startNumbers + alfa[startAlfa1] + alfa[startAlfa2]);
+               }
+               //Reset alfa 2 after finish
+               startAlfa2 = 0;
+           }
+       }
+       
+       //Loop for last letter
+       if(startAlfa1 === endAlfa1){
+               for(startAlfa2; startAlfa2 <= endAlfa2; startAlfa2++){
+                    AddSingleZip(startNumbers + alfa[startAlfa1] + alfa[startAlfa2]);
+               }
+       }
    }
    
    function AddSingleZip(Zip){
