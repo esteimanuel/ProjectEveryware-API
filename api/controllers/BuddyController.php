@@ -38,7 +38,7 @@ class BuddyController extends BaseController {
                     'bind' => array('id' => $sGebruikerId),
                 ));
 
-    if($model) {
+    if(isset($model)) {
 
       $this->response->setJsonContent(array('model' => $model);
 
