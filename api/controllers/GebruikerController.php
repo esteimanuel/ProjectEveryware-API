@@ -13,6 +13,17 @@ class GebruikerController extends BaseController
                 unset($putData['_gebruiker']);
                 unset($putData['gebruiker_id']);
             }
+             
+
+        if(isset($this->_buddy)) {
+            if(isset($putData['_buddy'])) {
+                foreach($putData['_buddy'] as $key => $value) {
+                    $putData[$key] = $value;
+                }
+                unset($putData['_buddy']);
+            }
+        }
+
             $putData['id'] = $this->_account->Gebruiker[0]->gebruiker_id;
             
             $messages = '';
