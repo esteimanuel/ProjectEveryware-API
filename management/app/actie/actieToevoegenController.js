@@ -90,7 +90,7 @@ app.controller('actieToevoegenCtrl', function($scope, $http, $timeout, $state, $
    }
    
    $scope.AddAction = function addAction(){
-       var body = {borg: 0, borg_betaald: false, start_datum: $scope.actieStartDatum, eind_datum: $scope.actieEindDatum, naam: $scope.actieNaam, wijk_id: $scope.wijkId};
+       var body = {borg: 0, borg_betaald: false, start_datum: $scope.actieStartDatum, eind_datum: $scope.actieEindDatum, naam: $scope.actieNaam, wijk_id: $scope.wijkId, statuslist_id: 0};
             var url = config.api.url+'actie';
             $http({
                 url:url,
