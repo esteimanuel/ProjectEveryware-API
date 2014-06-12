@@ -30,4 +30,19 @@ public function put() {
     }
 }
 
+  public function getByGebruikerId() {
+
+    $sGebruikerId = $this->request->getQuery('gebruiker_id');
+
+    $model = Buddy::findFirst($putData['gebruiker_id']);
+
+    if($model) {
+
+      $this->response->setJsonContent($model);
+
+    } else {
+      $this->response->setStatusCode(404, "Buddy niet gevonden, Koos Vriendloos!");
+    }
+  }
+
 ?>
