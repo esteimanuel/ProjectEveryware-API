@@ -5,6 +5,26 @@ class PostcodeController extends BaseController {
 	public function addToWijk() {
 		
 	}
+
+    public function findWithPostCode() {
+
+        $postcode = $this->request->getQuery('postcode');
+        $object = null;
+
+        if(isset($postcode) && strlen($postcode) == 6) {
+
+            $object = Postcode::findFirst(array(
+                    'conditions' => 'postcode = :pcode:',
+                    'bind' => array('pcode' => $postcode),
+                ));
+
+        } else {
+
+            $this->response->setStatusCode(400, "Invalid input, expected a 6 character long postalcode");
+        }
+
+        $this->response->setJsonContent($object);
+    }
         
     public function forDistrict() {
         $wijk_id = $this->request->getQuery('id');
