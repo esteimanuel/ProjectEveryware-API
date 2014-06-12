@@ -138,6 +138,12 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             views: {
                 "content":{templateUrl:"app/reports/actionFollowers.html", controller:'actionFollowersCtrl'}
             }
+           
+        }).state('main.report.actionDistrict',{
+            url: '/actie_wijkdata/:aid',
+            views: {
+                "content":{templateUrl:"app/reports/actionDistrict.html", controller:'actionDistrictCtrl'}
+            }
        
 //////////////////////////
 /// Login redirs

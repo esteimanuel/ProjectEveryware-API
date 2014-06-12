@@ -114,4 +114,7 @@ app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, 
     $scope.CreateUserReport = function (rowData){
         $state.transitionTo("main.report.actionFollowers", {'aid':$scope.actieId});
     };
+    $scope.CreateDistrictReport = function (rowData){
+        $state.transitionTo("main.report.actionDistrict", {'aid':$scope.actieId});
+    };
 });
