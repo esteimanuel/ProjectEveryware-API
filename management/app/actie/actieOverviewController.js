@@ -59,6 +59,6 @@ app.controller('actieOverviewCtrl', function($scope, $http, $state, $rootScope) 
     $scope.getData();     
     
     $scope.onEditClick = function(rowData){
-        $state.transitionTo("main.actie.editActie", {'aid':$scope.actieId});
+        $state.transitionTo("main.actie.editActie", {'aid':rowData[0].value});
     };
 });
