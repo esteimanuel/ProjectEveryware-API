@@ -40,7 +40,7 @@ class BuddyController extends BaseController {
 
     if(isset($model)) {
 
-      $this->response->setJsonContent(array('model' => $model));
+      $this->response->setJsonContent($model);
 
     } else {
       $this->response->setStatusCode(404, "Buddy niet gevonden, Koos Vriendloos!");
