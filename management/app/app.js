@@ -153,6 +153,21 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             }
        
 //////////////////////////
+/// Report redirs
+//////////////////////////
+    }).state('main.report', {
+        url: '/rapportage/:aid',
+        views: {
+            "main":{templateUrl:"app/main/subIndex.html"}
+        }
+           
+        }).state('main.report.actionFollowers',{
+            url: '/actie_deelnemers',
+            views: {
+                "content":{templateUrl:"app/reports/actionFollowers.html", controller:'actionFollowersCtrl'}
+            }
+       
+//////////////////////////
 /// Login redirs
 //////////////////////////
             

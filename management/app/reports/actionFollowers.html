@@ -1,16 +1,79 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
+<style>
+    table{
+        width: 100%;
+    }
+    
+    .quortarWidth{
+        width: 25%;
+    }
+    
+    thead tr{
+        height: 30px;
+        font-size: 16px;
+        color: #428bca;
+    }
+    
+    tbody tr{
+        font-size: 14px;
+        border-bottom: 1px solid lightgray;
+    }
+    
+    tbody tr td{
+        padding-left: 10px;
+    }
+    
+@media print {
+    /* Hidd sort buttons on table */
+    i {
+        display: none !important;
+    }
+}
+</style>
+
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Rapport voor wijk {{wijkName}} </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <h1 class="page-header">Deelnamerapportage voor wijk {{wijkName}}</h1>
+        <fieldset>
+            <legend>Statestieken</legend>
+            <table class="quortarWidth">
+                <thead>
+                    <tr>
+                        <th>Soort</th>
+                        <th>Aantal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Borg betalers</td>
+                        <td>{{totalBorg}}</td>
+                    </tr>
+                    <tr>
+                        <td>Totaal deelnemers</td>
+                        <td>{{totalUsers}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <br/>
+        
+        <fieldset>
+            <legend>Deelnemers</legend>
+            <gl-table>
+
+            <gl-table-head></gl-table-head>
+
+            <gl-table-body>
+                <gl-table-row ng-repeat="n in indexList(3000) track by $index" row="{{$index}}"></gl-table-row>
+            </gl-table-body>
+
+            </gl-table>
+        </fieldset>
     </body>
 </html>

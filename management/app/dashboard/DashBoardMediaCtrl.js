@@ -15,7 +15,6 @@ app.controller('DashBoardMediaCtrl', function($scope, $timeout, $http) {
     ];
     
     $scope.rows = [];
-    
     $scope.FilterResults = function(filterBy){
         
     };
