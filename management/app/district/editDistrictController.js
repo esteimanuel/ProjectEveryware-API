@@ -70,7 +70,7 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
        // AddRangeZip(postcode.rangeStart, postcode.rangeEnd);
         //If no data notify
         if(postcode === undefined){
-            updateWijkIfNotEist(wijk, postcode);
+            updateWijk(wijk, postcode);
             return;
         }
         
@@ -90,6 +90,11 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
             return;
         }
         
+        if(addSingle){
+            updateWijk();
+            AddSingleZip(postcode.single);
+        }
+        
         if(addRangeTry)
             if(!rege.test(postcode.rangeStart)){
                 alert("De postcode range start voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
@@ -99,15 +104,15 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
                 alert("De postcode range eind voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
                 return;
             }
-            
+            updateWijk();
             AddRangeZip(postcode.rangeStart, postcode.rangeEnd);
     };
    
    //Updates the wijk data "TOP BLOCK OF FORM"
-   function updateWijkIfNotEist(wijk, postcode){
+   function updateWijk(){
         //If wijk not set add, else update
         if($scope.currentWijkId){
-            var body = {id: $scope.currentWijkId ,wijk_naam: wijk.name, beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
+            var body = {id: $scope.currentWijkId ,wijk_naam: $scope.wijk.name, beschikbaar: $scope.wijk.avalible, target: $scope.wijk.target, actie_duur_dagen: $scope.wijk.duration, aantal_huishoudens: $scope.wijk.totalHousholds};
             var url = config.api.url+'wijk';
 
             $http({
@@ -132,10 +137,11 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
        var endAlfa1 = alfa.indexOf(end.charAt(4));
        var endAlfa2 = alfa.indexOf(end.charAt(5));
        
+       //Loop for digits
        for (startNumbers; startNumbers < endNumbers; startNumbers++){
            for(startAlfa1; startAlfa1 < alfa.length; startAlfa1++){
                for(startAlfa2; startAlfa2 < alfa.length; startAlfa2++){
-                   console.log("Postcode: " + startNumbers + alfa[startAlfa1] + alfa[startAlfa2]);
+                    AddSingleZip(startNumbers + alfa[startAlfa1] + alfa[startAlfa2]);
                }
                //Reset alfa 2 after finish
                startAlfa2 = 0;
@@ -144,10 +150,22 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
            startAlfa1 = 0;
        }
        
+       //Loop for first letter
        if(startNumbers === endNumbers){
-           for(startAlfa1; startAlfa1 <= endAlfa1; startAlfa1++){
-               
+           for(startAlfa1; startAlfa1 < endAlfa1; startAlfa1++){
+               for(startAlfa2; startAlfa2 < alfa.length; startAlfa2++){
+                    AddSingleZip(startNumbers + alfa[startAlfa1] + alfa[startAlfa2]);
+               }
+               //Reset alfa 2 after finish
+               startAlfa2 = 0;
            }
+       }
+       
+       //Loop for last letter
+       if(startAlfa1 === endAlfa1){
+               for(startAlfa2; startAlfa2 <= endAlfa2; startAlfa2++){
+                    AddSingleZip(startNumbers + alfa[startAlfa1] + alfa[startAlfa2]);
+               }
        }
    }
    
@@ -176,6 +194,7 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
             refreshMap();
             })
         .error(function(data, status, headers, config){
+            console.log(status);
         });
    }
    

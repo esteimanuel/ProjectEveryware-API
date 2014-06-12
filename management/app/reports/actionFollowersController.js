@@ -5,6 +5,7 @@
  */
 
 app.controller('actionFollowersCtrl', function($scope, $http, $timeout, $state, $sce, $stateParams, $rootScope) {  
+    $rootScope.setNavs(0);
     //Get actie id
     $scope.actieId = $stateParams.aid;
     
