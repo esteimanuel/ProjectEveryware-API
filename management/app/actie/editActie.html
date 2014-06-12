@@ -1,3 +1,18 @@
+<style>
+    .largeFontIcon{
+        font-size: 35px;
+        color: #428BCA;
+    }    
+    
+    .backgroundHoverColor{
+        padding: 10px 0;
+    }
+    
+    .backgroundHoverColor:hover{
+        background-color: #efefef!important;
+        cursor:pointer;
+    }
+</style>
 
 <div>
   <h1 class="page-header">Actie bewerken</h1>
@@ -5,6 +20,23 @@
 
 <form class="form-horizontal">
     
+    <fieldset id="modifiers">
+        <legend>Rapportage</legend>
+        <div class="row placeholders">
+            <div class="col-xs-6 col-sm-4 placeholder backgroundHoverColor">
+                <span class="glyphicon glyphicon-user largeFontIcon"></span>
+                <h4>Aanmeldingen</h4>
+            </div>
+            <div class="col-xs-6 col-sm-4 placeholder backgroundHoverColor">
+                <span class="glyphicon glyphicon-home largeFontIcon"></span>
+                <h4>Wijkgegevens</h4>
+            </div>
+            <div class="col-xs-6 col-sm-4 placeholder backgroundHoverColor">
+                <span class="glyphicon glyphicon-list-alt largeFontIcon"></span>
+                <h4>Volledig rapport</h4>
+            </div>
+        </div>
+    </fieldset>
     <fieldset id="personal">
         <legend>Actie gegevens</legend>
         
