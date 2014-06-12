@@ -17,11 +17,13 @@ class PostcodeController extends BaseController {
                     'conditions' => 'postcode = :pcode:',
                     'bind' => array('pcode' => $postcode),
                 ));
-            
+
         } else {
 
             $this->response->setStatusCode(400, "Invalid input, expected a 6 character long postalcode");
         }
+
+        $this->response->setJsonContent($object);
     }
         
     public function forDistrict() {
