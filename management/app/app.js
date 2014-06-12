@@ -29,34 +29,6 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         views: {
             'main': {templateUrl:'app/media/media.html', controller: 'MediaCtrl'}
         }
-    })
-//////////////////////////
-/// Dashboard redirs
-//////////////////////////
-        
-    .state('main.dashboard',{
-        url: '/dashboard',
-        views: {
-            "main":{templateUrl:"app/main/subIndex.html"}
-        }
-        
-        }).state('main.dashboard.districts',{
-            url: '/wijken',
-            views: {
-                "content":{templateUrl:"app/dashboard/districts.html", controller:'DashBoardDistrictsCtrl'}
-            }
-        
-        }).state('main.dashboard.users',{
-            url: '/gebruikers',
-            views: {
-                "content":{templateUrl:"app/dashboard/users.html", controller:'DashBoardUsersCtrl'}
-            }
-        
-        }).state('main.dashboard.media',{
-            url: '/media',
-            views: {
-                "content":{templateUrl:"app/dashboard/media.html"}
-            }
        
 //////////////////////////
 /// User redirs
@@ -191,7 +163,7 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
         if(User.data.isLogged) {
             if(toState.name === 'login') {
                 event.preventDefault();
-                $state.transitionTo('main.dashboard');
+                $state.transitionTo('main.actie.actieOverview');
             }
         } else {
             if(toState.name !== 'login') {
