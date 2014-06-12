@@ -30,7 +30,7 @@ public function put() {
     }
 }
 
-  public function getByGebruikerId() {
+  public function get() {
 
     $sGebruikerId = $this->request->getQuery('gebruiker_id');
 
