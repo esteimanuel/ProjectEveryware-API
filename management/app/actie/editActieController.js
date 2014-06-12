@@ -110,5 +110,10 @@ app.controller('editActieCtrl', function($scope, $http, $timeout, $state, $sce, 
    
    function loadMap(){       
         $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.wijkId);
-   }
+   }   
+    
+    //Redirs
+    $scope.CreateUserReport = function (rowData){
+        $state.transitionTo("main.report.actionFollowers", {'aid':$scope.actieId});
+    };
 });

@@ -19,11 +19,10 @@
 </div>
 
 <form class="form-horizontal">
-    
     <fieldset id="modifiers">
         <legend>Rapportage</legend>
         <div class="row placeholders">
-            <div class="col-xs-6 col-sm-4 placeholder backgroundHoverColor">
+            <div class="col-xs-6 col-sm-4 placeholder backgroundHoverColor" ng-click="CreateUserReport()">
                 <span class="glyphicon glyphicon-user largeFontIcon"></span>
                 <h4>Aanmeldingen</h4>
             </div>
@@ -45,12 +44,6 @@
             <div class="col-sm-3">
                 <input type="text" class="form-control" id="actieNaam" placeholder="Voorbeeldnaam" data-ng-model="actieNaam" />
             </div>
-            <!--
-            <label for="profile-name" class="col-sm-2 control-label">Status: </label>
-            <div class="col-sm-3">
-                <select ng-model="actieStatus" ng-options="status.status_id as status.description for status in statuses"></select>
-            </div>
-            -->
         </div>
         
         <div class="form-group">
