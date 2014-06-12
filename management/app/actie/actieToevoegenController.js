@@ -92,8 +92,6 @@ app.controller('actieToevoegenCtrl', function($scope, $http, $timeout, $state, $
    $scope.AddAction = function addAction(){
        var body = {borg: 0, borg_betaald: false, start_datum: $scope.actieStartDatum, eind_datum: $scope.actieEindDatum, naam: $scope.actieNaam, wijk_id: $scope.wijkId};
             var url = config.api.url+'actie';
-            console.log(body);
-            return;
             $http({
                 url:url,
                 method:"POST",
@@ -102,7 +100,7 @@ app.controller('actieToevoegenCtrl', function($scope, $http, $timeout, $state, $
                     alert('de actie is gestart');
                 })
                 .error(function(data, status, headers, config){
-                alert('Gegevens konden niet opgeslagen worden.');
+                    alert('Gegevens konden niet opgeslagen worden.');
                 });
    }
 });
