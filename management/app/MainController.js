@@ -16,7 +16,7 @@ app.controller('MainCtrl', function($rootScope, $scope, $http, $state, User, $ti
                 localStorage.token = data.account.token;
                 User.data.isLogged = data.account.token;
                 User.data.token = data.account.token;
-                $state.transitionTo('main.dashboard.districts');
+                $state.transitionTo('main.actie.actieOverview');
             }).error(function(data, status, headers, config) {
                 console.log("URL:" + {url: config.api.url + 'account/login',method:'GET',params:credentials})
                 console.log(data);
