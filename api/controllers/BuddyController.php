@@ -38,7 +38,7 @@ public function put() {
 
     if($model) {
 
-      $this->response->setJsonContent($model);
+      $this->response->setJsonContent(array('model' => $model);
 
     } else {
       $this->response->setStatusCode(404, "Buddy niet gevonden, Koos Vriendloos!");
