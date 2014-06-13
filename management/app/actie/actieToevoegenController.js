@@ -90,7 +90,19 @@ app.controller('actieToevoegenCtrl', function($scope, $http, $timeout, $state, $
    }
    
    $scope.AddAction = function addAction(){
-       var body = {borg: 0, borg_betaald: false, start_datum: $scope.actieStartDatum, eind_datum: $scope.actieEindDatum, naam: $scope.actieNaam, wijk_id: $scope.wijkId, statuslist_id: 0};
+       var url = config.api.url+'statuslist';
+            $http({
+                url:url,
+                method:"POST",
+                data: {}
+            }).success(function (data, status, headers, config) {
+                $scope.statusListId = data.id;
+                })
+                .error(function(data, status, headers, config){
+                    alert('Gegevens konden niet opgeslagen worden.');
+                });
+                
+       var body = {borg: 0, borg_betaald: false, start_datum: $scope.actieStartDatum, eind_datum: $scope.actieEindDatum, naam: $scope.actieNaam, wijk_id: $scope.wijkId, statuslist_id: $scope.statusListId};
             var url = config.api.url+'actie';
             $http({
                 url:url,
@@ -98,6 +110,7 @@ app.controller('actieToevoegenCtrl', function($scope, $http, $timeout, $state, $
                 data: body
             }).success(function (data, status, headers, config) {
                     alert('de actie is gestart');
+                    $state.transitionTo("main.actie.actieOverview");
                 })
                 .error(function(data, status, headers, config){
                     alert('Gegevens konden niet opgeslagen worden.');
