@@ -31,44 +31,29 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
     $scope.addPostcode = function(postcode, wijk){
        // AddRangeZip(postcode.rangeStart, postcode.rangeEnd);
         //If no data notify
-        addWijkIfNotEist(wijk);
+        addWijkIfNotEist(wijk, postcode);
         if(postcode === undefined){
             return;
         }
         
         //Check the type to add
-        var addSingle = false;
-        var addRangeTry = false;
+        $scope.addSingle = false;
+        $scope.addRangeTry = false;
         
         if(postcode.single){
-            addSingle = true;
+            $scope.addSingle = true;
         };
         if(postcode.rangeStart || postcode.rangeEnd){
-            addRangeTry = true;
+            $scope.addRangeTry = true;
         };
         
-        if(addRangeTry && addSingle){
+        if($scope.addRangeTry && $scope.addSingle){
             alert("Voeg of een range of een enkele postcode in");
             return;
         }
-        
-        if(addSingle){
-            $timeout(AddSingleZip(postcode.single), [1500]);
-        }
-        
-        if(addRangeTry)
-            if(!rege.test(postcode.rangeStart)){
-                alert("De postcode range start voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
-                return;
-            }
-            if(!rege.test(postcode.rangeEnd)){
-                alert("De postcode range eind voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
-                return;
-            }
-            $timeout(AddRangeZip(postcode.rangeStart, postcode.rangeEnd), [1500]);
     };
    
-   function addWijkIfNotEist(wijk){
+   function addWijkIfNotEist(wijk, postcode){
         //If wijk not set add, else update
         if(!$scope.currentWijkId){
             var body = {status_list_id: 1, wijk_naam: wijk.name, beschikbaar: wijk.avalible, target: wijk.target, actie_duur_dagen: wijk.duration, aantal_huishoudens: wijk.totalHousholds};
@@ -81,6 +66,22 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
             }).success(function (data, status, headers, config) {
                 $scope.currentWijkId = data.id;
                 alert('Wijkdata is toegevoegd');
+        
+                    if($scope.addSingle){
+                        AddSingleZip(postcode.single);
+                    }
+
+                    if($scope.addRangeTry){
+                        if(!rege.test(postcode.rangeStart)){
+                            alert("De postcode range start voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
+                            return;
+                        }
+                        if(!rege.test(postcode.rangeEnd)){
+                            alert("De postcode range eind voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
+                            return;
+                        }
+                        AddRangeZip(postcode.rangeStart, postcode.rangeEnd)
+                    }
                 })
                 .error(function(data, status, headers, config){
                 alert('Gegevens konden niet opgeslagen worden.');
@@ -96,6 +97,22 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
                 data: body
             }).success(function (data, status, headers, config) {
                 alert('Wijkdata is bijgewerkt');
+        
+                    if($scope.addSingle){
+                        AddSingleZip(postcode.single);
+                    }
+
+                    if($scope.addRangeTry){
+                        if(!rege.test(postcode.rangeStart)){
+                            alert("De postcode range start voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
+                            return;
+                        }
+                        if(!rege.test(postcode.rangeEnd)){
+                            alert("De postcode range eind voldoet niet enkel as voorbeeld \r\n\r\n 1111AA");
+                            return;
+                        }
+                        AddRangeZip(postcode.rangeStart, postcode.rangeEnd)
+                    }
                 })
                 .error(function(data, status, headers, config){
                 alert('Gegevens konden niet opgeslagen worden.');
