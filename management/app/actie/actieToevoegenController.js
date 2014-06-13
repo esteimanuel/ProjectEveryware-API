@@ -90,6 +90,10 @@ app.controller('actieToevoegenCtrl', function($scope, $http, $timeout, $state, $
    }
    
    $scope.AddAction = function addAction(){
+        StartAddingActie();  
+   };
+   
+   function StartAddingActie(){
        var url = config.api.url+'statuslist';
             $http({
                 url:url,
@@ -97,11 +101,14 @@ app.controller('actieToevoegenCtrl', function($scope, $http, $timeout, $state, $
                 data: {}
             }).success(function (data, status, headers, config) {
                 $scope.statusListId = data.id;
+                ActuallyAddAction();
                 })
                 .error(function(data, status, headers, config){
                     alert('Gegevens konden niet opgeslagen worden.');
                 });
-                
+   }
+   
+   function ActuallyAddAction(){
        var body = {borg: 0, borg_betaald: false, start_datum: $scope.actieStartDatum, eind_datum: $scope.actieEindDatum, naam: $scope.actieNaam, wijk_id: $scope.wijkId, statuslist_id: $scope.statusListId};
             var url = config.api.url+'actie';
             $http({
