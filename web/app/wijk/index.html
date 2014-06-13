@@ -1,3 +1,6 @@
+
+<img id="full-img" class="full-screen-image fade-img" data-ng-src="{{actionImgUrl}}" onload="showImg()" />
+
 <aside ui-view="left-nav" class="left-district-nav">
     <div class="list-group">
         <a data-ng-click="scrollTo('map')" class="list-group-item">Kaart</a>
@@ -5,11 +8,13 @@
         <a data-ng-click="scrollTo('goededoel')" class="list-group-item">Goed doel</a>
         <a data-ng-click="scrollTo('forum')" class="list-group-item">Buurt forum</a>
     </div>    
-    <div class="action-img">
+<!--    <div class="action-img">
         <img ng-src="{{actionImgUrl}}" />
-    </div>
+    </div>-->
 </aside>
 
+<div class="main-wijk-content">
+<div class="wijk-field">
 <div class="page-header">
     <h1>
         {{wijk.wijk_naam}}
@@ -17,12 +22,15 @@
     </h1>
 </div>
 
+
 <h4 id="map">De buurt</h4>
 <hr />
     <div class="map-frame" >
         <iframe ng-src="{{mapsUrl}}" frameborder="0" style="width:100%; height:100%;"></iframe>
     </div>
+</div>
 
+<div class="wijk-field">
 <h4 id="video">Buurt video</h4>
 <hr />
     <div class="video-frame" ng-show="showVideo">
@@ -31,7 +39,9 @@
 <p ng-show="!showVideo">
     Er is nog geen buurt video toegevoegd
 </p>
+</div>
 
+<div class="wijk-field">
 <h4 id="goededoel">uw goede doel  {{actie.goedeDoel.title}}</h4>
 <hr/>
     <div class="goedeDoel-frame">
@@ -43,7 +53,9 @@
             </div>
         </div>
     </div>
+</div>
 
+<div class="wijk-field">
 <h4 id="forum">Buurt forum</h4>
 <hr />
 
@@ -64,6 +76,8 @@
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 
@@ -101,12 +115,15 @@
 </div>
 
     <aside ui-view="right-nav" class="right-district-content">
-        <div class="page-header" style="margin-top:5px;">
+        <div class="wijk-field">
+<!--        <div class="page-header" style="margin-top:5px;">
             <h1 style="margin-top:5px;">
-                <!--<small><b>50%</b></small><br/>-->
+                <small><b>50%</b></small><br/>
                 <small><b>Targets</b></small>
             </h1>
-        </div>
+        </div>-->
+    <h4>Targets</h4>
+    <hr/>
 
         <div class="progress-container">
             1. Bewoners verzamelen {{actie.stats.targetPartPerc}}%
@@ -140,13 +157,17 @@
                 </div>
             </div>
         </div>
+        </div>
 
-        <div class="participants">
-            <div class="page-header" style="margin-top:5px;">
+        <div class="participants wijk-field">
+<!--            <div class="page-header" style="margin-top:5px;">
                 <h1 style="margin-top:5px;">
                     <small style="display:block;"><b>Deelnemers</b> <span class="pull-right">{{actie.deelnemers.length}}</span></small>
                 </h1>
-            </div>
+            </div>-->
+
+            <h4>Deelnemers <span class="pull-right">{{actie.deelnemers.length}}</span></h4>
+            <hr/>
 
             <ul class="participants-list">
                 <li ng-repeat="deelnemer in actie.deelnemers" title="{{deelnemer.voornaam}}" ng-click="participantClick(deelnemer)" style="position:relative;">
