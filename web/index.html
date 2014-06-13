@@ -40,6 +40,8 @@ and open the template in the editor.
         <!--<link type="text/css" rel="stylesheet" href="web/styles/main-css.php" />-->
         <link type="text/css" rel="stylesheet" href="global/styles/main.css" />
         <link type="text/css" rel="stylesheet" href="styles/main.css" />
+        
+        <script> var showImg = function() { var img = document.getElementById('full-img'); img.className = img.className + " show-img"; }</script>
 		
     </head>
     <body data-ng-controller="UserCtrl">
@@ -55,7 +57,7 @@ and open the template in the editor.
             - gebruikersnaam, dropdown: profiel, logout
         -->
         
-        <nav data-ui-view="nav" class="navbar navbar-default main-navbar" role="navigation">
+        <nav data-ui-view="nav" class="navbar navbar-default main-navbar bottom-shadow" role="navigation" style="border-radius: 0px;">
             <div class="container">
               <!-- Brand and toggle get grouped for better mobile display -->
               <div class="navbar-header">
