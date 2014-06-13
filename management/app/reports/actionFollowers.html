@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 
 <style>
+    #mainDiv{
+        width: 90%;
+        margin-left: 5%;
+    }
+    
     table{
         width: 100%;
     }
@@ -25,6 +30,15 @@
     }
     
 @media print {
+    h1{
+        display: none;
+    }
+    
+    legend{
+        padding: 0;
+        margin: 0;
+    }
+    
     /* Hidd sort buttons on table */
     i {
         display: none !important;

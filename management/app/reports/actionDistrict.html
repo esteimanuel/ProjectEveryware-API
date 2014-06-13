@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 
 <style>
+    #mainDiv{
+        width: 90%;
+        margin-left: 5%;
+    }
+    
     table{
         width: 100%;
     }
@@ -29,6 +34,15 @@
     }
     
 @media print {
+    h1{
+        display: none;
+    }
+    
+    legend{
+        padding: 0;
+        margin: 0;
+    }
+    
     /* Hidd sort buttons on table */
     i {
         display: none !important;
@@ -59,8 +73,8 @@
             <table class="quortarWidth">
                 <thead>
                     <tr>
-                        <th>Soort</th>
-                        <th>Aantal</th>
+                        <th>Type</th>
+                        <th>Waarde</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,8 +95,8 @@
             <table class="quortarWidth">
                 <thead>
                     <tr>
-                        <th>Soort</th>
-                        <th>Aantal</th>
+                        <th>Type</th>
+                        <th>Waarde</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,8 +121,8 @@
             <table class="quortarWidth">
                 <thead>
                     <tr>
-                        <th>Soort</th>
-                        <th>Aantal</th>
+                        <th>Type</th>
+                        <th>Waarde</th>
                     </tr>
                 </thead>
                 <tbody> 
