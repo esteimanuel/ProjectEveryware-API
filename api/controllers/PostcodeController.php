@@ -6,6 +6,26 @@ class PostcodeController extends BaseController {
 		
 	}
 
+    public function get() {
+
+        $id = $this->request->getQuery('id');
+        $object = null;
+
+        if(isset($id)) {
+
+            $object = Postcode::findFirst(array(
+                    'conditions' => 'postcode_id = :pc_id:',
+                    'bind' => array('pc_id' => $id),
+                ));
+
+        } else {
+
+            $this->response->setStatusCode(400, "Invalid input");
+        }
+
+        $this->response->setJsonContent($object);
+    }
+
     public function findWithPostCode() {
 
         $postcode = $this->request->getQuery('postcode');
