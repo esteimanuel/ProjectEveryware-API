@@ -30,9 +30,9 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
     };
     
     $scope.saveProfielInfo = function () {
-
-        console.log($scope.profile.account);
         var body = $scope.profile.account.gebruiker;
+        
+        console.log(body);
         
         $http({
             url: config.api.url + 'gebruiker',
@@ -42,7 +42,6 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
         .success(function (data, status, headers, config) {
             User.setGebruiker(data.model, true);
             console.log(data);
-
             $rootScope.$broadcast('onUserDataChanged');
         })
         .error(function (data, status, headers, config) {
