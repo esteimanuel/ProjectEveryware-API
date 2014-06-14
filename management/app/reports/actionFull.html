@@ -1,17 +1,199 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
+<style>
+    #mainDiv{
+        width: 90%;
+        margin-left: 5%;
+    }
+    
+    table{
+        width: 100%;
+    }
+    
+    .quortarWidth{
+        width: 25%;
+    }
+    
+    thead tr{
+        height: 30px;
+        font-size: 16px;
+        color: #428bca;
+    }
+    
+    tbody tr{
+        font-size: 14px;
+        border-bottom: 1px solid lightgray;
+    }
+    
+    tbody tr td{
+        padding-left: 10px;
+    }
+    
+    tbody tr td:first-child{
+        width: 55%;
+    }
+    
+    .gl-table td:first-child{
+        width: 70px;
+    }
+    
+@media print {
+    h1{
+        display: none;
+    }
+    
+    legend{
+        padding: 0;
+        margin: 0;
+    }
+    
+    .page-break {
+        display: block;
+        break-before: always;
+        page-break-before: always;
+    }
+    
+    /* Hidd sort buttons on table */
+    i {
+        display: none !important;
+    }
+    
+    /* Up the size during printing for better display*/
+    .quortarWidth{
+        width: 75%;
+    }
+    
+    /* downscale to fit A4 */
+    .page-header{
+        font-size: 26px;
+    }
+    
+    tbody{
+        overflow: none;
+    }
+}
+</style>
+
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Rapport voor wijk {{wijkName}} </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <h1 class="page-header">Volledig rapport voor wijk {{wijkName}}</h1>
+        <fieldset>
+            <legend>Wijkgegevens</legend>
+            <table class="quortarWidth">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Waarde</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>  
+                        <td>Totaal huishoudens: </td>
+                        <td>{{wijkTotal}}</td>
+                    </tr>
+                    <tr>
+                        <td>Target huishoudens: </td>
+                        <td>{{wijkTarget}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <br/>
+        <fieldset>
+            <legend>Actie gegevens</legend>
+            <table class="quortarWidth">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Waarde</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>  
+                        <td>Actie Naam: </td>
+                        <td>{{actieNaam}}</td>
+                    </tr>
+                    <tr>  
+                        <td>Actie start: </td>
+                        <td>{{actieStartDatum}}</td>
+                    </tr>
+                    <tr>
+                        <td>Actie eind: </td>
+                        <td>{{actieEindDatum}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>Actie status</legend>
+            <table class="quortarWidth">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Waarde</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr>  
+                        <td>Totaal aantal huishoudens:</td>
+                        <td>{{totalDeelnemers}}</td>
+                    </tr>
+                    <tr>  
+                        <td>Totaal percentage huishoudens:</td>
+                        <td>{{totalDeelnemersPrcnt}}%</td>
+                    </tr>
+                    <tr>  
+                        <td>Provider selectie: </td>
+                        <td>{{totalProviderSelected}}%</td>
+                    </tr>
+                    <tr>  
+                        <td>Totaal borg betaald: </td>
+                        <td>€{{actieBorg}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>Statestieken</legend>
+            <table class="quortarWidth">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Waarde</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Borg betalers</td>
+                        <td>{{totalBorg}}</td>
+                    </tr>
+                    <tr>
+                        <td>Totaal deelnemers</td>
+                        <td>{{totalUsers}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <br/>
+        <div class="page-break"><br /><br /><br /></div>
+        <fieldset>
+            <legend>Deelnemers</legend>
+            <gl-table>
+
+            <gl-table-head></gl-table-head>
+
+            <gl-table-body>
+                <gl-table-row ng-repeat="n in indexList(3000) track by $index" row="{{$index}}"></gl-table-row>
+            </gl-table-body>
+
+            </gl-table>
+        </fieldset>
     </body>
-    
 </html>

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 
 <style>
+    #mainDiv{
+        width: 90%;
+        margin-left: 5%;
+    }
+    
     table{
         width: 100%;
     }
@@ -15,7 +20,6 @@
         color: #428bca;
     }
     
-    
     tbody tr{
         font-size: 14px;
         border-bottom: 1px solid lightgray;
@@ -26,6 +30,15 @@
     }
     
 @media print {
+    h1{
+        display: none;
+    }
+    
+    legend{
+        padding: 0;
+        margin: 0;
+    }
+    
     /* Hidd sort buttons on table */
     i {
         display: none !important;
