@@ -31,8 +31,8 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
     
     $scope.saveProfielInfo = function () {
 
-        console.log($scope.profile);
-        var body = $scope.profile.gebruiker;
+        console.log($scope.profile.account);
+        var body = $scope.profile.account.gebruiker;
         
         $http({
             url: config.api.url + 'gebruiker',
@@ -52,7 +52,7 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
 
     $scope.saveBuddyInfo = function () {
 
-        var body = $scope.profile.gebruiker.buddy;
+        var body = $scope.profile.account.gebruiker.buddy;
 
         $http({
             url: config.api.url + 'buddy',
