@@ -91,6 +91,9 @@ class AccountController extends BaseController
             $gebruiker->Buddy;
             $account->gebruiker = $gebruiker;
         }
+        
+        $messages = '';
+        $this->response->setJsonContent(array('messages' => $messages, 'account' => $account));
     }
 
 
