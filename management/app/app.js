@@ -40,16 +40,16 @@ var app = angular.module(config.app.name.toLowerCase(), ['ui.router', 'ui.bootst
             "main":{templateUrl:"app/main/subIndex.html"}
         }
         
-        }).state('main.users.addUser',{
-            url: '/Gebruiker_toevoegen',
-            views: {
-                "content":{templateUrl:"app/user/addUser.html", controller:'AddUserCtrl'}
-            }
-        
         }).state('main.users.userOverview',{
             url: '/Gebruiker_overzicht',
             views: {
                 "content":{templateUrl:"app/user/userOverview.html", controller:'userOverviewCtrl'}
+            }
+        
+        }).state('main.users.editUser',{
+            url: '/Gebruiker_bewerken/:uid',
+            views: {
+                "content":{templateUrl:"app/user/editUser.html", controller:'editUserCtrl'}
             }
        
 //////////////////////////

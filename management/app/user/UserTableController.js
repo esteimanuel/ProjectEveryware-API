@@ -13,8 +13,6 @@ app.controller('UserTableCtrl', function($scope, $http) {
     ];
     $scope.cellOrder = ["account_id", "email", "validated", "token"];
 
-    //$scope.rows = [{id:"item1", name:"item2", header3: "item3"},{id: "waarde",name: "ding", w:"waarde"}];
-    //console.log($scope.rows);
     $scope.rows = [];
     
     $scope.getData = function() {
