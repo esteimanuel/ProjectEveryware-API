@@ -79,7 +79,7 @@ class AccountController extends BaseController
         $id = $this->request->getQuery('id');
         
         $account = Account::findFirst(array(
-                    'conditions' => 'id = :id:',
+                    'conditions' => 'account_id = :id:',
                     'bind' => array('id' => $id),
         ));
         
