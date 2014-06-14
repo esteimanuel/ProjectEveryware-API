@@ -41,7 +41,7 @@
 </p>
 </div>
 
-<div class="wijk-field">
+<div class="wijk-field" ng-if="actie.goedeDoel">
 <h4 id="goededoel">uw goede doel  {{actie.goedeDoel.title}}</h4>
 <hr/>
     <div class="goedeDoel-frame">
@@ -55,7 +55,7 @@
     </div>
 </div>
 
-<div class="wijk-field">
+<div class="wijk-field" ng-if="actie.threads.length">
 <h4 id="forum">Buurt forum</h4>
 <hr />
 
@@ -114,6 +114,72 @@
     </div>
 </div>
 
+<!-- Buddy info dialog -->
+<div class="dialogbackground" ng-if="showBuddyInfo">
+    <div class="basedialog" style="padding:0 10px;top:10%;">
+        <button class="close-btn" ng-click="toggleBuddyInfo()">X</button>
+        <div class="dialog-content">
+            <h3>Buddy informatie</h3>
+            <hr/>
+            <p>Buddy informatie hier</p>
+        </div>
+    </div>
+</div>
+
+<!-- Buddy add dialog -->
+<div class="dialogbackground" ng-if="showBuddyAdd">
+    <div class="basedialog" style="padding:10px;top:10%;">
+        <button class="close-btn" ng-click="toggleBuddyAdd()">X</button>
+        <div class="dialog-content">
+            <form ng-submit="addBuddy()">
+                <fieldset>
+                    
+                    <legend>Buddy gegevens <small style="font-size:14px;" class="pull-right text-info">Alle velden zijn optioneel</small></legend>
+
+                    <div class="form-group">
+                        <label for="contactemail" class="control-label">Contact email</label>
+                        <div>
+                            <input type="text" class="form-control" id="contact-email" placeholder="E-mail" data-ng-model="profile.gebruiker.buddy.contact_email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contacttel" class="control-label">Contact tel-nr</label>
+                        <div>
+                            <input type="text" class="form-control" id="contact-telnummer" placeholder="Telefoon nummer" data-ng-model="profile.gebruiker.buddy.contact_tel">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="locatie" class="control-label">Locatie</label>
+                        <div>
+                            <input type="text" class="form-control" id="contact-locatie" placeholder="Locatie" data-ng-model="profile.gebruiker.buddy.contact_locatie">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="locatie" class="control-label">Aanwezig van</label>
+                        <div>
+                            <input type="time" class="form-control" data-ng-model="profile.gebruiker.buddy.tijd_vanaf">
+                        </div>
+                        <label for="locatie" class="control-label">Aanwezig tot</label>
+                        <div>
+                            <input type="time" class="form-control" data-ng-model="profile.gebruiker.buddy.tijd_tot">
+                        </div>
+                    </div>
+                    
+                    <div class="pull-right">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-default" ng-click="toggleBuddyAdd()" type="button">Annuleren</button>
+                    </div>
+                    
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+
     <aside ui-view="right-nav" class="right-district-content">
         <div class="wijk-field">
 <!--        <div class="page-header" style="margin-top:5px;">
@@ -167,13 +233,33 @@
             </div>-->
 
             <h4>Deelnemers <span class="pull-right">{{actie.deelnemers.length}}</span></h4>
-            <hr/>
-
+            <hr style="margin-bottom:3px;" ng-show="actie.buddies.length"/>
+            <div style="height:20px;"><span class="pull-right">Buddies <span ng-if="hasBuddyButtons()" title="Wordt ook een buddy" class="buddy-add" ng-click="toggleBuddyAdd()"><i class="glyphicon glyphicon-plus-sign"> </i></span> <span title="Wat is een buddy" class="buddy-help" ng-click="toggleBuddyInfo()"><i class="glyphicon glyphicon-question-sign"> </i></span></span></div>
+            <ul class="buddy-list participants-list">
+                
+                <li ng-repeat="deelnemer in actie.buddies" ng-if="deelnemer.buddy" title="{{deelnemer.voornaam}}" ng-click="participantClick(deelnemer)" style="position:relative;">
+                    <img ng-if="deelnemer.account.foto_link" ng-src="{{deelnemer.account.foto_link}}" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" />
+                    
+                    <div ng-show="deelnemer.show"class="basedialog" style="padding:10px;position:absolute;top:20px;right:20px;width:200px;">
+                        <div class="buddy-img" style="margin-left:auto; margin-right:auto;">
+                            <img style="width:100%;height:100%;" ng-src="{{deelnemer.account.foto_link}}" />
+                        </div>
+                        <div>{{deelnemer.voornaam}} {{deelnemer.tussenvoegsel}} {{deelnemer.achternaam}}</div>
+                        <div>Email: {{deelnemer.buddy.contact_email}}</div>
+                        <div>Tel nr: {{deelnemer.buddy.contact_tel}}</div>
+                        <div>Beschikbaar</div>
+                        <div>Van: {{deelnemer.buddy.tijd_vanaf}} Tot: {{deelnemer.buddy.tijd_tot}}</div>
+                    </div>
+                </li>
+            </ul>
+            <hr style="margin-bottom:3px;"/>
+            <div style="height:20px;"><span class="pull-right">Iedereen</span></div>
+            
             <ul class="participants-list">
                 <li ng-repeat="deelnemer in actie.deelnemers" title="{{deelnemer.voornaam}}" ng-click="participantClick(deelnemer)" style="position:relative;">
                     <img ng-if="deelnemer.account.foto_link" ng-src="{{deelnemer.account.foto_link}}" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" />
                     <!--<img ng-if="!deelnemer.account.foto_link" src="assets/user.png" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" />-->
-                    <div ng-if="deelnemer.buddy">
+<!--                    <div ng-if="deelnemer.buddy">
                         <div ng-show="deelnemer.show"class="basedialog" style="padding:10px;position:absolute;top:20px;right:20px;width:200px;">
                             <div class="buddy-img" style="margin-left:auto; margin-right:auto;">
                                 <img style="width:100%;height:100%;" ng-src="{{deelnemer.account.foto_link}}" />
@@ -184,7 +270,7 @@
                             <div>Beschikbaar</div>
                             <div>Van: {{deelnemer.buddy.tijd_vanaf}} Tot: {{deelnemer.buddy.tijd_tot}}</div>
                         </div>
-                    </div>
+                    </div>-->
                 </li>
             </ul>
         </div>
