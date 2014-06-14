@@ -105,10 +105,12 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
             params: params
         })
        .success(function (data, status, headers) {
-            
+            $scope.actie.buddies = [];
             angular.forEach(data, function(deelnemer) {
                 if(!deelnemer.account.foto_link)
                     deelnemer.account.foto_link = config.api.url + "_media/images/user.png";
+                if(deelnemer.buddy)
+                    $scope.actie.buddies.push(deelnemer);
             });
             $scope.actie.deelnemers = data;
 //            $scope.actie.deelnemersCount = $scope.actie.deelnemers.length;
@@ -297,6 +299,18 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
         if(part.buddy) {
             part.show = !part.show;
         }
+    }
+    
+    $scope.toggleBuddyInfo = function() {
+        $scope.showBuddyInfo = !$scope.showBuddyInfo;
+    }
+    
+    $scope.toggleBuddyAdd = function() {
+        $scope.showBuddyAdd = !$scope.showBuddyAdd;
+    }
+    
+    $scope.hasBuddyButtons = function() {
+        return (User.isLogged && User.gebruiker.actie_id == $scope.actie.actie_id && !User.gebruiker.buddy);
     }
     
     $scope.$on('onUserLogin', function() {
