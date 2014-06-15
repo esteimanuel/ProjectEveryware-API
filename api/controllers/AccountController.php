@@ -75,6 +75,28 @@ class AccountController extends BaseController
         return $uAccount;
     }
 
+    public function FullDataGrab(){
+        $id = $this->request->getQuery('id');
+        
+        $account = Account::findFirst(array(
+                    'conditions' => 'account_id = :id:',
+                    'bind' => array('id' => $id),
+        ));
+        
+        if (isset($account->Gebruiker[0]))
+        {
+            $gebruiker = $account->Gebruiker[0];
+            if (isset($gebruiker->postcode_id) && $gebruiker->postcode_id > 0)
+                $gebruiker->postcode = Postcode::findFirst($gebruiker->postcode_id);
+            $gebruiker->Buddy;
+            $account->gebruiker = $gebruiker;
+        }
+        
+        $messages = '';
+        $this->response->setJsonContent(array('messages' => $messages, 'account' => $account));
+    }
+
+
     public function login()
     {
         $email = $this->request->getQuery('email');
