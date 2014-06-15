@@ -4,7 +4,6 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
     //Get user id from params
     $scope.currentUserId = $stateParams.uid;
     GetUserData();
-    GetToken();
     
     function GetUserData(){
         var url = config.api.url+'account/FullDataGrab?id=' + $scope.currentUserId;
@@ -14,6 +13,7 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
         }).success(function(data, status, headers, config) {
             console.log(url);
             $scope.profile = data;
+            GetToken();
             console.log($scope.profile);
         }).error(function(data, status, headers, config) {
             console.log(data);
@@ -21,7 +21,7 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
     }
     
     function GetToken(){
-        var url = config.api.url+'account?id=' + $scope.currentUserId;
+        var url = config.api.url+'account?id=' + $scope.profile.account.account_id;
         $http({
             url: url,
             method: 'GET'
