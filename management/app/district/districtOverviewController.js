@@ -18,7 +18,7 @@ app.controller('districtOverviewCtrl', function($scope, $http, $state, $rootScop
         {name:"wijk_naam", type:"text", header:"Wijk naam"},
         {name:"beschikbaar", type:"checkbox", header:"Beschikbaar"},
         {name:"target", type:"text", header:"Target"},
-        {name:"aantal_huishoudens", type:"text", header:"Huishoudes"},
+        {name:"aantal_huishoudens", type:"text", header:"Huishoudens"},
         {name:"actie_duur_dagen", type:"text", header:"Duur"},
     ];
     
