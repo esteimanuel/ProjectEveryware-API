@@ -22,11 +22,12 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
     
     function GetToken(){
         var url = config.api.url+'account?id=' + $scope.profile.account.account_id;
+        console.log(url);
         $http({
             url: url,
             method: 'GET'
         }).success(function(data, status, headers, config) {
-            console.log(url);
+            console.log(data);
             $scope.token = data.token;
             console.log($scope.profile);
         }).error(function(data, status, headers, config) {
