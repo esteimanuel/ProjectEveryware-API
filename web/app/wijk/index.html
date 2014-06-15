@@ -121,7 +121,7 @@
         <div class="dialog-content">
             <h3>Buddy informatie</h3>
             <hr/>
-            <p>Buddy informatie hier</p>
+            <p>Een buddy is een mede buurtbewoner die zich meer aanstelt als aanspreek punt voor de mede buurtbewoners met vragen over glasvezel.</p>
         </div>
     </div>
 </div>
@@ -246,7 +246,7 @@
                 <li ng-repeat="deelnemer in actie.buddies" title="{{deelnemer.voornaam}}" ng-click="participantClick(deelnemer)" style="position:relative;">
                     <img ng-if="deelnemer.account.foto_link" ng-src="{{deelnemer.account.foto_link}}" class="img-thumbnail buddy-thumb" />
                     
-                    <div ng-show="deelnemer.show"class="basedialog" style="padding:10px;position:absolute;top:20px;right:20px;width:200px;">
+                    <div ng-show="deelnemer.show" class="basedialog" style="padding:10px;position:absolute;top:20px;right:20px;width:200px;">
                         <div class="buddy-img" style="margin-left:auto; margin-right:auto;">
                             <img style="width:100%;height:100%;" ng-src="{{deelnemer.account.foto_link}}" />
                         </div>
