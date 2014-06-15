@@ -3,54 +3,54 @@
 class GebruikerController extends BaseController
 {
     public function put() {
-        $putData = $this->getRequestData();
-        var_dump($putData);
-        if(isset($this->_account)) {
-            $messages = '';
-            
-            unset($putData['_token']);
-            
-            if(isset($putData['_gebruiker'])) {
-                foreach($putData['_gebruiker'] as $key => $value) {
-                    $putData[$key] = $value;
-                }
-                unset($putData['_gebruiker']);
-            }
-             
-
-            if(isset($putData['buddy'])) {
-                $buddyData = [];
-                foreach($putData['buddy'] as $key => $value) {
-                    $buddyData[$key] = $value;
-                }
-                
-                $this->saveBuddy($buddyData, $putData['gebruiker_id'], $messages);
-                
-//                unset($putData['buddy']);
-            }
-            
-            if(isset($putData['postcode'])) {
-                $postcodeData = [];
-                foreach($putData['postcode'] as $key => $value) {
-                    $postcodeData[$key] = $value;
-                }
-                
-                $postcode_id = $this->savePostcode($postcodeData, ((isset($putData['postcode_id'])) ? $putData['postcode_id'] : 0), $messages);
-                
-                $putData['postcode_id'] = $postcode_id;
-//                unset($putData['postcode']);
-            }
-            
-            if(isset($putData['gebruiker_id']))
-                unset($putData['gebruiker_id']);
-
-            $putData['id'] = $this->_account->Gebruiker[0]->gebruiker_id;
-            
-            $model = $this->basePut($putData, $messages);
-            $this->response->setJsonContent(array('messages' => $messages, 'model' => $model));
-        } else {
-            $this->response->setStatusCode(404, "No Account Found");
-        }
+//        $putData = $this->getRequestData();
+//        var_dump($putData);
+//        if(isset($this->_account)) {
+//            $messages = '';
+//            
+//            unset($putData['_token']);
+//            
+//            if(isset($putData['_gebruiker'])) {
+//                foreach($putData['_gebruiker'] as $key => $value) {
+//                    $putData[$key] = $value;
+//                }
+//                unset($putData['_gebruiker']);
+//            }
+//             
+//
+//            if(isset($putData['buddy'])) {
+//                $buddyData = [];
+//                foreach($putData['buddy'] as $key => $value) {
+//                    $buddyData[$key] = $value;
+//                }
+//                
+//                $this->saveBuddy($buddyData, $putData['gebruiker_id'], $messages);
+//                
+////                unset($putData['buddy']);
+//            }
+//            
+//            if(isset($putData['postcode'])) {
+//                $postcodeData = [];
+//                foreach($putData['postcode'] as $key => $value) {
+//                    $postcodeData[$key] = $value;
+//                }
+//                
+//                $postcode_id = $this->savePostcode($postcodeData, ((isset($putData['postcode_id'])) ? $putData['postcode_id'] : 0), $messages);
+//                
+//                $putData['postcode_id'] = $postcode_id;
+////                unset($putData['postcode']);
+//            }
+//            
+//            if(isset($putData['gebruiker_id']))
+//                unset($putData['gebruiker_id']);
+//
+//            $putData['id'] = $this->_account->Gebruiker[0]->gebruiker_id;
+//            
+//            $model = $this->basePut($putData, $messages);
+//            $this->response->setJsonContent(array('messages' => $messages, 'model' => $model));
+//        } else {
+//            $this->response->setStatusCode(404, "No Account Found");
+//        }
     }
     
     private function saveBuddy($buddyData, $gebruiker_id, &$messages) {
