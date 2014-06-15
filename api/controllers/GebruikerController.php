@@ -4,7 +4,7 @@ class GebruikerController extends BaseController
 {
     public function put() {
 //        $putData = $this->getRequestData();
-//        var_dump($putData);
+////        var_dump($putData);
 //        if(isset($this->_account)) {
 //            $messages = '';
 //            

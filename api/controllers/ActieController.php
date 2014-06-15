@@ -68,11 +68,20 @@ class ActieController extends BaseController {
             $states['participants'] = $participants;
             $states['houses'] = $houses;
             $states['target'] = $targetNr;
-            $states['totalPartPerc'] = round(($participants / $houses) * 100);
-            $states['targetPartPerc'] = round(($participants / $targetNr) * 100);
-            $states['paidTargetPerc'] = round(($paidParticipants / $targetNr) * 100);
-            $states['providerSelecPerc'] = round(($providerSelections / $targetNr) * 100);
-            $states['goedeDoelPartPerc'] = round(($participants / $goedDoel->target) * 100);
+            if($houses > 0)
+                $states['totalPartPerc'] = round(($participants / $houses) * 100);
+            else
+                $states['totalPartPerc'] = 0;
+            if($targetNr > 0) {
+                $states['targetPartPerc'] = round(($participants / $targetNr) * 100);
+                $states['paidTargetPerc'] = round(($paidParticipants / $targetNr) * 100);
+                $states['providerSelecPerc'] = round(($providerSelections / $targetNr) * 100);
+            } else {
+                $states['targetPartPerc'] = 0;
+                $states['paidTargetPerc'] = 0;
+                $states['providerSelecPerc'] = 0;
+            }
+            $states['goedeDoelPartPerc'] = (($goedDoel && $goedDoel->target > 0) ? round(($participants / $goedDoel->target) * 100) : 0);
             // Glasvezel aanleg gaat via beheer, hier nog opvragen
             // Werkelijk overgestapt percentage, moet nog een waarde voor in de db
             
