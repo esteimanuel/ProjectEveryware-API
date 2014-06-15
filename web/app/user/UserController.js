@@ -126,6 +126,9 @@ app.controller('UserCtrl', function($scope, $rootScope, $location, $http, srvAut
     $scope.fillUserWithData = function(data) {
         var tmpGebruiker = data.account.gebruiker;
         delete data.account.gebruiker;
+        
+        if(!data.account.foto_link)
+            data.account.foto_link = config.api.url + "_media/images/user.png";
 
         User.setAccount(data.account, true);
         User.setGebruiker(tmpGebruiker, true);
