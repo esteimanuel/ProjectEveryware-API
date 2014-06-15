@@ -6,7 +6,7 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
     $scope.showVideo = false;
     $scope.actionImgUrl = "";
     
-    $scope.buddy = User.gebruiker.buddy;
+    if(User.isLogged) $scope.buddy = User.gebruiker.buddy;
 
     //get wijk info van ingelogd persoon
     $scope.getActieInfo = function () {
@@ -359,6 +359,7 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
     
     $scope.$on('onUserLogin', function() {
         $scope.initUserStateMessage();
+        $scope.buddy = User.gebruiker.buddy;
     });
     
     $scope.$on('onUserLogout', function() {
