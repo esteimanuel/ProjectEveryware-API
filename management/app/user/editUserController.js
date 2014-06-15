@@ -4,7 +4,7 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
     //Get user id from params
     $scope.currentUserId = $stateParams.uid;
     GetUserData();
-    
+    GetToken();
     
     function GetUserData(){
         var url = config.api.url+'account/FullDataGrab?id=' + $scope.currentUserId;
@@ -44,6 +44,7 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
     };
     
     $scope.saveProfielInfo = function () {
+        $scope.profile.account.gebruiker._token = $scope.token;
         var body = $scope.profile.account.gebruiker;
         
         console.log(body);
