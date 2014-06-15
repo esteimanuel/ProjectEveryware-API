@@ -38,11 +38,11 @@ class GebruikerController extends BaseController
                 $putData['postcode_id'] = $postcode_id;
 //                unset($putData['postcode']);
             }
-
-            unset($putData['gebruiker_id']);
+            
+            if(isset($putData['gebruiker_id']))
+                unset($putData['gebruiker_id']);
 
             $putData['id'] = $this->_account->Gebruiker[0]->gebruiker_id;
-
             
             $model = $this->basePut($putData, $messages);
             $this->response->setJsonContent(array('messages' => $messages, 'model' => $model));
