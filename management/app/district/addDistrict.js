@@ -194,10 +194,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         
         //Update in API
         var body = {"postalcode": Zip, "wid": $scope.currentWijkId};
-        console.log(body);
         var url = config.api.url+'postcode/editDistrictId';
-        
-        console.log(body);
 
         $http({
             url:url,
@@ -226,7 +223,6 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
    };
    
    function refreshMap(){       
-        var mapFrame = document.getElementById('mapFrame');
         $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
    }
 });
