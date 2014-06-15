@@ -19,7 +19,7 @@ class GebruikerController extends BaseController
              
 
             if(isset($putData['buddy'])) {
-                $buddyData = [];
+                $buddyData = array();
                 foreach($putData['buddy'] as $key => $value) {
                     $buddyData[$key] = $value;
                 }
@@ -30,7 +30,7 @@ class GebruikerController extends BaseController
             }
             
             if(isset($putData['postcode'])) {
-                $postcodeData = [];
+                $postcodeData = array();
                 foreach($putData['postcode'] as $key => $value) {
                     $postcodeData[$key] = $value;
                 }
@@ -54,7 +54,7 @@ class GebruikerController extends BaseController
     }
     
     private function saveBuddy($buddyData, $gebruiker_id, &$messages) {
-        $params = [];
+        $params = array();
         $conditionStr = BaseModel::getCondition(array(array('k' => 'gebruiker_id', 'v' => $gebruiker_id)), $params);
 
         $model = Buddy::findFirst(array(
@@ -82,7 +82,7 @@ class GebruikerController extends BaseController
     }
     
     private function savePostcode($postcodeData, $postcode_id, &$messages) {
-        $params = [];
+        $params = array();
         $model = false;
         if($postcode_id > 0) {
             $conditionStr = BaseModel::getCondition(array('k' => 'postcode_id', 'v' => $postcode_id), $params);
