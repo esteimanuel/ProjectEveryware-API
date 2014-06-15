@@ -20,6 +20,20 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
         });
     }
     
+    function GetToken(){
+        var url = config.api.url+'account?id=' + $scope.currentUserId;
+        $http({
+            url: url,
+            method: 'GET'
+        }).success(function(data, status, headers, config) {
+            console.log(url);
+            $scope.token = data.token;
+            console.log($scope.profile);
+        }).error(function(data, status, headers, config) {
+            console.log(data);
+        });
+    }
+    
     $scope.uploadUrl = config.api.url + 'media/postImages';
     
     $scope.setProfileValues = function() {
@@ -50,6 +64,7 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
     };
 
     $scope.saveBuddyInfo = function () {
+        $scope.profile.account.gebruiker._token = $scope.token;
 
         var body = $scope.profile.account.gebruiker.buddy;
 
