@@ -3,12 +3,13 @@
 class GebruikerController extends BaseController
 {
     public function put() {
-        $messages = '';
-        
         $putData = $this->getRequestData();
         var_dump($putData);
         if(isset($this->_account)) {
+            $messages = '';
+            
             unset($putData['_token']);
+            
             if(isset($putData['_gebruiker'])) {
                 foreach($putData['_gebruiker'] as $key => $value) {
                     $putData[$key] = $value;
