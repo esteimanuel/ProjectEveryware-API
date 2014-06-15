@@ -65,6 +65,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
                 data: body
             }).success(function (data, status, headers, config) {
                 $scope.currentWijkId = data.id;
+                
                 alert('Wijkdata is toegevoegd');
         
                     if($scope.addSingle){
