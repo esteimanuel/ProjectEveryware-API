@@ -5,6 +5,8 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
     $scope.videoUrl = "";
     $scope.showVideo = false;
     $scope.actionImgUrl = "";
+    
+    $scope.buddy = User.gebruiker.buddy;
 
     //get wijk info van ingelogd persoon
     $scope.getActieInfo = function () {
@@ -307,8 +309,11 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
         $scope.showBuddyAdd = !$scope.showBuddyAdd;
     }
     
-    $scope.hasBuddyButtons = function() {
+    $scope.hasAddButton = function() {
         return (User.isLogged && User.gebruiker.actie_id == $scope.actie.actie_id && !User.gebruiker.buddy);
+    }
+    $scope.hasEditButton = function() {
+        return (User.isLogged && User.gebruiker.actie_id == $scope.actie.actie_id && User.gebruiker.buddy);
     }
     
     $scope.addBuddy = function(buddy) {
@@ -317,7 +322,7 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
         console.log(User.gebruiker.buddy);
         User.gebruiker._token = User.account.token;
         $http({
-            url: '/glassy/api/' + 'gebruiker',
+            url: config.api.url + 'gebruiker',
             method: "PUT",
             data: User.gebruiker
         }).success(function(data, status) {

@@ -234,7 +234,13 @@
 
             <h4>Deelnemers <span class="pull-right">{{actie.deelnemers.length}}</span></h4>
             <hr style="margin-bottom:3px;" ng-show="actie.buddies.length"/>
-            <div style="height:20px;"><span class="pull-right">Buddies <span ng-if="hasBuddyButtons()" title="Wordt ook een buddy" class="buddy-add" ng-click="toggleBuddyAdd()"><i class="glyphicon glyphicon-plus-sign"> </i></span> <span title="Wat is een buddy" class="buddy-help" ng-click="toggleBuddyInfo()"><i class="glyphicon glyphicon-question-sign"> </i></span></span></div>
+            <div style="height:20px;">
+                <span class="pull-right">Buddies 
+                    <span ng-if="hasAddButton()" title="Wordt ook een buddy" class="buddy-add" ng-click="toggleBuddyAdd()"><i class="glyphicon glyphicon-plus-sign"> </i></span> 
+                    <span ng-if="hasEditButton()" title="Wijzig uw buddy gegevens" class="buddy-add" ng-click="toggleBuddyAdd()"><i class="glyphicon glyphicon-edit"> </i></span> 
+                    <span title="Wat is een buddy" class="buddy-help" ng-click="toggleBuddyInfo()"><i class="glyphicon glyphicon-question-sign"> </i></span>
+                </span>
+            </div>
             <ul class="buddy-list participants-list">
                 
                 <li ng-repeat="deelnemer in actie.buddies" title="{{deelnemer.voornaam}}" ng-click="participantClick(deelnemer)" style="position:relative;">
