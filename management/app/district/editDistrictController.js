@@ -81,7 +81,7 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
         if(postcode.single){
             addSingle = true;
         };
-        if(postcode.rangeStart || postcode.rangeEnd){
+        if(postcode.rangeStart && postcode.rangeEnd){
             addRangeTry = true;
         };
         

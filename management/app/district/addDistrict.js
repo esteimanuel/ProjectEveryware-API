@@ -43,7 +43,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
         if(postcode.single){
             $scope.addSingle = true;
         };
-        if(postcode.rangeStart || postcode.rangeEnd){
+        if(postcode.rangeStart && postcode.rangeEnd){
             $scope.addRangeTry = true;
         };
         
