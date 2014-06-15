@@ -131,7 +131,7 @@
     <div class="basedialog" style="padding:10px;top:10%;">
         <button class="close-btn" ng-click="toggleBuddyAdd()">X</button>
         <div class="dialog-content">
-            <form ng-submit="addBuddy()">
+            <form ng-submit="addBuddy(buddy)">
                 <fieldset>
                     
                     <legend>Buddy gegevens <small style="font-size:14px;" class="pull-right text-info">Alle velden zijn optioneel</small></legend>
@@ -139,37 +139,37 @@
                     <div class="form-group">
                         <label for="contactemail" class="control-label">Contact email</label>
                         <div>
-                            <input type="text" class="form-control" id="contact-email" placeholder="E-mail" data-ng-model="profile.gebruiker.buddy.contact_email">
+                            <input type="text" class="form-control" id="contact-email" placeholder="E-mail" data-ng-model="buddy.contact_email">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="contacttel" class="control-label">Contact tel-nr</label>
                         <div>
-                            <input type="text" class="form-control" id="contact-telnummer" placeholder="Telefoon nummer" data-ng-model="profile.gebruiker.buddy.contact_tel">
+                            <input type="text" class="form-control" id="contact-telnummer" placeholder="Telefoon nummer" data-ng-model="buddy.contact_tel">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="locatie" class="control-label">Locatie</label>
                         <div>
-                            <input type="text" class="form-control" id="contact-locatie" placeholder="Locatie" data-ng-model="profile.gebruiker.buddy.contact_locatie">
+                            <input type="text" class="form-control" id="contact-locatie" placeholder="Locatie" data-ng-model="buddy.contact_locatie">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="locatie" class="control-label">Aanwezig van</label>
                         <div>
-                            <input type="time" class="form-control" data-ng-model="profile.gebruiker.buddy.tijd_vanaf">
+                            <input type="time" class="form-control" data-ng-model="buddy.tijd_vanaf">
                         </div>
                         <label for="locatie" class="control-label">Aanwezig tot</label>
                         <div>
-                            <input type="time" class="form-control" data-ng-model="profile.gebruiker.buddy.tijd_tot">
+                            <input type="time" class="form-control" data-ng-model="buddy.tijd_tot">
                         </div>
                     </div>
                     
                     <div class="pull-right">
-                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-primary" type="submit">Ok</button>
                         <button class="btn btn-default" ng-click="toggleBuddyAdd()" type="button">Annuleren</button>
                     </div>
                     
@@ -237,8 +237,8 @@
             <div style="height:20px;"><span class="pull-right">Buddies <span ng-if="hasBuddyButtons()" title="Wordt ook een buddy" class="buddy-add" ng-click="toggleBuddyAdd()"><i class="glyphicon glyphicon-plus-sign"> </i></span> <span title="Wat is een buddy" class="buddy-help" ng-click="toggleBuddyInfo()"><i class="glyphicon glyphicon-question-sign"> </i></span></span></div>
             <ul class="buddy-list participants-list">
                 
-                <li ng-repeat="deelnemer in actie.buddies" ng-if="deelnemer.buddy" title="{{deelnemer.voornaam}}" ng-click="participantClick(deelnemer)" style="position:relative;">
-                    <img ng-if="deelnemer.account.foto_link" ng-src="{{deelnemer.account.foto_link}}" class="img-thumbnail" ng-class="{'buddy-thumb':deelnemer.buddy}" />
+                <li ng-repeat="deelnemer in actie.buddies" title="{{deelnemer.voornaam}}" ng-click="participantClick(deelnemer)" style="position:relative;">
+                    <img ng-if="deelnemer.account.foto_link" ng-src="{{deelnemer.account.foto_link}}" class="img-thumbnail buddy-thumb" />
                     
                     <div ng-show="deelnemer.show"class="basedialog" style="padding:10px;position:absolute;top:20px;right:20px;width:200px;">
                         <div class="buddy-img" style="margin-left:auto; margin-right:auto;">

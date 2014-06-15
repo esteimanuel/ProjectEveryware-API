@@ -218,9 +218,7 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
             User.setGebruiker(User.gebruiker, true);
             $scope.initUserStateMessage();
             $rootScope.$broadcast('onUserDataChanged');
-            var user = User.gebruiker;
-            user.account = User.account;
-            user.buddy = false;
+            var user = $scope.getCopy();
             // Update deelnemers count, add deelnemer to front of array;
             $scope.actie.deelnemers.unshift(user);
             $scope.actie.stats.targetPartPerc = ($scope.actie.stats.participants / $scope.actie.stats.target) * 100;
@@ -311,6 +309,47 @@ app.controller('WijkCtrl', function ($scope, $routeParams, $location, $http, $sc
     
     $scope.hasBuddyButtons = function() {
         return (User.isLogged && User.gebruiker.actie_id == $scope.actie.actie_id && !User.gebruiker.buddy);
+    }
+    
+    $scope.addBuddy = function(buddy) {
+        User.gebruiker.buddy = buddy;
+        
+        console.log(User.gebruiker.buddy);
+        User.gebruiker._token = User.account.token;
+        $http({
+            url: '/glassy/api/' + 'gebruiker',
+            method: "PUT",
+            data: User.gebruiker
+        }).success(function(data, status) {
+            console.log("Saved buddy data");
+            $rootScope.showMessage("U bent nu als buddy geregistreerd!", "success");
+            
+            delete User.gebruiker._token;
+            
+            //User.gebruiker.buddy = buddy;
+            User.setGebruiker(User.gebruiker, true);
+            $rootScope.$broadcast("onUserDataChanged");
+            
+            $scope.actie.buddies.push($scope.getCopy());
+            
+            $scope.toggleBuddyAdd();
+            
+        }).error(function(data, status) {
+            console.log("Failed save");
+            $rootScope.showMessage("Er is een fout opgetreden bij het opslaan", "danger");
+            
+            delete User.gebruiker._token;
+            delete User.gebruiker.buddy;
+        });
+    }
+    
+    $scope.getCopy = function() {
+        var profile = { gebruiker: {},account:{}};
+        
+        angular.copy(User.gebruiker, profile.gebruiker);
+        angular.copy(User.account, profile.account);
+        
+        return profile;
     }
     
     $scope.$on('onUserLogin', function() {

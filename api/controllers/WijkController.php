@@ -44,7 +44,7 @@ class WijkController extends BaseController {
             $isPostalCode = preg_match('/^\d/', $searchQuery) === 1;
             $params = array();
             $conditionStr = BaseModel::getCondition(array(
-                array('k' => ($isPostalCode) ? 'postcode' : 'wijk_naam', 'v' => $searchQuery.'%', 'op' => 'LIKE'),
+                array('k' => ($isPostalCode) ? 'postcode' : 'wijk_naam', 'v' => $searchQuery.'%', 'op' => 'ILIKE'),
             ), $params);
 
             $arguments = array(
