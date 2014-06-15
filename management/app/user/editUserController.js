@@ -56,9 +56,8 @@ app.controller('editUserCtrl', function($scope, User, $http, $rootScope, $stateP
             data: body
         })
         .success(function (data, status, headers, config) {
-            User.setGebruiker(data.model, true);
             console.log(data);
-            $rootScope.$broadcast('onUserDataChanged');
+            alert("Wijzigingen zijn opgeslagen");
         })
         .error(function (data, status, headers, config) {
             console.log('fail');
