@@ -231,5 +231,6 @@ app.controller('editDistrictCtrl', function($scope, $http, $timeout, $state, $sc
    
    function refreshMap(){       
         $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+       document.getElementById('mapFrame').src = document.getElementById('mapFrame').src;
    }
 });

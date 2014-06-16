@@ -64,6 +64,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
                 method:"POST",
                 data: body
             }).success(function (data, status, headers, config) {
+                console.log(data);
                 $scope.currentWijkId = data.id;
                 
                 alert('Wijkdata is toegevoegd');
@@ -203,6 +204,7 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
             data: body
         }).success(function (data, status, headers, config) {
             console.log(data);
+            refreshMap();
             })
             .error(function(data, status, headers, config){
             });
@@ -225,5 +227,6 @@ app.controller('addDistrictCtrl', function($scope, $http, $timeout, $state, $sce
    
    function refreshMap(){       
         $scope.mapsUrl = $sce.trustAsResourceUrl("http://glassy-web.avans-project.nl/?wijk=" + $scope.currentWijkId);
+        document.getElementById('mapFrame').src = document.getElementById('mapFrame').src;
    }
 });
