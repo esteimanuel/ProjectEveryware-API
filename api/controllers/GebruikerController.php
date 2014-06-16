@@ -18,7 +18,7 @@ class GebruikerController extends BaseController
             }
              
 
-            if(isset($putData['buddy'])) {
+            if(isset($putData['buddy']) && is_array($putData['buddy'])) {
                 $buddyData = array();
                 foreach($putData['buddy'] as $key => $value) {
                     $buddyData[$key] = $value;
@@ -29,7 +29,7 @@ class GebruikerController extends BaseController
 //                unset($putData['buddy']);
             }
             
-            if(isset($putData['postcode'])) {
+            if(isset($putData['postcode']) && is_array($putData['postcode'])) {
                 $postcodeData = array();
                 foreach($putData['postcode'] as $key => $value) {
                     $postcodeData[$key] = $value;
